@@ -4,7 +4,11 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./frontend",
+    "paths": {
+      "@styled-system/*": ["styled-system/*"]
+    }
   },
   "include": ["vite.config.ts"]
 }
