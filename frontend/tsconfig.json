@@ -3,7 +3,11 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -15,12 +19,17 @@
     "strict": true,
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "baseUrl": "./frontend",
+    "baseUrl": "./",
     "paths": {
-      "@styled-system/*": ["styled-system/*"]
+      "@styled-system/*": [
+        "styled-system/*"
+      ]
     }
   },
-  "include": ["src", "styled-system"],
+  "include": [
+    "src",
+    "styled-system"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

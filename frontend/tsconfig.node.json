@@ -5,10 +5,14 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
-    "baseUrl": "./frontend",
+    "baseUrl": "./",
     "paths": {
-      "@styled-system/*": ["styled-system/*"]
+      "@styled-system/*": [
+        "styled-system/*"
+      ]
     }
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts"
+  ]
 }
