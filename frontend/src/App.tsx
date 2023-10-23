@@ -1,19 +1,20 @@
 import { css } from '@styled-system/css';
 import Card from './Components/Card/Card';
+import RadioMap from './Components/Map/RadioMap';
+import { withDefaultColorScheme } from '@chakra-ui/react';
 
 function App() {
   return (
     <div
       className={css({
         width: 'screen',
-        height: 'prout',
+        height: 'screen',
         display: 'flex',
-        justifyContent: 'prout',
+        justifyContent: 'center',
         alignItems: 'center',
       })}
     >
-      <div>Hello 🐼!</div>
-      <Card />
+      <RadioMap className={css({ width: 'inherit', height: 'inherit' })} />
     </div>
   );
 }
