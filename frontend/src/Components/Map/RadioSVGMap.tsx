@@ -1,146 +1,103 @@
-import { Component, createRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import SVGMap from './SVGMap';
 
-class RadioSVGMap extends Component {
-  constructor(props) {
-    super(props);
+type RadioSVGMapProps = {
+  selectedLocationId?: string;
+  onChange?: (selectedNode: SVGPathElement) => void;
+  map: any; // Replace with the appropriate type for your map data
+  className?: string;
+  locationClassName?: string;
+  locationAriaLabel?: string;
+  onLocationMouseOver?: (event: React.MouseEvent) => void;
+  onLocationMouseOut?: (event: React.MouseEvent) => void;
+  onLocationMouseMove?: (event: React.MouseEvent) => void;
+  childrenBefore?: React.ReactNode;
+  childrenAfter?: React.ReactNode;
+};
 
-    this.state = {
-      selectedLocation: null,
-    };
+const RadioSVGMap = ({
+  selectedLocationId,
+  onChange,
+  map,
+  className,
+  locationClassName,
+  locationAriaLabel,
+  onLocationMouseOver,
+  onLocationMouseOut,
+  onLocationMouseMove,
+  childrenBefore,
+  childrenAfter,
+}: RadioSVGMapProps) => {
+  const [selectedLocation, setSelectedLocation] = useState<SVGPathElement | null>(null);
+  const locationsRef = useRef<SVGGElement | null>(null);
 
-    this.locations = createRef();
+  const getLocationTabIndex = (location: SVGPathElement, index: number): string => {
+    let tabIndex: string = '-1';
 
-    this.getLocationTabIndex = this.getLocationTabIndex.bind(this);
-    this.isLocationSelected = this.isLocationSelected.bind(this);
-    this.handleLocationClick = this.handleLocationClick.bind(this);
-    this.handleLocationKeyDown = this.handleLocationKeyDown.bind(this);
-  }
-
-  componentDidMount() {
-    const { selectedLocationId } = this.props;
-
-    if (selectedLocationId) {
-      const selectedLocation = this.locations.current
-        .getElementsByTagName('path')
-        .find((location) => location.id === selectedLocationId);
-
-      this.setState({ selectedLocation });
-    }
-  }
-
-  getLocationTabIndex(location, index) {
-    let tabIndex = null;
-
-    if (this.state.selectedLocation) {
-      tabIndex = this.isLocationSelected(location) ? '0' : '-1';
+    if (selectedLocation) {
+      tabIndex = isLocationSelected(location) ? '0' : '-1';
     } else {
       tabIndex = index === 0 ? '0' : '-1';
     }
 
     return tabIndex;
-  }
+  };
 
-  isLocationSelected(location) {
-    return this.state.selectedLocation && this.state.selectedLocation.id === location.id;
-  }
+  const isLocationSelected = (location: SVGPathElement): boolean =>
+    selectedLocation && selectedLocation.id === location.id;
 
-  selectLocation(location) {
+  const selectLocation = (location: SVGPathElement): void => {
     location.focus();
-    this.setState({ selectedLocation: location });
+    setSelectedLocation(location);
 
-    if (this.props.onChange) {
-      this.props.onChange(location);
+    if (onChange) {
+      onChange(location);
     }
-  }
+  };
 
-  handleLocationClick(event) {
-    const clickedLocation = event.target;
+  const handleLocationClick = (event: React.MouseEvent): void => {
+    const clickedLocation = event.target as SVGPathElement;
 
-    if (clickedLocation !== this.state.selectedLocation) {
-      this.selectLocation(clickedLocation);
+    if (clickedLocation !== selectedLocation) {
+      selectLocation(clickedLocation);
     }
-  }
+  };
 
-  handleLocationKeyDown(event) {
-    const focusedLocation = event.target;
-
-    if (event.keyCode === 32) {
-      event.preventDefault();
-
-      if (focusedLocation !== this.state.selectedLocation) {
-        this.selectLocation(focusedLocation);
-      } else if (event.keyCode === 39 || event.keyCode === 40) {
-        event.preventDefault();
-
-        this.selectLocation(
-          focusedLocation.nextSibling || this.locations.current.getElementsByTagName('path')[0],
-        );
-      } else if (event.keyCode === 37 || event.keyCode === 38) {
-        event.preventDefault();
-
-        this.selectLocation(
-          focusedLocation.previousSibling ||
-            this.locations.current.getElementsByTagName('path')[
-              this.locations.current.getElementsByTagName('path').length - 1
-            ],
-        );
+  useEffect(() => {
+    if (selectedLocationId) {
+      if (!locationsRef.current) {
+        return;
       }
+
+      const selectedLocationElement = Array.from(
+        locationsRef.current.getElementsByTagName('path'),
+      ).find((location) => location.id === selectedLocationId);
+
+      setSelectedLocation(selectedLocationElement as SVGPathElement);
     }
-  }
+  }, [selectedLocationId]);
 
-  render() {
-    return (
-      <SVGMap
-        map={this.props.map}
-        role="radiogroup"
-        locationTabIndex={this.getLocationTabIndex}
-        locationRole="radio"
-        className={this.props.className}
-        locationClassName={this.props.locationClassName}
-        locationAriaLabel={this.props.locationAriaLabel}
-        isLocationSelected={this.isLocationSelected}
-        onLocationClick={this.handleLocationClick}
-        onLocationKeyDown={this.handleLocationKeyDown}
-        onLocationMouseOver={this.props.onLocationMouseOver}
-        onLocationMouseOut={this.props.onLocationMouseOut}
-        onLocationMouseMove={this.props.onLocationMouseMove}
-        onLocationFocus={this.props.onLocationFocus}
-        onLocationBlur={this.props.onLocationBlur}
-        onChange={this.props.onChange}
-        childrenBefore={this.props.childrenBefore}
-        childrenAfter={this.props.childrenAfter}
-        ref={this.locations}
-      />
-    );
-  }
-}
-
-// RadioSVGMap.propTypes = {
-//   selectedLocationId: PropTypes.string,
-//   onChange: PropTypes.func,
-//   map: PropTypes.shape({
-//     viewBox: PropTypes.string.isRequired,
-//     locations: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         path: PropTypes.string.isRequired,
-//         name: PropTypes.string,
-//         id: PropTypes.string,
-//       }),
-//     ).isRequired,
-//     label: PropTypes.string,
-//   }).isRequired,
-//   className: PropTypes.string,
-//   locationClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-//   locationAriaLabel: PropTypes.func,
-//   onLocationMouseOver: PropTypes.func,
-//   onLocationMouseOut: PropTypes.func,
-//   onLocationMouseMove: PropTypes.func,
-//   onLocationFocus: PropTypes.func,
-//   onLocationBlur: PropTypes.func,
-//   childrenBefore: PropTypes.node,
-//   childrenAfter: PropTypes.node,
-// };
+  return (
+    <SVGMap
+      map={map}
+      role="radiogroup"
+      locationTabIndex={getLocationTabIndex}
+      locationRole="radio"
+      className={className}
+      locationClassName={locationClassName}
+      locationAriaLabel={locationAriaLabel}
+      isLocationSelected={isLocationSelected}
+      onLocationClick={handleLocationClick}
+      onLocationMouseOver={onLocationMouseOver}
+      onLocationMouseOut={onLocationMouseOut}
+      onLocationMouseMove={onLocationMouseMove}
+      onChange={onChange}
+      childrenBefore={childrenBefore}
+      childrenAfter={childrenAfter}
+      ref={locationsRef}
+    />
+  );
+};
 
 export default RadioSVGMap;

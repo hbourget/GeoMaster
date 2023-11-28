@@ -3,7 +3,7 @@
  * @param  {Event} event Occured event
  * @return {String}      Id of the location
  */
-export function getLocationId(event) {
+export function getLocationId(event: { target: { id: any } }) {
   return event.target.id;
 }
 
@@ -12,7 +12,7 @@ export function getLocationId(event) {
  * @param  {Event} event Occured event
  * @return {String}      Name of the location
  */
-export function getLocationName(event) {
+export function getLocationName(event: { target: { attributes: { name: { value: any } } } }) {
   return event.target.attributes.name.value;
 }
 
@@ -21,6 +21,8 @@ export function getLocationName(event) {
  * @param  {Event} event Occured event
  * @return {Boolean}     Is the location selected
  */
-export function getLocationSelected(event) {
+export function getLocationSelected(event: {
+  target: { attributes: { [x: string]: { value: string } } };
+}) {
   return event.target.attributes['aria-checked'].value === 'true';
 }
