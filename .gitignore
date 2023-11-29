@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Panda CSS
-
-styled-system/
+styled-system
