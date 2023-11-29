@@ -18,31 +18,46 @@ public class PartyCrt {
 
     @PostMapping("/parties/create/{userId}")
     public ResponseEntity<Party> createParty(@PathVariable Integer userId) {
-        partyService.createParty(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Party party = partyService.createParty(userId);
+        if (party == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
     @PutMapping("/parties/{partyId}/add/{userId}")
     public ResponseEntity<Party> addMember(@PathVariable Integer partyId, @PathVariable Integer userId) {
-        partyService.addMember(partyId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Party party = partyService.addMember(partyId, userId);
+        if (party == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
     @PutMapping("/parties/{partyId}/remove/{userId}")
     public ResponseEntity<Party> removeMember(@PathVariable Integer partyId, @PathVariable Integer userId) {
-        partyService.removeMember(partyId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Party party = partyService.removeMember(partyId, userId);
+        if (party == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
     @DeleteMapping("/parties/{partyId}")
     public ResponseEntity<Party> deleteParty(@PathVariable Integer partyId) {
-        partyService.deleteParty(partyId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Party party = partyService.deleteParty(partyId);
+        if (party == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
     @GetMapping("/parties/{partyId}")
     public ResponseEntity<Party> getParty(@PathVariable Integer partyId) {
         Party party = partyService.getParty(partyId);
+        if (party == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(party, HttpStatus.OK);
     }
 
