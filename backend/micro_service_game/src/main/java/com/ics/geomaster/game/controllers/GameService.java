@@ -68,8 +68,7 @@ public class GameService {
             }
             game.setStatus(2);
         }
-        else if (game.getStatus() == 2)
-        {
+        else if (game.getStatus() == 2) {
             for (int i = 9; i < 14; i++) {
                 for (int j = 0; i < 5; i++) {
                     Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);

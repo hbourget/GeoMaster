@@ -27,7 +27,7 @@ public class GameCrt {
         return new ResponseEntity<>(createdGame, HttpStatus.OK);
     }
 
-    @PutMapping("/game")
+    @PutMapping("/game/play")
     public ResponseEntity<Game> updateGame(@RequestBody Integer gameId, @RequestBody List<String> countryGuesses) {
         Game updatedGame = gameService.updateGame(gameId, countryGuesses);
         if (updatedGame == null) {
