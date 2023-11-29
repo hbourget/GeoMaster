@@ -1,5 +1,16 @@
 // import PropTypes from 'prop-types';
 
+import { css } from '@styled-system/css';
+
+const mapStyle = css({
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  fill: '#A8E151', // Remplacez par la couleur de remplissage souhaitée
+  stroke: 'black', // Remplacez par la couleur du trait souhaitée
+  strokeWidth: '1px',
+});
+
 function SVGMap(props) {
   return (
     <svg
@@ -16,11 +27,7 @@ function SVGMap(props) {
             id={location.id}
             name={location.name}
             d={location.path}
-            className={
-              typeof props.locationClassName === 'function'
-                ? props.locationClassName(location, index)
-                : props.locationClassName
-            }
+            className={mapStyle}
             tabIndex={
               typeof props.locationTabIndex === 'function'
                 ? props.locationTabIndex(location, index)
