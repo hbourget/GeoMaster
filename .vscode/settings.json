@@ -41,5 +41,6 @@
   "markdown.validate.fileLinks.enabled": "error",
   "markdown.validate.fileLinks.markdownFragmentLinks": "error",
   "markdown.validate.fragmentLinks.enabled": "error",
-  "markdown.validate.referenceLinks.enabled": "error"
+  "markdown.validate.referenceLinks.enabled": "error",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
