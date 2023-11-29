@@ -16,25 +16,34 @@ public class GameService {
     private final String userServiceUrl = "http://localhost:8081";
     private final String countryServiceUrl = "http://localhost:8082";
 
+    private final String partyServiceUrl = "http://localhost:8083";
+
     public Game createGame(Integer partyId) {
-        Game game = new Game();
+        try {
+            restTemplate.getForEntity(partyServiceUrl + "/parties/" + partyId, Game.class);
+        } catch (Exception e) {
+            return null;
+        }
 
         List<Country> countries = restTemplate.getForObject(countryServiceUrl + "/countries", List.class);
-        assert countries != null;
+
+        if (countries == null) {
+            return null;
+        }
+
+        Game game = new Game();
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
             game.getCountries_r1().add(countries.get(random).getName());
             countries.remove(random);
         }
 
-        System.out.println(game.getCountries_r1());
-
         game.setPartyId(partyId);
         gameRepository.save(game);
         return game;
     }
 
-    public void updateGame(Integer gameId, Integer score_roud1, Integer score_roud2, Integer score_roud3, String status) {
+    public Game updateGame(Integer gameId, Integer score_roud1, Integer score_roud2, Integer score_roud3, String status) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game != null) {
             game.setScore_roud1(score_roud1);
@@ -42,7 +51,9 @@ public class GameService {
             game.setScore_roud3(score_roud3);
             game.setStatus(status);
             gameRepository.save(game);
+            return game;
         }
+        return null;
     }
 
     public Game getGame(Integer gameId) {

@@ -19,18 +19,27 @@ public class GameCrt {
     @PostMapping("/game/{partyId}")
     public ResponseEntity<Game> createGame(@PathVariable Integer partyId) {
         Game createdGame = gameService.createGame(partyId);
+        if (createdGame == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(createdGame, HttpStatus.OK);
     }
 
     @PutMapping("/game/{gameId}")
     public ResponseEntity<Game> updateGame(@PathVariable Integer gameId, @RequestBody Game game) {
-        gameService.updateGame(gameId, game.getScore_roud1(), game.getScore_roud2(), game.getScore_roud3(), game.getStatus());
-        return new ResponseEntity<>(HttpStatus.OK);
+        Game updatedGame = gameService.updateGame(gameId, game.getScore_roud1(), game.getScore_roud2(), game.getScore_roud3(), game.getStatus());
+        if (updatedGame == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
 
     @GetMapping("/game/{gameId}")
     public ResponseEntity<Game> getGame(@PathVariable Integer gameId) {
         Game game = gameService.getGame(gameId);
+        if (game == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
 }
