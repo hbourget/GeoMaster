@@ -1,0 +1,7 @@
+com/ics/geomaster/users/models/UserDTO.class
+com/ics/geomaster/users/models/UserRepository.class
+com/ics/geomaster/users/controllers/UserCrt.class
+com/ics/geomaster/users/controllers/UserService.class
+com/ics/geomaster/users/controllers/UserMapper.class
+com/ics/geomaster/UserApp.class
+com/ics/geomaster/users/models/User.class

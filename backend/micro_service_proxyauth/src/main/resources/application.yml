@@ -1,0 +1,63 @@
+server:
+  port: 8080
+spring:
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  config:
+    import: "optional:configserver:"
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:8080"
+              - "http://user:8081"
+              - "http://card:8082"
+              - "http://inventory:8083"
+              - "http://game:8084"
+              - "http://localhost:4200"
+            allowedMethods:
+              - "GET"
+              - "POST"
+              - "PUT"
+              - "DELETE"
+              - "OPTIONS"
+            allowedHeaders:
+                - "Authorization"
+                - "Content-Type"
+                - "x-xsrf-token"
+                - "X-Requested-With"
+                - "XMLHttpRequest"
+                - "Origin"
+                - "Access-Control-Allow-Headers"
+                - "Access-Control-Allow-Origin"
+                - "Access-Control-Request-Method"
+                - "Access-Control-Request-Headers"
+                - "Access-Control-Allow-Credentials"
+            allowCredentials: true
+      routes:
+        - id: card-service
+          uri: http://card:8082
+          predicates:
+            - Path=/cards/**
+        - id: user-service
+          uri: http://user:8081
+          predicates:
+            - Path=/users/**
+        - id: inventory-service
+          uri: http://inventory:8083
+          predicates:
+            - Path=/inventories/**
+        - id: game-service
+          uri: http://game:8084
+          predicates:
+            - Path=/games/**
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5971
+      expiration: 600000000
+      refresh-token:
+        expiration: 604800000

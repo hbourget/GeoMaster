@@ -1,0 +1,16 @@
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/token/TokenRepository.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/SecurityConfiguration.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/JwtService.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/LogoutService.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/token/TokenType.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/token/Token.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/ApplicationConfig.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/auth/RegisterRequest.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/CustomUserDetailsService.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/ServerLogoutHandlerAdapter.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/ProxyApp.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/config/JwtAuthenticationFilter.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/auth/AuthCrt.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/auth/AuthRequest.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/auth/AuthService.java
+/Users/hugobourget/Developer/GeoBackend/micro_service_proxyauth/src/main/java/com/ics/geomaster/auth/AuthResponse.java
