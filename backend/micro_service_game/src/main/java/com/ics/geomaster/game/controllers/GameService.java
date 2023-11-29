@@ -13,9 +13,7 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String userServiceUrl = "http://localhost:8081";
     private final String countryServiceUrl = "http://localhost:8082";
-
     private final String partyServiceUrl = "http://localhost:8083";
 
     public Game createGame(Integer partyId) {
@@ -34,7 +32,7 @@ public class GameService {
         Game game = new Game();
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
-            game.getCountries_r1().add(countries.get(random).getName());
+            game.getCountries().add(countries.get(random).getName());
             countries.remove(random);
         }
 
@@ -43,22 +41,50 @@ public class GameService {
         return game;
     }
 
-    public Game updateGame(Integer gameId, Integer score_roud1, Integer score_roud2, Integer score_roud3, String status) {
+    public Game updateGame(Integer gameId, List<String> countryGuesses) {
         Game game = gameRepository.findById(gameId).orElse(null);
-        if (game != null) {
-            game.setScore_roud1(score_roud1);
-            game.setScore_roud2(score_roud2);
-            game.setScore_roud3(score_roud3);
-            game.setStatus(status);
-            gameRepository.save(game);
-            return game;
+        if (game == null) {
+            return null;
         }
-        return null;
+        if (game.getStatus() == 0) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; i < 5; i++) {
+                    Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                        game.setScore(game.getScore() + 1);
+                    }
+                }
+            }
+            game.setStatus(1);
+        }
+        else if (game.getStatus() == 1) {
+            for (int i = 5; i < 9; i++) {
+                for (int j = 0; i < 5; i++) {
+                    Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                        game.setScore(game.getScore() + 1);
+                    }
+                }
+            }
+            game.setStatus(2);
+        }
+        else if (game.getStatus() == 2)
+        {
+            for (int i = 9; i < 14; i++) {
+                for (int j = 0; i < 5; i++) {
+                    Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                        game.setScore(game.getScore() + 1);
+                    }
+                }
+            }
+            game.setStatus(3);
+        }
+        gameRepository.save(game);
+        return game;
     }
 
     public Game getGame(Integer gameId) {
         return gameRepository.findById(gameId).orElse(null);
     }
-
-
 }

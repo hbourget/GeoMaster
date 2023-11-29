@@ -11,39 +11,26 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private int score_roud1;
-    private int score_roud2;
-    private int score_roud3;
+    private int score;
     @ElementCollection
-    private List<String> countries_r1;
-    @ElementCollection
-    private List<String> flags_r2;
-    @ElementCollection
-    private List<String> capitals_r3;
-
-    private String status;
+    private List<String> countries;
+    private Integer status;
     private int partyId;
 
     public Game() {
-        this.score_roud1 = 0;
-        this.score_roud2 = 0;
-        this.score_roud3 = 0;
-        this.status = "Started";
+        this.score = 0;
+        this.status = 0;
     }
 
-    public Game(int score_roud1, int score_roud2, int score_roud3, String status, int partyId) {
-        this.score_roud1 = score_roud1;
-        this.score_roud2 = score_roud2;
-        this.score_roud3 = score_roud3;
+    public Game(int score, Integer status, int partyId) {
+        this.score = score;
         this.status = status;
         this.partyId = partyId;
     }
 
-    public Game(int id, int score_roud1, int score_roud2, int score_roud3, String status, int partyId) {
-        this.id = id;
-        this.score_roud1 = score_roud1;
-        this.score_roud2 = score_roud2;
-        this.score_roud3 = score_roud3;
+    public Game(int score, List<String> countries, Integer status, int partyId) {
+        this.score = score;
+        this.countries = countries;
         this.status = status;
         this.partyId = partyId;
     }
@@ -52,35 +39,18 @@ public class Game {
 
     public void setId(Integer id) { this.id = id; }
 
-    public int getScore_roud1() { return score_roud1; }
+    public int getScore() { return score; }
 
-    public void setScore_roud1(int score_roud1) { this.score_roud1 = score_roud1; }
+    public void setScore(int score) { this.score = score; }
 
-    public int getScore_roud2() { return score_roud2; }
+    public Integer getStatus() { return status; }
 
-    public void setScore_roud2(int score_roud2) { this.score_roud2 = score_roud2; }
-
-    public int getScore_roud3() { return score_roud3; }
-
-    public void setScore_roud3(int score_roud3) { this.score_roud3 = score_roud3; }
-
-    public String getStatus() { return status; }
-
-    public void setStatus(String status) { this.status = status; }
+    public void setStatus(Integer status) { this.status = status; }
 
     public int getPartyId() { return partyId; }
 
     public void setPartyId(int partyId) { this.partyId = partyId; }
 
-    public List<String> getCountries_r1() { return countries_r1; }
+    public List<String> getCountries() { return countries; }
 
-    public void setCountries_r1(List<String> countries_r1) { this.countries_r1 = countries_r1; }
-
-    public List<String> getFlags_r2() { return flags_r2; }
-
-    public void setFlags_r2(List<String> flags_r2) { this.flags_r2 = flags_r2; }
-
-    public List<String> getCapitals_r3() { return capitals_r3; }
-
-    public void setCapitals_r3(List<String> capitals_r3) { this.capitals_r3 = capitals_r3; }
 }

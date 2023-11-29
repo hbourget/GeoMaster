@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Order(1)
 public class GameCrt {
@@ -25,9 +27,9 @@ public class GameCrt {
         return new ResponseEntity<>(createdGame, HttpStatus.OK);
     }
 
-    @PutMapping("/game/{gameId}")
-    public ResponseEntity<Game> updateGame(@PathVariable Integer gameId, @RequestBody Game game) {
-        Game updatedGame = gameService.updateGame(gameId, game.getScore_roud1(), game.getScore_roud2(), game.getScore_roud3(), game.getStatus());
+    @PutMapping("/game")
+    public ResponseEntity<Game> updateGame(@RequestBody Integer gameId, @RequestBody List<String> countryGuesses) {
+        Game updatedGame = gameService.updateGame(gameId, countryGuesses);
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

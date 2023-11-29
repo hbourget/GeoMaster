@@ -87,5 +87,4 @@ public class UserCrt {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
         }
     }
-
 }
