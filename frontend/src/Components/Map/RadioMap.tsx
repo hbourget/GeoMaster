@@ -54,7 +54,8 @@ const RadioMap = () => {
       />
 
       <div className={infoRoomStyle}>
-        <p>Room : NOM ROOM</p>
+        <p>NOM ROOM</p>
+        <br></br>
         <p>Maxime - SCORE</p>
         <p>Maxime - SCORE</p>
         <p>Maxime - SCORE</p>

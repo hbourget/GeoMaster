@@ -5,6 +5,8 @@ import Navbar from './Components/Map/Navbar';
 import RadioMap from './Components/Map/RadioMap';
 import Party from './Components/Map/Party';
 import Inscription from './Components/Map/Inscription';
+import FlagGuesser from './Components/Map/FlagGuesser';
+import Monument from './Components/Map/Monument';
 
 const containerStyle = css({
   height: '100vh',
@@ -31,6 +33,8 @@ const App = () => {
             <Route path="/home" element={<RadioMap />} />
             <Route path="/party" element={<Party />} />
             <Route path="/inscription" element={<Inscription />} />
+            <Route path="/flagguesser" element={<FlagGuesser />} />
+            <Route path="/Monument" element={<Monument />} />
           </Routes>
         </div>
       </div>

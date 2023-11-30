@@ -1,4 +1,3 @@
-import { transition } from '@chakra-ui/react';
 import { css } from '@styled-system/css';
 
 const mapStyle = css({
@@ -8,7 +7,7 @@ const mapStyle = css({
   fill: '#DBDCB6', // #A8E151 vert
   stroke: 'black',
   strokeWidth: '1px',
-  transition: 'fill 0.5s',
+  transition: 'fill 0.3s',
 });
 
 function SVGMap(props) {
