@@ -6,14 +6,12 @@ import jakarta.persistence.*;
 @Table(name = "COUNTRY")
 public class Country {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String name;
     private String capital;
     private String flag;
     private String continent;
     private String population;
-    private String monummentUrl;
+    private String monument;
 
     public Country() {}
 
@@ -25,34 +23,16 @@ public class Country {
         this.population = population;
     }
 
-    public Country(Integer id, String name, String capital, String flag, String continent, String population) {
-            this.id = id;
+    public Country(String name, String capital, String flag, String continent, String population, String monument) {
             this.name = name;
             this.capital = capital;
             this.flag = flag;
             this.continent = continent;
             this.population = population;
-    }
-
-    public Country(Integer id, String name, String capital, String flag, String continent, String population, String monummentUrl) {
-            this.id = id;
-            this.name = name;
-            this.capital = capital;
-            this.flag = flag;
-            this.continent = continent;
-            this.population = population;
-            this.monummentUrl = monummentUrl;
+            this.monument = monument;
     }
 
     // Getters and Setters
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
      public String getName() {
         return name;
@@ -95,22 +75,22 @@ public class Country {
     }
 
     public String getMonument() {
-        return monummentUrl;
+        return monument;
     }
 
-    public void setMonument(String monummentUrl) {
-        this.monummentUrl = monummentUrl;
+    public void setMonument(String monument) {
+        this.monument = monument;
     }
 
     @Override
     public String toString() {
         return "Country{" +
-                "id=" + id +
-                ", name='" + name +
-                ", capital='" + capital +
-                ", flag='" + flag +
-                ", continent='" + continent +
-                ", population='" + population +
+                "name='" + name + '\'' +
+                ", capital='" + capital + '\'' +
+                ", flag='" + flag + '\'' +
+                ", continent='" + continent + '\'' +
+                ", population='" + population + '\'' +
+                ", monument='" + monument + '\'' +
                 '}';
     }
 
