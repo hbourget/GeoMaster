@@ -37,12 +37,12 @@ RegisterRequest Class / AuthRequest Class:
 
 User Class
 
-| Champ     | Type    | Description                   |
-|-----------|---------|-------------------------------|
+| Champ     | Type    | Description                                            |
+|-----------|---------|--------------------------------------------------------|
 | id        | Integer | Identifiant de l'utilisateur (généré automatiquement). |
-| username  | String  | Nom d'utilisateur.            |
-| password  | String  | Mot de passe de l'utilisateur.|
-| balance   | double  | Solde de l'utilisateur.       |
+| username  | String  | Nom d'utilisateur.                                     |
+| password  | String  | Mot de passe de l'utilisateur.                         |
+| balance   | Integer | Solde de points pour l'utilisateur.                    |
 
 UserDTO Class
 
