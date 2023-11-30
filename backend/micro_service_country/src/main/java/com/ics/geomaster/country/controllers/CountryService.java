@@ -39,6 +39,7 @@ public class CountryService {
             for (Country country : countries) {
                 country.setName(country.getName().replace(" ", "-"));
                 country.setFlag("https://restfulcountries.com//assets//images//flags//" + country.getName() + ".png");
+                country.setMonument("monument.png");
             }
 
             if (countries.isEmpty()) {
@@ -46,6 +47,7 @@ public class CountryService {
             }
             else {
                 System.out.println("\n\n[API] COUNTRIES LOADED\n\n");
+                System.out.println(countries);
             }
 
             countryRepository.saveAll(countries);
