@@ -1,6 +1,7 @@
 package com.ics.geomaster.game.controllers;
 
 import com.ics.geomaster.game.models.Game;
+import com.ics.geomaster.game.models.GameUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -45,13 +46,14 @@ public class GameCrt {
     }
 
     @PutMapping("/game/play")
-    public ResponseEntity<Game> updateGame(@RequestBody Integer gameId, @RequestBody List<String> countryGuesses) {
-        Game updatedGame = gameService.updateGame(gameId, countryGuesses);
+    public ResponseEntity<Game> updateGame(@RequestBody GameUpdateDTO gameUpdateDTO) {
+        Game updatedGame = gameService.updateGameScores(gameUpdateDTO.getGameId(), gameUpdateDTO.getUserId(), gameUpdateDTO.getCountryGuesses());
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
+
 
     @GetMapping("/game")
     public ResponseEntity<Game> getGame(@RequestBody Integer gameId) {
@@ -60,6 +62,15 @@ public class GameCrt {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(game, HttpStatus.OK);
+    }
+
+    @GetMapping("/games")
+    public ResponseEntity<Iterable<Game>> getGames() {
+        Iterable<Game> games = gameService.getGames();
+        if (games == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(games, HttpStatus.OK);
     }
 
     @GetMapping("/game/{userId}")

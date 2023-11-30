@@ -1,12 +1,6 @@
 package com.ics.geomaster.country.models;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "COUNTRY")
 public class Country {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String capital;
@@ -26,22 +20,22 @@ public class Country {
     }
 
     public Country(Integer id, String name, String capital, String flag, String continent, String population) {
-            this.id = id;
-            this.name = name;
-            this.capital = capital;
-            this.flag = flag;
-            this.continent = continent;
-            this.population = population;
+        this.id = id;
+        this.name = name;
+        this.capital = capital;
+        this.flag = flag;
+        this.continent = continent;
+        this.population = population;
     }
 
     public Country(Integer id, String name, String capital, String flag, String continent, String population, String monummentUrl) {
-            this.id = id;
-            this.name = name;
-            this.capital = capital;
-            this.flag = flag;
-            this.continent = continent;
-            this.population = population;
-            this.monummentUrl = monummentUrl;
+        this.id = id;
+        this.name = name;
+        this.capital = capital;
+        this.flag = flag;
+        this.continent = continent;
+        this.population = population;
+        this.monummentUrl = monummentUrl;
     }
 
     // Getters and Setters
@@ -54,7 +48,7 @@ public class Country {
         this.id = id;
     }
 
-     public String getName() {
+    public String getName() {
         return name;
     }
 
@@ -62,7 +56,7 @@ public class Country {
         this.name = name;
     }
 
-     public String getCapital() {
+    public String getCapital() {
         return capital;
     }
 
@@ -70,7 +64,7 @@ public class Country {
         this.capital = capital;
     }
 
-     public String getFlag() {
+    public String getFlag() {
         return flag;
     }
 
@@ -78,7 +72,7 @@ public class Country {
         this.flag = flag;
     }
 
-     public String getContinent() {
+    public String getContinent() {
         return continent;
     }
 
@@ -86,7 +80,7 @@ public class Country {
         this.continent = continent;
     }
 
-     public String getPopulation() {
+    public String getPopulation() {
         return population;
     }
 
@@ -113,5 +107,4 @@ public class Country {
                 ", population='" + population +
                 '}';
     }
-
 }
