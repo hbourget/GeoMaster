@@ -1,0 +1,6 @@
+com/ics/geomaster/game/models/GameWrapper.class
+com/ics/geomaster/GameApp.class
+com/ics/geomaster/game/controllers/GameService.class
+com/ics/geomaster/game/models/GameRepository.class
+com/ics/geomaster/game/models/Game.class
+com/ics/geomaster/game/controllers/GameCrt.class
