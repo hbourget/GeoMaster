@@ -84,14 +84,8 @@ public class CountryService {
         return Optional.empty();
     }
 
-    public Country[] getCountries() {
+    public List<Country> getCountries() {
         Iterable<Country> countries = countryRepository.findAll();
-        Country[] countriesArray = new Country[100];
-        int i = 0;
-        for (Country country : countries) {
-            countriesArray[i] = country;
-            i++;
-        }
-        return countriesArray;
+        return (List<Country>) countries;
     }
 }

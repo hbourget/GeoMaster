@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -48,11 +49,9 @@ public class CountryCrt {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<Country[]> getCountries() {
-        Country[] countries = countryService.getCountries();
+    @GetMapping("/countries")
+    public ResponseEntity<List<Country>> getCountries() {
+        List<Country> countries = countryService.getCountries();
         return new ResponseEntity<>(countries, HttpStatus.OK);
     }
 }
-
-
