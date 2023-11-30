@@ -88,4 +88,14 @@ public class UserCrt {
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
         }
     }
+
+    @PutMapping("/users/addbal/{userId}")
+    public ResponseEntity<UserDTO> addBalance(@PathVariable Integer userId, @RequestBody Integer amount) {
+        UserDTO updatedUser = uService.addBalance(userId, amount);
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(updatedUser);
+        }
+    }
 }

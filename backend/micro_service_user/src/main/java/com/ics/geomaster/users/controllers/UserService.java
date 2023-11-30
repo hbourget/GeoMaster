@@ -66,6 +66,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        user.setBalance(0);
         userRepository.save(user);
         return user;
     }
@@ -97,5 +98,17 @@ public class UserService {
 
     public void deleteAllUsers() {
         userRepository.deleteAll();
+    }
+
+    public UserDTO addBalance(Integer id, Integer balance) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User userToUpdate = userOptional.get();
+            userToUpdate.setBalance(userToUpdate.getBalance() + balance);
+            userRepository.save(userToUpdate);
+            return userMapper.toDTO(userToUpdate);
+        } else {
+            return null;
+        }
     }
 }

@@ -2,7 +2,10 @@ package com.ics.geomaster.game.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "GAME")
@@ -11,7 +14,6 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private int score;
     @ElementCollection
     private List<String> countriesMap;
 
@@ -22,36 +24,37 @@ public class Game {
     private List<String> countriesMonument;
 
     @ElementCollection
-    private List<Integer> userIds;
+    private Map<Integer, Integer> userIdsAndScores;
 
     private Integer status;
 
     public Game() {
-        this.score = 0;
         this.status = 0;
+        this.userIdsAndScores = new HashMap<>();
+        this.countriesMonument = new ArrayList<>();
+        this.countriesFlag = new ArrayList<>();
+        this.countriesMap = new ArrayList<>();
     }
 
-    public Game(int score, Integer status) {
-        this.score = score;
+    public Game(Integer status) {
+        this.userIdsAndScores = new HashMap<>();
+        this.countriesMonument = new ArrayList<>();
+        this.countriesFlag = new ArrayList<>();
+        this.countriesMap = new ArrayList<>();
         this.status = status;
     }
 
-    public Game(int score, Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, List<Integer> userIds) {
-        this.score = score;
+    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds) {
         this.status = status;
         this.countriesMap = countriesMap;
         this.countriesFlag = countriesFlag;
         this.countriesMonument = countriesMonument;
-        this.userIds = userIds;
+        this.userIdsAndScores = userIds;
     }
 
     public Integer getId() { return id; }
 
     public void setId(Integer id) { this.id = id; }
-
-    public int getScore() { return score; }
-
-    public void setScore(int score) { this.score = score; }
 
     public Integer getStatus() { return status; }
 
@@ -69,8 +72,8 @@ public class Game {
 
     public void setCountriesMonument(List<String> countriesMonument) { this.countriesMonument = countriesMonument; }
 
-    public List<Integer> getUserIds() { return userIds; }
+    public Map<Integer, Integer> getUserIdsAndScores() { return userIdsAndScores; }
 
-    public void setUserIds(List<Integer> userIds) { this.userIds = userIds; }
+    public void setUserIdsAndScores(Map<Integer, Integer> userIds) { this.userIdsAndScores = userIds; }
 
 }
