@@ -1,14 +1,14 @@
-// import PropTypes from 'prop-types';
-
+import { transition } from '@chakra-ui/react';
 import { css } from '@styled-system/css';
 
 const mapStyle = css({
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  fill: '#A8E151', // Remplacez par la couleur de remplissage souhaitée
-  stroke: 'black', // Remplacez par la couleur du trait souhaitée
+  fill: '#DBDCB6', // #A8E151 vert
+  stroke: 'black',
   strokeWidth: '1px',
+  transition: 'fill 0.5s',
 });
 
 function SVGMap(props) {
@@ -28,11 +28,12 @@ function SVGMap(props) {
             name={location.name}
             d={location.path}
             className={mapStyle}
-            tabIndex={
-              typeof props.locationTabIndex === 'function'
-                ? props.locationTabIndex(location, index)
-                : props.locationTabIndex
-            }
+            // Carré de selection
+            // tabIndex={
+            //   typeof props.locationTabIndex === 'function'
+            //     ? props.locationTabIndex(location, index)
+            //     : props.locationTabIndex
+            // }
             role={props.locationRole}
             aria-label={
               typeof props.locationAriaLabel === 'function'
@@ -56,44 +57,9 @@ function SVGMap(props) {
   );
 }
 
-// SVGMap.propTypes = {
-// 	// Map properties
-// 	map: PropTypes.shape({
-// 		viewBox: PropTypes.string.isRequired,
-// 		locations: PropTypes.arrayOf(
-// 			PropTypes.shape({
-// 				path: PropTypes.string.isRequired,
-// 				id: PropTypes.string.isRequired,
-// 				name: PropTypes.string
-// 			})
-// 		).isRequired,
-// 		label: PropTypes.string
-// 	}).isRequired,
-// 	className: PropTypes.string,
-// 	role: PropTypes.string,
-
-// 	// Locations properties
-// 	locationClassName: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-// 	locationTabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-// 	locationRole: PropTypes.string,
-// 	locationAriaLabel: PropTypes.func,
-// 	onLocationMouseOver: PropTypes.func,
-// 	onLocationMouseOut: PropTypes.func,
-// 	onLocationMouseMove: PropTypes.func,
-// 	onLocationClick: PropTypes.func,
-// 	onLocationKeyDown: PropTypes.func,
-// 	onLocationFocus: PropTypes.func,
-// 	onLocationBlur: PropTypes.func,
-// 	isLocationSelected: PropTypes.func,
-
-// 	// Slots
-// 	childrenBefore: PropTypes.node,
-// 	childrenAfter: PropTypes.node,
-// };
-
 SVGMap.defaultProps = {
   className: 'svg-map',
-  role: 'none', // No role for map
+  role: 'none',
   locationClassName: 'svg-map__location',
   locationTabIndex: '0',
   locationRole: 'none',

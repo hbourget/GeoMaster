@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import SVGMap from './SVGMap';
 
 type RadioSVGMapProps = {
   selectedLocationId?: string;
   onChange?: (selectedNode: SVGPathElement) => void;
-  map: any; // Replace with the appropriate type for your map data
+  map: any;
   className?: string;
   locationClassName?: string;
   locationAriaLabel?: string;
@@ -47,8 +46,20 @@ const RadioSVGMap = ({
   const isLocationSelected = (location: SVGPathElement): boolean =>
     selectedLocation && selectedLocation.id === location.id;
 
+  const MapColor = '#DBDCB6'; // Changer aussi la variable "fill" dans SVGMap.tsx
+  const SelectionColor = '#C9FF7C';
+
   const selectLocation = (location: SVGPathElement): void => {
-    location.focus();
+    // Reset the color of all locations
+    const allLocations = locationsRef.current?.getElementsByTagName('path');
+    if (allLocations) {
+      Array.from(allLocations).forEach((loc) => {
+        loc.style.fill = MapColor;
+      });
+    }
+
+    location.style.fill = SelectionColor;
+
     setSelectedLocation(location);
 
     if (onChange) {
@@ -60,7 +71,18 @@ const RadioSVGMap = ({
     const clickedLocation = event.target as SVGPathElement;
 
     if (clickedLocation !== selectedLocation) {
+      if (selectedLocation) {
+        selectedLocation.style.fill = MapColor;
+      }
+
       selectLocation(clickedLocation);
+    } else {
+      clickedLocation.style.fill = MapColor;
+      setSelectedLocation(null);
+
+      if (onChange) {
+        onChange(null);
+      }
     }
   };
 

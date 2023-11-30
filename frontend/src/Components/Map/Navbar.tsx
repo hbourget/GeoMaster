@@ -81,6 +81,7 @@ const Navbar = () => {
           </button>
         </Link>
       </div>
+      <p>Score:</p>
       <div style={rightSectionStyle}>
         {!loggedIn ? (
           <div>

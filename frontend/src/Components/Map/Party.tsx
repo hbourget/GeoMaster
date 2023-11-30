@@ -32,8 +32,34 @@ const listItemStyle = (index, status) =>
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    color: status === 'En attente de joueur' ? 'orange' : 'black',
+    color: getStatusColor(status),
   });
+
+const getStatusText = (status) => {
+  switch (status) {
+    case 0:
+      return 'En attente de joueur';
+    case 1:
+      return 'En cours';
+    case 2:
+      return 'Terminé';
+    default:
+      return '';
+  }
+};
+
+const getStatusColor = (status) => {
+  switch (status) {
+    case 0:
+      return 'gray';
+    case 1:
+      return 'orange';
+    case 2:
+      return 'green';
+    default:
+      return 'black';
+  }
+};
 
 const joinButtonStyle = css({
   'padding': '12px',
@@ -51,6 +77,7 @@ const joinButtonStyle = css({
 const Party = () => {
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState('');
+  const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
 
   const handleCreateRoom = () => {
@@ -58,7 +85,7 @@ const Party = () => {
       id: Date.now(),
       name: roomName,
       players: [],
-      status: 'En attente de joueur',
+      status: 1, // Recuperer le status depuis le backend
     };
 
     setRooms((prevRooms) => [...prevRooms, newRoom]);
@@ -66,8 +93,6 @@ const Party = () => {
   };
 
   const handleJoinRoom = (roomId) => {
-    // Logique pour rejoindre la room
-    console.log(`Joining room ${roomId}`);
     // Rediriger vers la page "Home"
     navigate('/home');
   };
@@ -102,9 +127,9 @@ const Party = () => {
               <div>
                 <strong>{room.name}</strong>
                 <p style={{ color: 'black' }}>{`${room.players.length}/4 joueurs`}</p>
-                <p>{room.status}</p>
+                <p style={{ color: getStatusColor(room.status) }}>{getStatusText(room.status)}</p>
               </div>
-              {room.players.length < 4 && (
+              {room.players.length < 4 && room.status !== 2 && (
                 <button
                   style={{ background: '#007BFF', padding: '5px', color: '#fff' }}
                   onClick={() => handleJoinRoom(room.id)}
