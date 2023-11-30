@@ -13,26 +13,36 @@ public class Game {
     private Integer id;
     private int score;
     @ElementCollection
-    private List<String> countries;
+    private List<String> countriesMap;
+
+    @ElementCollection
+    private List<String> countriesFlag;
+
+    @ElementCollection
+    private List<String> countriesMonument;
+
+    @ElementCollection
+    private List<Integer> userIds;
+
     private Integer status;
-    private int partyId;
 
     public Game() {
         this.score = 0;
         this.status = 0;
     }
 
-    public Game(int score, Integer status, int partyId) {
+    public Game(int score, Integer status) {
         this.score = score;
         this.status = status;
-        this.partyId = partyId;
     }
 
-    public Game(int score, List<String> countries, Integer status, int partyId) {
+    public Game(int score, Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, List<Integer> userIds) {
         this.score = score;
-        this.countries = countries;
         this.status = status;
-        this.partyId = partyId;
+        this.countriesMap = countriesMap;
+        this.countriesFlag = countriesFlag;
+        this.countriesMonument = countriesMonument;
+        this.userIds = userIds;
     }
 
     public Integer getId() { return id; }
@@ -47,10 +57,20 @@ public class Game {
 
     public void setStatus(Integer status) { this.status = status; }
 
-    public int getPartyId() { return partyId; }
+    public List<String> getCountriesMap() { return countriesMap; }
 
-    public void setPartyId(int partyId) { this.partyId = partyId; }
+    public void setCountriesMap(List<String> countriesMap) { this.countriesMap = countriesMap; }
 
-    public List<String> getCountries() { return countries; }
+    public List<String> getCountriesFlag() { return countriesFlag; }
+
+    public void setCountriesFlag(List<String> countriesFlag) { this.countriesFlag = countriesFlag; }
+
+    public List<String> getCountriesMonument() { return countriesMonument; }
+
+    public void setCountriesMonument(List<String> countriesMonument) { this.countriesMonument = countriesMonument; }
+
+    public List<Integer> getUserIds() { return userIds; }
+
+    public void setUserIds(List<Integer> userIds) { this.userIds = userIds; }
 
 }

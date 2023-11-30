@@ -41,12 +41,17 @@ public class CountryService {
                 country.setFlag("https://restfulcountries.com//assets//images//flags//" + country.getName() + ".png");
             }
 
+            if (countries.isEmpty()) {
+                System.out.println("\n\n[API] ERROR FETCHING COUNTRIES\n\n");
+            }
+            else {
+                System.out.println("\n\n[API] COUNTRIES LOADED\n\n");
+            }
+
             countryRepository.saveAll(countries);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        countryRepository.findAll().forEach(System.out::println);
     }
 
     public Optional<Country> getCountry(String name) {

@@ -2,7 +2,9 @@ package com.ics.geomaster.game.controllers;
 import com.ics.geomaster.country.models.Country;
 import com.ics.geomaster.game.models.Game;
 import com.ics.geomaster.game.models.GameRepository;
+import com.ics.geomaster.users.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,11 +16,17 @@ public class GameService {
     private GameRepository gameRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private final String countryServiceUrl = "http://localhost:8082";
-    private final String partyServiceUrl = "http://localhost:8083";
+    private final String userService = "http://localhost:8081";
 
-    public Game createGame(Integer partyId) {
+    public Game createGame(Integer userId) {
+
+        Game game = new Game();
+
         try {
-            restTemplate.getForEntity(partyServiceUrl + "/parties/" + partyId, Game.class);
+            ResponseEntity<User> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, User.class);
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                game.setUserIds(List.of(userId));
+            }
         } catch (Exception e) {
             return null;
         }
@@ -29,14 +37,24 @@ public class GameService {
             return null;
         }
 
-        Game game = new Game();
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
-            game.getCountries().add(countries.get(random).getName());
+            game.getCountriesMap().add(countries.get(random).getName());
             countries.remove(random);
         }
 
-        game.setPartyId(partyId);
+        for (int i = 0; i < 5; i++) {
+            int random = (int) (Math.random() * countries.size());
+            game.getCountriesFlag().add(countries.get(random).getName());
+            countries.remove(random);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            int random = (int) (Math.random() * countries.size());
+            game.getCountriesMonument().add(countries.get(random).getName());
+            countries.remove(random);
+        }
+
         gameRepository.save(game);
         return game;
     }
@@ -50,29 +68,31 @@ public class GameService {
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; i < 5; i++) {
                     Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
-                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountriesMap().get(i))) {
                         game.setScore(game.getScore() + 1);
                     }
                 }
             }
             game.setStatus(1);
         }
+
         else if (game.getStatus() == 1) {
-            for (int i = 5; i < 9; i++) {
+            for (int i = 0; i < 5; i++) {
                 for (int j = 0; i < 5; i++) {
                     Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
-                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountriesFlag().get(i))) {
                         game.setScore(game.getScore() + 1);
                     }
                 }
             }
             game.setStatus(2);
         }
+
         else if (game.getStatus() == 2) {
-            for (int i = 9; i < 14; i++) {
+            for (int i = 0; i < 5; i++) {
                 for (int j = 0; i < 5; i++) {
                     Country country = restTemplate.getForObject(countryServiceUrl + "/countries/name/" + countryGuesses.get(j), Country.class);
-                    if (country != null && country.getName().equalsIgnoreCase(game.getCountries().get(i))) {
+                    if (country != null && country.getName().equalsIgnoreCase(game.getCountriesMonument().get(i))) {
                         game.setScore(game.getScore() + 1);
                     }
                 }
@@ -85,5 +105,48 @@ public class GameService {
 
     public Game getGame(Integer gameId) {
         return gameRepository.findById(gameId).orElse(null);
+    }
+
+    public Game addMember(Integer gameId, Integer userId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game == null) {
+            return null;
+        }
+
+        List<Integer> userIds = game.getUserIds();
+        userIds.add(userId);
+        game.setUserIds(userIds);
+        gameRepository.save(game);
+        return game;
+    }
+
+    public Game removeMember(Integer gameId, Integer userId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game == null) {
+            return null;
+        }
+        List<Integer> userIds = game.getUserIds();
+        userIds.remove(userId);
+        game.setUserIds(userIds);
+        gameRepository.save(game);
+        return game;
+    }
+
+    public Game deleteGame(Integer gameId) {
+        Game game = gameRepository.findById(gameId).orElse(null);
+        if (game != null) {
+            gameRepository.delete(game);
+        }
+        return game;
+    }
+
+    public Game getGameByUserId(Integer userId) {
+        Iterable<Game> games = gameRepository.findAll();
+        for (Game game : games) {
+            if (game.getUserIds().contains(userId)) {
+                return game;
+            }
+        }
+        return null;
     }
 }

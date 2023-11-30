@@ -75,6 +75,7 @@ public class UserCrt {
             return uService.getUserAuthByUsername(idOrUsername);
         }
     }
+
     @PostMapping("/users")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         if (user.getUsername() == null || user.getPassword() == null) {
