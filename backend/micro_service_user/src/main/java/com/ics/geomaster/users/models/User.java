@@ -9,7 +9,7 @@ public class User {
   private Integer id;
   private String username;
   private String password;
-  private double balance;
+  private Integer balance;
 
   public User(Integer id, String username, String password) {
     this.id = id;
@@ -24,7 +24,7 @@ public class User {
     this.balance = 0;
   }
 
-    public User(String username, String password, double balance) {
+    public User(String username, String password, Integer balance) {
         this.username = username;
         this.password = password;
         this.balance = balance;
@@ -42,9 +42,9 @@ public class User {
 
   public void setPassword(String password) { this.password = password; }
 
-  public double getBalance() { return balance; }
+  public Integer getBalance() { return balance; }
 
-  public void setBalance(double balance) { this.balance = balance; }
+  public void setBalance(Integer balance) { this.balance = balance; }
 
   public String toString() {
     return ("User: " + username + " has " + balance + " points");

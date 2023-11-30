@@ -4,15 +4,15 @@ public class UserDTO {
 
     private int id;
     private String username;
-    private double balance;
+    private Integer balance;
 
-    public UserDTO(Integer id, String username, double balance) {
+    public UserDTO(Integer id, String username, Integer balance) {
         this.id = id;
         this.username = username;
         this.balance = balance;
     }
 
-    public UserDTO(String username, double balance) {
+    public UserDTO(String username, Integer balance) {
         this.username = username;
         this.balance = balance;
     }
@@ -29,11 +29,11 @@ public class UserDTO {
         this.username = username;
     }
 
-    public double getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 
