@@ -3,9 +3,12 @@
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "noEmit": true,
     "noFallthroughCasesInSwitch": true,
@@ -13,12 +16,20 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    /* Linting */
-    "strict": true,
+    "strict": false,
     "target": "ES2020",
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "baseUrl": "./",
+    "paths": {
+      "@styled-system/*": [
+        "styled-system/*"
+      ]
+    }
   },
-  "include": ["src", "styled-system"],
+  "include": [
+    "src",
+    "styled-system"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

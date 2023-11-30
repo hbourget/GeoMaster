@@ -1,8 +1,8 @@
 # GeoMaster
 
-# Backend
+## Backend
 
-## Documentation API
+### Documentation API
 
 Les ports des différents services sont les suivants :
 
@@ -12,7 +12,7 @@ Les ports des différents services sont les suivants :
 - Country Service : **8082**
 - Game Service : **8083**
 
-## Proxy Auth Endpoints
+### Proxy Auth Endpoints
 
 | Endpoint          | HTTP Method | Request Body      | Description             |
 |-------------------|-------------|-------------------|-------------------------|
@@ -28,7 +28,7 @@ RegisterRequest Class / AuthRequest Class:
 
 --- 
 
-## User Endpoints
+### User Endpoints
 
 | Endpoint                | HTTP Method | Request Body | Response Body       | Description                                              |
 |-------------------------|-------------|--------------|---------------------|----------------------------------------------------------|
@@ -56,7 +56,7 @@ UserDTO Class
 | username  | String  | Nom d'utilisateur.           |
 | balance   | double  | Solde de l'utilisateur.      |
 
-## Country Endpoints
+### Country Endpoints
 
 | Endpoint                          | HTTP Method | Description                                                   |
 |-----------------------------------|-------------|---------------------------------------------------------------|
@@ -65,7 +65,7 @@ UserDTO Class
 | /countries/flag/{flagName}        | GET         | Récupère les informations d'un pays par le nom de son drapeau.|
 | /countries                        | GET         | Récupère les informations de tous les pays.                   |
 
-## Game Endpoints
+### Game Endpoints
 
 | Endpoint                | HTTP Method | Request Body                         | Description                                                 |
 |-------------------------|-------------|--------------------------------------|-------------------------------------------------------------|
@@ -78,7 +78,7 @@ UserDTO Class
 | /game/removeMember      | PUT         | Integer (gameId), Integer (userId)   | Retire un membre d'une partie existante.                    |
 
 
-# Frontend
+## Frontend
 
 ```bash
 cd frontend
