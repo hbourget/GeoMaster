@@ -4,7 +4,6 @@ import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
 import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
-import Navbar from './Navbar';
 
 const infoRoomStyle = css({
   marginLeft: '20px',
