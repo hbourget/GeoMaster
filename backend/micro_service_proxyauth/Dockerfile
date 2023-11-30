@@ -7,8 +7,6 @@ ENV PUBLIC_USER=public_user
 
 WORKDIR /app
 COPY "./micro_service_${MICRO_SERVICE_NAME}" "/app/${MICRO_SERVICE_NAME}/"
-COPY "${PUBLIC_CARD}/" "/app/${PUBLIC_CARD}/"
-COPY "${PUBLIC_INVENTORY}/" "/app/${PUBLIC_INVENTORY}/"
 COPY "${PUBLIC_USER}/" "/app/${PUBLIC_USER}/"
 
 WORKDIR "/app/${PUBLIC_CARD}"
