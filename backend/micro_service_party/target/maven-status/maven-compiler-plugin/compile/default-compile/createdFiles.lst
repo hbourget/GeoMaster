@@ -1,5 +1,0 @@
-com/ics/geomaster/PartyApp.class
-com/ics/geomaster/party/models/Party.class
-com/ics/geomaster/party/controllers/PartyService.class
-com/ics/geomaster/party/controllers/PartyCrt.class
-com/ics/geomaster/party/models/PartyRepository.class
