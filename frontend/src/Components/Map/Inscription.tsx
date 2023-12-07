@@ -1,6 +1,6 @@
 // RegistrationForm.js
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { css } from '@styled-system/css';
 
 const formStyle = css({

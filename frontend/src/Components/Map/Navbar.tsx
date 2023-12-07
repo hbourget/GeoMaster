@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { css } from '@styled-system/css';
+// import { css } from '@styled-system/css';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -9,12 +9,14 @@ const Navbar = () => {
 
   const handleLogin = (username, password) => {
     setUser(username);
+    console.log(password);
     setLoggedIn(true);
   };
 
   const handleLogout = () => {
     setUser(null);
     setLoggedIn(false);
+    setCurrentPage('Home');
   };
 
   const navbarStyle = {

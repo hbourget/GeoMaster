@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 
@@ -77,7 +77,7 @@ const joinButtonStyle = css({
 const Party = () => {
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState('');
-  const [playerScore, setPlayerScore] = useState(0);
+  // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
 
   const handleCreateRoom = () => {
@@ -95,6 +95,7 @@ const Party = () => {
   const handleJoinRoom = (roomId) => {
     // Rediriger vers la page "Home"
     navigate('/home');
+    console.log(roomId);
   };
 
   return (

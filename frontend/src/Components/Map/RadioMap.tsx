@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
@@ -20,12 +19,14 @@ const infoRoomStyle = css({
 });
 
 const RadioMap = () => {
-  const [pointedLocation, setPointedLocation] = useState(null);
+  const [prouti, setPointedLocation] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationMouseOver = (event) => {
     const pointedLocation = getLocationName(event);
     setPointedLocation(pointedLocation);
+    console.log(prouti);
+    console.log(selectedLocation);
   };
 
   const handleLocationMouseOut = () => {

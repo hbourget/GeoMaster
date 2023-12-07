@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowSyntheticDefaultImports": true,
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
-      "@styled-system/*": ["styled-system/*"]
+      "@styled-system/*": [
+        "styled-system/*"
+      ]
     }
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts"
+  ]
 }

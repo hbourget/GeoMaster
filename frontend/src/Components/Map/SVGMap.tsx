@@ -1,4 +1,3 @@
-import { transition } from '@chakra-ui/react';
 import { css } from '@styled-system/css';
 
 const mapStyle = css({
