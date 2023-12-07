@@ -7,9 +7,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     minify: true,
-    rollupOptions: {
-      external: ['@styled-system/css'],
-    },
   },
   resolve: {
     alias: [
