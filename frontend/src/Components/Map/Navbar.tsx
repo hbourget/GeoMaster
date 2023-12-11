@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@styled-system/css';
+import { Button, Input } from '@chakra-ui/react';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -59,9 +60,26 @@ const Navbar = () => {
   });
 
   const inputStyle = css({
-    marginRight: '8px',
-    padding: '4px',
-    color: 'black !important',
+    display: 'flex',
+    h: '10',
+    w: '20',
+    rounded: 'md',
+    borderWidth: '1px',
+    pl: '3',
+    pr: '3',
+    pt: '2',
+    pb: '2',
+    fontSize: 'sm',
+    lineHeight: 'sm',
+    _file: {
+      borderWidth: '0px',
+      bgColor: 'transparent',
+      fontSize: 'sm',
+      lineHeight: 'sm',
+      fontWeight: 'medium',
+    },
+    _focusVisible: { ring: 'none', ringOffset: 'none', shadow: '2' },
+    _disabled: { cursor: 'not-allowed', opacity: '0.5' },
   });
 
   return (
@@ -81,33 +99,36 @@ const Navbar = () => {
       <p>Score:</p>
       <div className={rightSectionStyle}>
         {!loggedIn ? (
-          <div>
-            <form action="GET">
-              <input
-                onChange={(e) => setUserInput(e.target.value)}
-                className={inputStyle}
-                value={userInput}
-                autoComplete="user"
-                type="text"
-                placeholder="Nom d'utilisateur"
-              />
-              <input
-                className={inputStyle}
-                onChange={(e) => setPasswordInput(e.target.value)}
-                value={passwordInput}
-                autoComplete="current-password"
-                type="password"
-                placeholder="Mot de passe"
-              />
-              <button className={buttonStyle} onClick={() => handleLogin('user123', 'password123')}>
-                Connexion
-              </button>
-            </form>
-          </div>
+          <form
+            className={css({
+              display: 'flex',
+            })}
+            action="GET"
+          >
+            <Input
+              onChange={(e) => setUserInput(e.target.value)}
+              // className={inputStyle}
+              value={userInput}
+              autoComplete="user"
+              type="text"
+              placeholder="Nom d'utilisateur"
+            />
+            <Input
+              // className={inputStyle}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              value={passwordInput}
+              autoComplete="current-password"
+              type="password"
+              placeholder="Mot de passe"
+            />
+            <Button className={buttonStyle} onClick={() => handleLogin('user123', 'password123')}>
+              Connexion
+            </Button>
+          </form>
         ) : (
-          <button className={buttonStyle} onClick={handleLogout}>
+          <Button className={buttonStyle} onClick={handleLogout}>
             Déconnexion
-          </button>
+          </Button>
         )}
       </div>
     </div>
