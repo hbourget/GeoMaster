@@ -18,8 +18,8 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String countryServiceUrl = "http://localhost:8082";
-    private final String userService = "http://localhost:8081";
+    private final String countryServiceUrl = "http://country:8082";
+    private final String userService = "http://user:8081";
 
     public Game createGame(Integer userId) {
 

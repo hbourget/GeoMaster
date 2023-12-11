@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final String userServiceUrl = "http://localhost:8081";
+    private final String userServiceUrl = "http://user:8081";
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
