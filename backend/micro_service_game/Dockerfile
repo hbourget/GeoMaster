@@ -1,4 +1,4 @@
-FROM maven:latest
+FROM maven:3-eclipse-temurin-17 as build
 
 ENV MICRO_SERVICE_NAME=game
 ENV PUBLIC_COUNTRY=public_country
