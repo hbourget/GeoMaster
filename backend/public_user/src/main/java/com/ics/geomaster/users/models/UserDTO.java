@@ -5,19 +5,16 @@ public class UserDTO {
     private int id;
     private String username;
     private Integer balance;
-    private Integer idInventory;
 
-    public UserDTO(Integer id, String username, Integer balance, Integer idInventory) {
+    public UserDTO(Integer id, String username, Integer balance) {
         this.id = id;
         this.username = username;
         this.balance = balance;
-        this.idInventory = idInventory;
     }
 
-    public UserDTO(String username, Integer balance, Integer idInventory) {
+    public UserDTO(String username, Integer balance) {
         this.username = username;
         this.balance = balance;
-        this.idInventory = idInventory;
     }
 
     public UserDTO() {
@@ -38,14 +35,6 @@ public class UserDTO {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
-    }
-
-    public Integer getIdInventory() {
-        return this.idInventory;
-    }
-
-    public void setIdInventory(Integer idInventory) {
-        this.idInventory = idInventory;
     }
 
     public int getId() {
