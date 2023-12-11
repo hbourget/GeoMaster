@@ -1,8 +1,7 @@
 FROM maven:3-eclipse-temurin-17 as build
 
 ENV MICRO_SERVICE_NAME=user
-ENV PUBLIC_CARD=public_card
-ENV PUBLIC_INVENTORY=public_inventory
+ENV PUBLIC_COUNTRY=public_country
 
 WORKDIR /app
 

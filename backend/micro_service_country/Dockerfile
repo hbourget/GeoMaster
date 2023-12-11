@@ -1,7 +1,6 @@
 FROM maven:3-eclipse-temurin-17 as build
 
 ENV MICRO_SERVICE_NAME=country
-ENV PUBLIC_USER=public_user
 
 WORKDIR /app
 COPY "./micro_service_${MICRO_SERVICE_NAME}" "/app/${MICRO_SERVICE_NAME}/"
