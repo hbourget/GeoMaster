@@ -24,7 +24,7 @@ const sectionStyle = css({
   overflowY: 'auto',
 });
 
-const listItemStyle = (index, status) =>
+const listItemStyle = (index: number, status) =>
   css({
     backgroundColor: index % 2 === 0 ? '#f0f0f0' : '#fff',
     padding: '10px',
@@ -35,7 +35,7 @@ const listItemStyle = (index, status) =>
     color: getStatusColor(status),
   });
 
-const getStatusText = (status) => {
+const getStatusText = (status: number) => {
   switch (status) {
     case 0:
       return 'En attente de joueur';

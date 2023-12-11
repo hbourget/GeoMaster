@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { css } from '@styled-system/css';
+import { css } from '@styled-system/css';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState('Home');
 
-  const handleLogin = (username, password) => {
+  const [userInput, setUserInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+
+  const handleLogin = (username: string, password: string) => {
     setUser(username);
     console.log(password);
     setLoggedIn(true);
@@ -16,88 +19,93 @@ const Navbar = () => {
   const handleLogout = () => {
     setUser(null);
     setLoggedIn(false);
+    console.log(currentPage);
     setCurrentPage('Home');
   };
 
-  const navbarStyle = {
+  const navbarStyle = css({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px',
     backgroundColor: '#333',
     color: '#fff',
-  };
+  });
 
-  const leftSectionStyle = {
+  const leftSectionStyle = css({
     display: 'flex',
     alignItems: 'center',
-  };
+  });
 
-  const middleSectionStyle = {
+  const middleSectionStyle = css({
     display: 'flex',
-  };
+  });
 
-  const buttonStyle = {
+  const buttonStyle = css({
     marginLeft: '10px',
-    backgroundColor: '#555',
+    backgroundColor: '#555 !important',
     color: '#fff',
     border: 'none',
     padding: '8px 16px',
     cursor: 'pointer',
-    transition: 'background-color 0.3s', // Ajoutez une transition pour un effet de fondu lors du survol
-  };
+    transition: 'background-color 0.3s',
+    _hover: {
+      backgroundColor: '#777 !important',
+    },
+  });
 
-  const buttonHoverStyle = {
-    backgroundColor: '#777',
-  };
-
-  const rightSectionStyle = {
+  const rightSectionStyle = css({
     display: 'flex',
     alignItems: 'center',
-  };
+  });
 
-  const inputStyle = {
+  const inputStyle = css({
     marginRight: '8px',
     padding: '4px',
-    color: 'black',
-  };
+    color: 'black !important',
+  });
 
   return (
-    <div style={navbarStyle}>
-      <div style={leftSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
-      <div style={middleSectionStyle}>
-        <Link to="/home">
-          <button style={{ ...buttonStyle, ...(currentPage === 'Home' && buttonHoverStyle) }}>
-            Home
-          </button>
+    <div className={navbarStyle}>
+      <div className={leftSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
+      <div className={middleSectionStyle}>
+        <Link className={buttonStyle} to="/home">
+          Home
         </Link>
-        <Link to="/party">
-          <button style={{ ...buttonStyle, ...(currentPage === 'Party' && buttonHoverStyle) }}>
-            Party
-          </button>
+        <Link className={buttonStyle} to="/party">
+          Party
         </Link>
-        <Link to="/inscription">
-          <button
-            style={{ ...buttonStyle, ...(currentPage === 'Inscription' && buttonHoverStyle) }}
-          >
-            Inscription
-          </button>
+        <Link className={buttonStyle} to="/inscription">
+          Inscription
         </Link>
       </div>
       <p>Score:</p>
-      <div style={rightSectionStyle}>
+      <div className={rightSectionStyle}>
         {!loggedIn ? (
           <div>
-            <input style={inputStyle} type="text" placeholder="Nom d'utilisateur" />
-            <input style={inputStyle} type="password" placeholder="Mot de passe" />
-            <button
-              style={{ ...buttonStyle, ...(loggedIn && buttonHoverStyle) }}
-              onClick={() => handleLogin('user123', 'password123')}
-            >
-              Connexion
-            </button>
+            <form action="GET">
+              <input
+                onChange={(e) => setUserInput(e.target.value)}
+                className={inputStyle}
+                value={userInput}
+                autoComplete="user"
+                type="text"
+                placeholder="Nom d'utilisateur"
+              />
+              <input
+                className={inputStyle}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                value={passwordInput}
+                autoComplete="current-password"
+                type="password"
+                placeholder="Mot de passe"
+              />
+              <button className={buttonStyle} onClick={() => handleLogin('user123', 'password123')}>
+                Connexion
+              </button>
+            </form>
           </div>
         ) : (
-          <button style={{ ...buttonStyle, ...buttonHoverStyle }} onClick={handleLogout}>
+          <button className={buttonStyle} onClick={handleLogout}>
             Déconnexion
           </button>
         )}

@@ -3,7 +3,7 @@
  * @param  {Event} event Occured event
  * @return {String}      Id of the location
  */
-export function getLocationId(event: { target: { id: any } }) {
+export function getLocationId(event: { target: { id: number } }) {
   return event.target.id;
 }
 
@@ -12,7 +12,7 @@ export function getLocationId(event: { target: { id: any } }) {
  * @param  {Event} event Occured event
  * @return {String}      Name of the location
  */
-export function getLocationName(event: { target: { attributes: { name: { value: any } } } }) {
+export function getLocationName(event: { target: { attributes: { name: { value: string } } } }) {
   return event.target.attributes.name.value;
 }
 
