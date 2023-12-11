@@ -27,16 +27,8 @@ services:
       dockerfile: ./micro_service_country/Dockerfile
     ports:
       - '8082:8082'
-    network_mode: host
-
-  # ! USER
-  proxyauth:
-    build:
-      context: ./
-      dockerfile: ./micro_service_proxyauth/Dockerfile
-    ports:
-      - '8080:8080'
-    network_mode: host
+    networks:
+      - archistack
 
   user:
     build:
@@ -44,7 +36,8 @@ services:
       dockerfile: ./micro_service_user/Dockerfile
     ports:
       - '8081:8081'
-    network_mode: host
+    networks:
+      - archistack
 
   # ! USER COUNTRY
   game:
@@ -53,7 +46,18 @@ services:
       dockerfile: ./micro_service_game/Dockerfile
     ports:
       - '8083:8083'
-    network_mode: host
+    networks:
+      - archistack
+
+  # ! USER
+  proxyauth:
+    build:
+      context: ./
+      dockerfile: ./micro_service_proxyauth/Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - archistack
 
   # sonarqube:
   #   image: sonarqube:lts
@@ -93,4 +97,4 @@ services:
 #   postgresql_data:
 
 networks:
-  host:
+  archistack:
