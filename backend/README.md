@@ -1,6 +1,6 @@
 # Documentation API
 
-Les ports des différents services sont les suivants : 
+Les ports des différents services sont les suivants :
 
 - Frontend : **80**
 - Proxy & Auth Service : **8080**
@@ -22,18 +22,17 @@ RegisterRequest Class / AuthRequest Class:
 | username  | String | Nom d'utilisateur de l'authentification. |
 | password  | String | Mot de passe de l'utilisateur.           |
 
---- 
+---
 
 ## User Endpoints
 
 | Endpoint                | HTTP Method | Request Body | Response Body       | Description                                              |
 |-------------------------|-------------|--------------|---------------------|----------------------------------------------------------|
 | /users/{idOrUsername}   | GET         | -            | UserDTO             | Récupère un utilisateur par ID ou nom d'utilisateur.     |
-| /users                  | GET         | -            | List<UserDTO>       | Récupère la liste de tous les utilisateurs.              |
+| /users                  | GET         | -            | List\<UserDTO>       | Récupère la liste de tous les utilisateurs.              |
 | /users/{id}             | PUT         | User         | UserDTO             | Met à jour les informations d'un utilisateur par son ID. |
 | /users/{id}             | DELETE      | -            | -                   | Supprime un utilisateur par son ID.                      |
 | /users                  | DELETE      | -            | -                   | Supprime tous les utilisateurs.                          |
-
 
 User Class
 
@@ -66,7 +65,7 @@ UserDTO Class
 | Endpoint                | HTTP Method | Request Body                         | Description                                                 |
 |-------------------------|-------------|--------------------------------------|-------------------------------------------------------------|
 | /game                   | POST        | Integer (userId)                     | Crée une nouvelle partie pour l'utilisateur spécifié.       |
-| /game/play              | PUT         | Integer (gameId), List<String> (countryGuesses) | Met à jour une partie existante avec les devinettes de pays. |
+| /game/play              | PUT         | Integer (gameId), List\<String> (countryGuesses) | Met à jour une partie existante avec les devinettes de pays. |
 | /game                   | GET         | Integer (gameId)                     | Récupère les détails d'une partie spécifique.               |
 | /game/{userId}          | GET         | -                                    | Récupère les détails d'une partie basée sur l'ID de l'utilisateur. |
 | /game/{gameId}          | DELETE      | -                                    | Supprime une partie spécifique.                             |
