@@ -1,4 +1,4 @@
-FROM maven:3-eclipse-temurin-17 as build
+FROM maven:latest
 
 # ENV MICRO_SERVICE_NAME=service_card
 

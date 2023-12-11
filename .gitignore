@@ -25,3 +25,7 @@ dist-ssr
 
 # Panda CSS
 styled-system
+
+# Java
+backend/**/target/
+backend/**/target/*.jar
