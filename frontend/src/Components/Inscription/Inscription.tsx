@@ -1,8 +1,7 @@
-// RegistrationForm.js
-
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
+import { usePostQuery } from '../../Hooks/useQuery';
 
 const formStyle = css({
   backgroundColor: '#fff',
@@ -43,11 +42,11 @@ const buttonStyle = css({
 
 const Inscription = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
     password: '',
-    Pseudo: '',
+    username: '',
   });
+
+  const mutation = usePostQuery({ url: 'http://localhost:8080/auth/register' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,50 +58,23 @@ const Inscription = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Ajoutez ici la logique pour traiter les données d'inscription
+
+    mutation.mutate(formData);
+
     console.log('Submitted data:', formData);
   };
 
   return (
     <form onSubmit={handleSubmit} className={formStyle} style={{ marginTop: '2%' }}>
-      <u>
-        <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '20px' }}>Inscription</h1>
-      </u>
+      <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '20px' }}>Inscription</h1>
+
       <label className={labelStyle}>
-        Nom:
+        Username:
         <Input
           type="text"
-          name="name"
-          placeholder="Nom"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className={inputStyle}
-          style={{ fontWeight: 'normal' }}
-        />
-      </label>
-
-      <label className={labelStyle}>
-        E-mail:
-        <Input
-          type="email"
-          name="email"
-          placeholder="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className={inputStyle}
-          style={{ fontWeight: 'normal' }}
-        />
-      </label>
-
-      <label className={labelStyle}>
-        Pseudo:
-        <Input
-          type="Pseudo"
-          name="Pseudo"
-          placeholder="Pseudo"
-          value={formData.Pseudo}
+          name="username"
+          placeholder="Username"
+          value={formData.username}
           onChange={handleChange}
           required
           className={inputStyle}
@@ -115,8 +87,21 @@ const Inscription = () => {
         <Input
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
           value={formData.password}
+          onChange={handleChange}
+          required
+          className={inputStyle}
+          style={{ fontWeight: 'normal' }}
+        />
+      </label>
+
+      <label className={labelStyle}>
+        Confirmation du mot de passe:
+        <Input
+          type="password"
+          name="password-confirm"
+          placeholder="Password"
           onChange={handleChange}
           required
           className={inputStyle}
@@ -131,6 +116,9 @@ const Inscription = () => {
       >
         S'inscrire
       </Button>
+
+      {mutation.isError && <p style={{ color: 'red' }}>Une erreur est survenue</p>}
+      {mutation.isSuccess && <p style={{ color: 'green' }}>Inscription réussie</p>}
     </form>
   );
 };

@@ -33,6 +33,7 @@ const App = () => {
           <Navbar />
           <div className={contentStyle}>
             <Routes>
+              <Route path="/" element={<RadioMap />} />
               <Route path="/home" element={<RadioMap />} />
               <Route path="/party" element={<Party />} />
               <Route path="/inscription" element={<Inscription />} />
