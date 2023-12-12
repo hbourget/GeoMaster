@@ -46,10 +46,17 @@ const Inscription = () => {
     username: '',
   });
 
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [password, setPassword] = useState('');
+
   const mutation = usePostQuery({ url: 'http://localhost:8080/auth/register' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === 'password') setPassword(value);
+    if (name === 'password-confirm') setPasswordConfirm(value);
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -58,9 +65,7 @@ const Inscription = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     mutation.mutate(formData);
-
     console.log('Submitted data:', formData);
   };
 
@@ -109,10 +114,16 @@ const Inscription = () => {
         />
       </label>
 
+      {password !== passwordConfirm && (
+        <p style={{ color: 'red' }}>Les mots de passe ne correspondent pas</p>
+      )}
+
       <Button
         type="submit"
         style={{ background: '#007BFF', color: 'white' }}
         className={buttonStyle}
+        // disabled={password !== passwordConfirm}
+        disabled
       >
         S'inscrire
       </Button>
