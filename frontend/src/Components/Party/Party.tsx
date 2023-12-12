@@ -81,7 +81,7 @@ const Party = () => {
   // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
 
-  const mutation = usePostQuery({ url: 'http://localhost:8083/game' });
+  const mutation = usePostQuery({ url: 'http://localhost:8080/game' });
 
   const handleCreateRoom = () => {
     const newRoom = {
