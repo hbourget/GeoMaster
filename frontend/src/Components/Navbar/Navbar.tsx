@@ -14,10 +14,11 @@ const Navbar = () => {
 
   const mutation = usePostQuery({ url: 'http://localhost:8080/auth/login' });
 
-  const handleLogin = (username: string, password: string) => {
-    setUser(username);
-    console.log(password);
-    mutation.mutate({ username, password });
+  const handleLogin = () => {
+    console.log('username:', userInput);
+    console.log('password:', passwordInput);
+    mutation.mutate({ username: userInput, password: passwordInput });
+
     setLoggedIn(true);
   };
 
@@ -102,7 +103,7 @@ const Navbar = () => {
               type="password"
               placeholder="Mot de passe"
             />
-            <Button className={buttonStyle} onClick={() => handleLogin('user123', 'password123')}>
+            <Button className={buttonStyle} onClick={() => handleLogin()}>
               Connexion
             </Button>
           </form>

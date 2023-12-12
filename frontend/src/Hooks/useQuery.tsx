@@ -34,16 +34,21 @@ const usePostQuery = ({ url }: { url: string }) => {
         body: JSON.stringify(formData),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         mode: 'cors',
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return formData;
+      return response.json();
     },
     onSuccess(data, variables, context) {
       console.log('data:', data);
+      if (data.access_token) {
+        localStorage.setItem('token', data.access_token);
+      }
+
       console.log('variables:', variables);
       console.log('context:', context);
     },
