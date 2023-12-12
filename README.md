@@ -1,8 +1,6 @@
 # GeoMaster
 
-## Backend
-
-### Documentation API
+# Documentation API
 
 Les ports des différents services sont les suivants :
 
@@ -12,12 +10,13 @@ Les ports des différents services sont les suivants :
 - Country Service : **8082**
 - Game Service : **8083**
 
-### Proxy Auth Endpoints
+#### Proxy Auth Endpoints
 
-| Endpoint          | HTTP Method | Request Body      | Description             |
-|-------------------|-------------|-------------------|-------------------------|
-| /auth/register    | POST        | RegisterRequest   | Enregistre un nouvel utilisateur. Renvoie une réponse AuthResponse en cas de succès, sinon un statut 409. |
-| /auth/login       | POST        | AuthRequest       | Authentifie un utilisateur. Renvoie une réponse AuthResponse en cas de succès, sinon un statut 401.       |
+| Endpoint          | HTTP Method | Request Body    | Success Response | Failure Response       | Description             |
+|-------------------|-------------|-----------------|------------------|------------------------|-------------------------|
+| /auth/register    | POST        | RegisterRequest | 200 OK           | 409 Conflict           | Registers a new user.   |
+| /auth/login       | POST        | AuthRequest     | 200 OK           | 401 Unauthorized       | Authenticates a user.   |
+
 
 RegisterRequest Class / AuthRequest Class:
 
@@ -26,17 +25,34 @@ RegisterRequest Class / AuthRequest Class:
 | username  | String | Nom d'utilisateur de l'authentification. |
 | password  | String | Mot de passe de l'utilisateur.           |
 
----
 
-### User Endpoints
+#### Country Endpoints
 
-| Endpoint                | HTTP Method | Request Body | Response Body       | Description                                              |
-|-------------------------|-------------|--------------|---------------------|----------------------------------------------------------|
-| /users/{idOrUsername}   | GET         | -            | UserDTO             | Récupère un utilisateur par ID ou nom d'utilisateur.     |
-| /users                  | GET         | -            | List\<UserDTO>       | Récupère la liste de tous les utilisateurs.              |
-| /users/{id}             | PUT         | User         | UserDTO             | Met à jour les informations d'un utilisateur par son ID. |
-| /users/{id}             | DELETE      | -            | -                   | Supprime un utilisateur par son ID.                      |
-| /users                  | DELETE      | -            | -                   | Supprime tous les utilisateurs.                          |
+| Endpoint                          | HTTP Method | Success Response | Failure Response | Description                                                   |
+|-----------------------------------|-------------|------------------|------------------|---------------------------------------------------------------|
+| /countries/name/{countryName}     | GET         | 200 OK           | 404 Not Found    | Retrieves country information by name.                        |
+| /countries/capital/{capitalName}  | GET         | 200 OK           | 404 Not Found    | Retrieves country information by capital name.                |
+| /countries/flag/{flagName}        | GET         | 200 OK           | 404 Not Found    | Retrieves country information by flag name.                   |
+| /countries                        | GET         | 200 OK           | N/A              | Retrieves information of all countries.                       |
+
+#### Game Service Endpoints
+
+| Endpoint                | HTTP Method | Request Body    | Success Response | Failure Response | Description                                                 |
+|-------------------------|-------------|-----------------|------------------|------------------|-------------------------------------------------------------|
+| /game                   | POST        | Integer (userId) | 200 OK           | 404 Not Found    | Creates a new game for the specified user.                   |
+| /game/addMember         | PUT         | Integer (gameId), Integer (userId) | 200 OK | 404 Not Found | Adds a member to an existing game.                          |
+| /game/removeMember      | PUT         | Integer (gameId), Integer (userId) | 200 OK | 404 Not Found | Removes a member from an existing game.                     |
+
+#### User Service Endpoints
+
+| Endpoint                | HTTP Method | Request Body | Success Response | Failure Response | Description                                              |
+|-------------------------|-------------|--------------|------------------|------------------|----------------------------------------------------------|
+| /users/{idOrUsername}   | GET         | -            | 200 OK           | 404 Not Found    | Retrieves a user by ID or username.                       |
+| /users                  | GET         | -            | 200 OK           | 204 No Content   | Retrieves a list of all users.                            |
+| /users/{id}             | PUT         | User         | 200 OK           | 404 Not Found    | Updates a user's information by their ID.                 |
+| /users/{id}             | DELETE      | -            | 204 No Content   | 404 Not Found    | Deletes a user by their ID.                               |
+| /users                  | DELETE      | -            | 204 No Content   | N/A              | Deletes all users.                                        |
+
 
 User Class
 
@@ -55,26 +71,6 @@ UserDTO Class
 | username  | String  | Nom d'utilisateur.           |
 | balance   | double  | Solde de l'utilisateur.      |
 
-### Country Endpoints
-
-| Endpoint                          | HTTP Method | Description                                                   |
-|-----------------------------------|-------------|---------------------------------------------------------------|
-| /countries/name/{countryName}     | GET         | Récupère les informations d'un pays par son nom.              |
-| /countries/capital/{capitalName}  | GET         | Récupère les informations d'un pays par le nom de sa capitale.|
-| /countries/flag/{flagName}        | GET         | Récupère les informations d'un pays par le nom de son drapeau.|
-| /countries                        | GET         | Récupère les informations de tous les pays.                   |
-
-### Game Endpoints
-
-| Endpoint                | HTTP Method | Request Body                         | Description                                                 |
-|-------------------------|-------------|--------------------------------------|-------------------------------------------------------------|
-| /game                   | POST        | Integer (userId)                     | Crée une nouvelle partie pour l'utilisateur spécifié.       |
-| /game/play              | PUT         | Integer (gameId), List\<String> (countryGuesses) | Met à jour une partie existante avec les devinettes de pays. |
-| /game                   | GET         | Integer (gameId)                     | Récupère les détails d'une partie spécifique.               |
-| /game/{userId}          | GET         | -                                    | Récupère les détails d'une partie basée sur l'ID de l'utilisateur. |
-| /game/{gameId}          | DELETE      | -                                    | Supprime une partie spécifique.                             |
-| /game/addMember         | PUT         | Integer (gameId), Integer (userId)   | Ajoute un membre à une partie existante.                    |
-| /game/removeMember      | PUT         | Integer (gameId), Integer (userId)   | Retire un membre d'une partie existante.                    |
 
 ## Frontend
 
