@@ -21,8 +21,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "editor.codeActionsOnSave": {
-    // "source.fixAll.eslint": true,
-    "source.fixAll.markdownlint": true
+    "source.fixAll.markdownlint": "explicit"
   },
   "editor.minimap.enabled": false,
   "editor.stickyScroll.enabled": true,
