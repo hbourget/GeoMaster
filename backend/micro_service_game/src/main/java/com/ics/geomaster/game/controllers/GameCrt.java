@@ -2,6 +2,7 @@ package com.ics.geomaster.game.controllers;
 
 import com.ics.geomaster.game.models.Game;
 import com.ics.geomaster.game.models.GameUpdateDTO;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,8 @@ public class GameCrt {
     public GameCrt(GameService gameService) {
         this.gameService = gameService;
     }
-    @PostMapping("/game")
-    public ResponseEntity<Game> createGame(@RequestBody Integer userId) {
+    @PostMapping("/game/{userId}")
+    public ResponseEntity<Game> createGame(@PathVariable Integer userId) {
         System.out.println("Trying to create game (controller)");
         Game createdGame = gameService.createGame(userId);
         System.out.println("Game created (controller)");
@@ -29,8 +30,8 @@ public class GameCrt {
         return new ResponseEntity<>(createdGame, HttpStatus.OK);
     }
 
-    @PutMapping("/game/addMember")
-    public ResponseEntity<Game> addMember(@RequestBody Integer gameId, @RequestBody Integer userId) {
+    @PutMapping("/game/addMember/{gameId}/{userId}")
+    public ResponseEntity<Game> addMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
         Game updatedGame = gameService.addMember(gameId, userId);
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -38,8 +39,8 @@ public class GameCrt {
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
 
-    @PutMapping("/game/removeMember")
-    public ResponseEntity<Game> removeMember(@RequestBody Integer gameId, @RequestBody Integer userId) {
+    @PutMapping("/game/removeMember/{gameId}/{userId}")
+    public ResponseEntity<Game> removeMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
         Game updatedGame = gameService.removeMember(gameId, userId);
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,8 +58,8 @@ public class GameCrt {
     }
 
 
-    @GetMapping("/game")
-    public ResponseEntity<Game> getGame(@RequestBody Integer gameId) {
+    @GetMapping("/game/{gameId}")
+    public ResponseEntity<Game> getGame(@PathVariable Integer gameId) {
         Game game = gameService.getGame(gameId);
         if (game == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
