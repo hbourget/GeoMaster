@@ -29,14 +29,14 @@ Ports des services :
 ### Game Service Endpoints
 
 | Endpoint                             | HTTP Method | Request Body                                                                   | Success Response | Failure Response | Description                                 |
-| ------------------------------------ | ----------- |--------------------------------------------------------------------------------| ---------------- | ---------------- | ------------------------------------------- |
+|--------------------------------------| ----------- |--------------------------------------------------------------------------------| ---------------- | ---------------- | ------------------------------------------- |
 | /game/{userId}                       | POST        | -                                                                              | 200 OK           | 404 Not Found    | Creates a new game for the specified user. |
 | /game/addMember/{gameId}/{userId}    | PUT         | -                                                                              | 200 OK           | 404 Not Found    | Adds a member to an existing game.         |
 | /game/removeMember/{gameId}/{userId} | PUT         | -                                                                              | 200 OK           | 404 Not Found    | Removes a member from an existing game.    |
 | /game/play                           | PUT         | JSON: { "gameId": Integer, "userId": Integer, "countryGuesses": List<String> } | 200 OK           | 404 Not Found    | Updates game scores and guesses.           |
-| /game/{gameId}                       | GET         | -                                                                              | 200 OK           | 404 Not Found    | Retrieves a game by its ID.                |
+| /game/g/{gameId}                     | GET         | -                                                                              | 200 OK           | 404 Not Found    | Retrieves a game by its ID.                |
+| /game/u/{userId}                     | GET         | -                                                                              | 200 OK           | 404 Not Found    | Retrieves a game by user ID.               |
 | /games                               | GET         | -                                                                              | 200 OK           | 404 Not Found    | Retrieves a list of all games.             |
-| /game/user/{userId}                  | GET         | -                                                                              | 200 OK           | 404 Not Found    | Retrieves a game by user ID.               |
 | /game/{gameId}                       | DELETE      | -                                                                              | 200 OK           | 404 Not Found    | Deletes a game by its ID.                  |
 
 ### User Service Endpoints
@@ -69,5 +69,5 @@ pnpm dev
 ### Docker
 
 ```bash
-docker compose build
+docker compose up --build
 ```
