@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
+import { usePostQuery } from '../../Hooks/useQuery';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -11,9 +12,12 @@ const Navbar = () => {
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  const mutation = usePostQuery({ url: 'http://localhost:8080/auth/login' });
+
   const handleLogin = (username: string, password: string) => {
     setUser(username);
     console.log(password);
+    mutation.mutate({ username, password });
     setLoggedIn(true);
   };
 
@@ -57,29 +61,6 @@ const Navbar = () => {
   const rightSectionStyle = css({
     display: 'flex',
     alignItems: 'center',
-  });
-
-  const inputStyle = css({
-    display: 'flex',
-    h: '10',
-    w: '20',
-    rounded: 'md',
-    borderWidth: '1px',
-    pl: '3',
-    pr: '3',
-    pt: '2',
-    pb: '2',
-    fontSize: 'sm',
-    lineHeight: 'sm',
-    _file: {
-      borderWidth: '0px',
-      bgColor: 'transparent',
-      fontSize: 'sm',
-      lineHeight: 'sm',
-      fontWeight: 'medium',
-    },
-    _focusVisible: { ring: 'none', ringOffset: 'none', shadow: '2' },
-    _disabled: { cursor: 'not-allowed', opacity: '0.5' },
   });
 
   return (

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
+import { usePostQuery } from '../../Hooks/useQuery';
 
 const containerStyle = css({
   width: '65%',
@@ -80,6 +81,8 @@ const Party = () => {
   // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
 
+  const mutation = usePostQuery({ url: 'http://localhost:8083/game' });
+
   const handleCreateRoom = () => {
     const newRoom = {
       id: Date.now(),
@@ -87,6 +90,8 @@ const Party = () => {
       players: [],
       status: 1, // Recuperer le status depuis le backend
     };
+
+    mutation.mutate({ id: 1 });
 
     setRooms((prevRooms) => [...prevRooms, newRoom]);
     setRoomName('');
@@ -110,7 +115,6 @@ const Party = () => {
           onChange={(e) => setRoomName(e.target.value)}
           style={{ marginBottom: '10px' }}
         />
-        <br></br>
 
         <button
           style={{ background: '#007BFF', padding: '5px', color: '#fff', borderRadius: '4px' }}

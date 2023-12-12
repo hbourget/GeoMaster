@@ -6,7 +6,12 @@ const useGetQuery = (queryKey: string[], url: string) => {
   return useQuery({
     queryKey,
     queryFn: async () => {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -16,21 +21,36 @@ const useGetQuery = (queryKey: string[], url: string) => {
 };
 
 type FormData = {
-  username: string;
-  password: string;
+  username?: string;
+  password?: string;
+  id?: number;
 };
 
 const usePostQuery = ({ url }: { url: string }) => {
   return useMutation({
-    mutationFn: async (formdata: FormData) => {
+    mutationFn: async (formData: FormData) => {
       const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify(formdata),
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'cors',
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
+      return formData;
+    },
+    onSuccess(data, variables, context) {
+      console.log('data:', data);
+      console.log('variables:', variables);
+      console.log('context:', context);
+    },
+    onError(error, variables, context) {
+      console.log('error:', error);
+      console.log('variables:', variables);
+      console.log('context:', context);
     },
   });
 };
@@ -42,6 +62,9 @@ const usePutQuery = (queryKey: string[], url: string, body) => {
       const response = await fetch(url, {
         method: 'PUT',
         body: JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -57,6 +80,9 @@ const useDeleteQuery = (queryKey: string[], url: string) => {
     queryFn: async () => {
       const response = await fetch(url, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
       if (!response.ok) {
         throw new Error('Network response was not ok');
