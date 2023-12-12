@@ -15,18 +15,20 @@ const Navbar = () => {
   const mutation = usePostQuery({ url: 'http://localhost:8080/auth/login' });
 
   const handleLogin = () => {
-    console.log('username:', userInput);
-    console.log('password:', passwordInput);
     mutation.mutate({ username: userInput, password: passwordInput });
-
-    setLoggedIn(true);
+    if (mutation.isSuccess) {
+      setLoggedIn(true);
+      setUser(userInput);
+    }
   };
 
   const handleLogout = () => {
     setUser(null);
     setLoggedIn(false);
-    console.log(currentPage);
-    setCurrentPage('Home');
+    localStorage.removeItem('token');
+    if (currentPage !== 'Home') {
+      setCurrentPage('Home');
+    }
   };
 
   const navbarStyle = css({
@@ -37,7 +39,7 @@ const Navbar = () => {
     color: '#fff',
   });
 
-  const leftSectionStyle = css({
+  const sideSectionStyle = css({
     display: 'flex',
     alignItems: 'center',
   });
@@ -59,14 +61,9 @@ const Navbar = () => {
     },
   });
 
-  const rightSectionStyle = css({
-    display: 'flex',
-    alignItems: 'center',
-  });
-
   return (
     <div className={navbarStyle}>
-      <div className={leftSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
+      <div className={sideSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
       <div className={middleSectionStyle}>
         <Link className={buttonStyle} to="/home">
           Home
@@ -79,7 +76,7 @@ const Navbar = () => {
         </Link>
       </div>
       <p>Score:</p>
-      <div className={rightSectionStyle}>
+      <div className={sideSectionStyle}>
         {!loggedIn ? (
           <form
             className={css({
