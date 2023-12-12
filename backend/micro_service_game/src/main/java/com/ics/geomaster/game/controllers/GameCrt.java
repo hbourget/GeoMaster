@@ -20,7 +20,9 @@ public class GameCrt {
     }
     @PostMapping("/game")
     public ResponseEntity<Game> createGame(@RequestBody Integer userId) {
+        System.out.println("Trying to create game (controller)");
         Game createdGame = gameService.createGame(userId);
+        System.out.println("Game created (controller)");
         if (createdGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

@@ -25,21 +25,30 @@ public class GameService {
 
         Game game = new Game();
 
+        System.out.println("User id: " + userId);
+
         try {
+            System.out.println("Trying to create game");
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                System.out.println("Game created");
                 game.getUserIdsAndScores().put(userId, 0);
             }
+            System.out.println("Game not created");
         } catch (Exception e) {
+            System.out.println("Game not created Exception in try catch" + e.getMessage());
             return null;
         }
 
+        System.out.println("Trying to fetch countries");
         ParameterizedTypeReference<List<Country>> typeRef = new ParameterizedTypeReference<List<Country>>() {};
         List<Country> countries = restTemplate.exchange(countryServiceUrl + "/countries", HttpMethod.GET, null, typeRef).getBody();
 
         if (countries == null) {
             return null;
         }
+
+        System.out.println("Countries fetched");
 
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
@@ -56,7 +65,10 @@ public class GameService {
             game.getCountriesMonument().add(countries.get(random).getName());
         }
 
+        System.out.println("Countries added to game");
+
         gameRepository.save(game);
+        System.out.println("Game saved, returning object...");
         return game;
     }
 
