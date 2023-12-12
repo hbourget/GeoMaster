@@ -58,7 +58,7 @@ public class GameCrt {
     }
 
 
-    @GetMapping("/game/{gameId}")
+    @GetMapping("/game/g/{gameId}")
     public ResponseEntity<Game> getGame(@PathVariable Integer gameId) {
         Game game = gameService.getGame(gameId);
         if (game == null) {
@@ -76,7 +76,7 @@ public class GameCrt {
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
 
-    @GetMapping("/game/{userId}")
+    @GetMapping("/game/u/{userId}")
     public ResponseEntity<Game> getGameByUserId(@PathVariable Integer userId) {
         Game game = gameService.getGameByUserId(userId);
         if (game == null) {
