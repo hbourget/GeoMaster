@@ -24,14 +24,12 @@ public class SecurityConfiguration {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:8080",
             "http://user:8081",
-            "http://localhost:4200",
-            "http://localhost:80",
+            "http://country:8082",
+            "http://game:8083",
             "http://localhost",
-            "http://frontend:80",
-            "http://frontend:4200",
-            "http://192.168.1.17:80",
+            "http://localhost:80",
+            "http://localhost:8080",
             "http://localhost:4173",
             "http://localhost:5173"
     ));

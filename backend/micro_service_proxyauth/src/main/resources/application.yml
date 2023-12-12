@@ -14,9 +14,8 @@ spring:
             allowedOrigins:
               - "http://user:8081"
               - "http://country:8082"
-              - "http://game:8084"
+              - "http://game:8083"
               - "http://localhost:8080"
-              - "http://localhost:4200"
               - "http://localhost:4173"
               - "http://localhost:5173"
             allowedMethods:
@@ -39,18 +38,18 @@ spring:
               - "Access-Control-Allow-Credentials"
             allowCredentials: true
       routes:
-        - id: card-service
-          uri: http://country:8082
-          predicates:
-            - Path=/cards/**
         - id: user-service
           uri: http://user:8081
           predicates:
             - Path=/users/**
-        - id: game-service
-          uri: http://game:8084
+        - id: card-service
+          uri: http://country:8082
           predicates:
-            - Path=/games/**
+            - Path=/country/**
+        - id: game-service
+          uri: http://game:8083
+          predicates:
+            - Path=/game/**
 application:
   security:
     jwt:
