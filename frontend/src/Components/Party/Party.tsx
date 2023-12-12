@@ -24,7 +24,7 @@ const sectionStyle = css({
   overflowY: 'auto',
 });
 
-const listItemStyle = (index: number, status) =>
+const listItemStyle = (index: number, status: number) =>
   css({
     backgroundColor: index % 2 === 0 ? '#f0f0f0' : '#fff',
     padding: '10px',
@@ -48,7 +48,7 @@ const getStatusText = (status: number) => {
   }
 };
 
-const getStatusColor = (status) => {
+const getStatusColor = (status: number) => {
   switch (status) {
     case 0:
       return 'gray';
@@ -92,7 +92,7 @@ const Party = () => {
     setRoomName('');
   };
 
-  const handleJoinRoom = (roomId) => {
+  const handleJoinRoom = (roomId: number) => {
     // Rediriger vers la page "Home"
     navigate('/home');
     console.log(roomId);

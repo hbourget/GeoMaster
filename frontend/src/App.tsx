@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { css } from '@styled-system/css';
-import Navbar from './Components/Map/Navbar';
+import Navbar from './Components/Navbar/Navbar';
 import RadioMap from './Components/Map/RadioMap';
-import Party from './Components/Map/Party';
-import Inscription from './Components/Map/Inscription';
-import FlagGuesser from './Components/Map/FlagGuesser';
+import Party from './Components/Party/Party';
+import Inscription from './Components/Inscription/Inscription';
+import FlagGuesser from './Components/FlagGuesser/FlagGuesser';
 import Monument from './Components/Map/Monument';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const containerStyle = css({
   height: '100vh',
@@ -22,22 +23,26 @@ const contentStyle = css({
   position: 'relative',
 });
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <Router>
-      <div className={containerStyle}>
-        <Navbar />
-        <div className={contentStyle}>
-          <Routes>
-            <Route path="/home" element={<RadioMap />} />
-            <Route path="/party" element={<Party />} />
-            <Route path="/inscription" element={<Inscription />} />
-            <Route path="/flagguesser" element={<FlagGuesser />} />
-            <Route path="/Monument" element={<Monument />} />
-          </Routes>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <div className={containerStyle}>
+          <Navbar />
+          <div className={contentStyle}>
+            <Routes>
+              <Route path="/home" element={<RadioMap />} />
+              <Route path="/party" element={<Party />} />
+              <Route path="/inscription" element={<Inscription />} />
+              <Route path="/flagguesser" element={<FlagGuesser />} />
+              <Route path="/Monument" element={<Monument />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </QueryClientProvider>
   );
 };
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { css } from '@styled-system/css';
+import { Button, Input } from '@chakra-ui/react';
 
 const formStyle = css({
   backgroundColor: '#fff',
@@ -69,7 +70,7 @@ const Inscription = () => {
       </u>
       <label className={labelStyle}>
         Nom:
-        <input
+        <Input
           type="text"
           name="name"
           placeholder="Nom"
@@ -80,11 +81,10 @@ const Inscription = () => {
           style={{ fontWeight: 'normal' }}
         />
       </label>
-      <br></br>
 
       <label className={labelStyle}>
         E-mail:
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="email"
@@ -95,11 +95,10 @@ const Inscription = () => {
           style={{ fontWeight: 'normal' }}
         />
       </label>
-      <br></br>
 
       <label className={labelStyle}>
         Pseudo:
-        <input
+        <Input
           type="Pseudo"
           name="Pseudo"
           placeholder="Pseudo"
@@ -110,11 +109,10 @@ const Inscription = () => {
           style={{ fontWeight: 'normal' }}
         />
       </label>
-      <br></br>
 
       <label className={labelStyle}>
         Mot de passe:
-        <input
+        <Input
           type="password"
           name="password"
           placeholder="password"
@@ -126,15 +124,13 @@ const Inscription = () => {
         />
       </label>
 
-      <br></br>
-
-      <button
+      <Button
         type="submit"
         style={{ background: '#007BFF', color: 'white' }}
         className={buttonStyle}
       >
         S'inscrire
-      </button>
+      </Button>
     </form>
   );
 };
