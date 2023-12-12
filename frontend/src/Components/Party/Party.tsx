@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 import { usePostQuery } from '../../Hooks/useQuery';
+import { Button, Input } from '@chakra-ui/react';
 
 const containerStyle = css({
   width: '65%',
@@ -108,7 +109,7 @@ const Party = () => {
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
-        <input
+        <Input
           type="text"
           placeholder="Nom de la room"
           value={roomName}
@@ -116,12 +117,12 @@ const Party = () => {
           style={{ marginBottom: '10px' }}
         />
 
-        <button
+        <Button
           style={{ background: '#007BFF', padding: '5px', color: '#fff', borderRadius: '4px' }}
           onClick={handleCreateRoom}
         >
           Créer
-        </button>
+        </Button>
       </div>
 
       <div className={sectionStyle}>
@@ -135,13 +136,13 @@ const Party = () => {
                 <p style={{ color: getStatusColor(room.status) }}>{getStatusText(room.status)}</p>
               </div>
               {room.players.length < 4 && room.status !== 2 && (
-                <button
+                <Button
                   style={{ background: '#007BFF', padding: '5px', color: '#fff' }}
                   onClick={() => handleJoinRoom(room.id)}
                   className={joinButtonStyle}
                 >
                   Rejoindre
-                </button>
+                </Button>
               )}
             </li>
           ))}
