@@ -47,7 +47,6 @@ public class CountryService {
             }
             else {
                 System.out.println("\n\n[API] COUNTRIES LOADED\n\n");
-                System.out.println(countries);
             }
 
             countryRepository.saveAll(countries);

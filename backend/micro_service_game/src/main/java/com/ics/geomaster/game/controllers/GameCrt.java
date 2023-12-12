@@ -21,9 +21,7 @@ public class GameCrt {
     }
     @PostMapping("/game/{userId}")
     public ResponseEntity<Game> createGame(@PathVariable Integer userId) {
-        System.out.println("Trying to create game (controller)");
         Game createdGame = gameService.createGame(userId);
-        System.out.println("Game created (controller)");
         if (createdGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -95,5 +93,3 @@ public class GameCrt {
         }
     }
 }
-
-
