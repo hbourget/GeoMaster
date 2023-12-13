@@ -20,8 +20,8 @@ public class GameCrt {
         this.gameService = gameService;
     }
     @PostMapping("/game/{userId}")
-    public ResponseEntity<Game> createGame(@PathVariable Integer userId) {
-        Game createdGame = gameService.createGame(userId);
+    public ResponseEntity<GameUpdateDTO> createGame(@PathVariable Integer userId) {
+        GameUpdateDTO createdGame = gameService.createGame(userId);
         if (createdGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -29,8 +29,8 @@ public class GameCrt {
     }
 
     @PutMapping("/game/addMember/{gameId}/{userId}")
-    public ResponseEntity<Game> addMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
-        Game updatedGame = gameService.addMember(gameId, userId);
+    public ResponseEntity<GameUpdateDTO> addMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
+        GameUpdateDTO updatedGame = gameService.addMember(gameId, userId);
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -38,8 +38,8 @@ public class GameCrt {
     }
 
     @PutMapping("/game/removeMember/{gameId}/{userId}")
-    public ResponseEntity<Game> removeMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
-        Game updatedGame = gameService.removeMember(gameId, userId);
+    public ResponseEntity<GameUpdateDTO> removeMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
+        GameUpdateDTO updatedGame = gameService.removeMember(gameId, userId);
         if (updatedGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -47,12 +47,12 @@ public class GameCrt {
     }
 
     @PutMapping("/game/play")
-    public ResponseEntity<Game> updateGame(@RequestBody GameUpdateDTO gameUpdateDTO) {
-        Game updatedGame = gameService.updateGameScores(gameUpdateDTO.getGameId(), gameUpdateDTO.getUserId(), gameUpdateDTO.getCountryGuesses());
-        if (updatedGame == null) {
+    public ResponseEntity<GameUpdateDTO> updateGame(@RequestBody GameUpdateDTO gameUpdateDTO) {
+        GameUpdateDTO updatedGameDTO = gameService.updateGameScores(gameUpdateDTO.getGameId(), gameUpdateDTO.getUserId(), gameUpdateDTO.getCountryGuesses());
+        if (updatedGameDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(updatedGame, HttpStatus.OK);
+        return new ResponseEntity<>(updatedGameDTO, HttpStatus.OK);
     }
 
 

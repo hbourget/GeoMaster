@@ -2,6 +2,7 @@ package com.ics.geomaster.game.controllers;
 import com.ics.geomaster.country.models.Country;
 import com.ics.geomaster.game.models.Game;
 import com.ics.geomaster.game.models.GameRepository;
+import com.ics.geomaster.game.models.GameUpdateDTO;
 import com.ics.geomaster.users.models.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -21,7 +22,7 @@ public class GameService {
     private final String countryServiceUrl = "http://country:8082";
     private final String userService = "http://user:8081";
 
-    public Game createGame(Integer userId) {
+    public GameUpdateDTO createGame(Integer userId) {
 
         Game game = new Game();
         try {
@@ -55,10 +56,13 @@ public class GameService {
         }
 
         gameRepository.save(game);
-        return game;
+
+        GameUpdateDTO gameUpdateDTO = new GameUpdateDTO(game.getId(), userId, game.getUserIdsAndScores());
+
+        return gameUpdateDTO;
     }
 
-    public Game updateGameScores(Integer gameId, Integer userId, List<String> countryGuesses) {
+    public GameUpdateDTO updateGameScores(Integer gameId, Integer userId, List<String> countryGuesses) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
             return null;
@@ -112,14 +116,17 @@ public class GameService {
             game.setStatus(3);
         }
         gameRepository.save(game);
-        return game;
+
+        GameUpdateDTO gameUpdateDTO = new GameUpdateDTO(game.getId(), userId, game.getUserIdsAndScores());
+
+        return gameUpdateDTO;
     }
 
     public Game getGame(Integer gameId) {
         return gameRepository.findById(gameId).orElse(null);
     }
 
-    public Game addMember(Integer gameId, Integer userId) {
+    public GameUpdateDTO addMember(Integer gameId, Integer userId) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
             return null;
@@ -129,10 +136,13 @@ public class GameService {
         userIdsAndScores.put(userId, 0);
         game.setUserIdsAndScores(userIdsAndScores);
         gameRepository.save(game);
-        return game;
+
+        GameUpdateDTO gameUpdateDTO = new GameUpdateDTO(game.getId(), userId, game.getUserIdsAndScores());
+
+        return gameUpdateDTO;
     }
 
-    public Game removeMember(Integer gameId, Integer userId) {
+    public GameUpdateDTO removeMember(Integer gameId, Integer userId) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
             return null;
@@ -141,7 +151,10 @@ public class GameService {
         userIdsAndScores.remove(userId);
         game.setUserIdsAndScores(userIdsAndScores);
         gameRepository.save(game);
-        return game;
+
+        GameUpdateDTO gameUpdateDTO = new GameUpdateDTO(game.getId(), userId, game.getUserIdsAndScores());
+
+        return gameUpdateDTO;
     }
 
     public Game deleteGame(Integer gameId) {
