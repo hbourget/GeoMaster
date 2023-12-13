@@ -1,0 +1,18 @@
+meta {
+  name: Add balance to user - Success
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{user_service_url}}/users/addbal/1/500
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to add 500 balance to user", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

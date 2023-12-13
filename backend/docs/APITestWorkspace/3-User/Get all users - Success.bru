@@ -1,0 +1,18 @@
+meta {
+  name: Get all users - Success
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{user_service_url}}/users
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to get all users", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

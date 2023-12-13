@@ -111,4 +111,16 @@ public class UserService {
             return null;
         }
     }
+
+    public UserDTO removeBalance(Integer id, Integer balance) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User userToUpdate = userOptional.get();
+            userToUpdate.setBalance(userToUpdate.getBalance() - balance);
+            userRepository.save(userToUpdate);
+            return userMapper.toDTO(userToUpdate);
+        } else {
+            return null;
+        }
+    }
 }

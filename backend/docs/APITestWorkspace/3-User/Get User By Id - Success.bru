@@ -1,0 +1,18 @@
+meta {
+  name: Get User By Id - Success
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{user_service_url}}/users/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to get user byId", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

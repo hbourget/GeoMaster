@@ -1,0 +1,18 @@
+meta {
+  name: Remove balance to user - Failure
+  type: http
+  seq: 9
+}
+
+put {
+  url: {{user_service_url}}/users/rembal/99/500
+  body: none
+  auth: none
+}
+
+tests {
+  test("should not be able to remove 500 balance to user", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(404);
+  });
+}

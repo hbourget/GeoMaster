@@ -98,4 +98,14 @@ public class UserCrt {
             return ResponseEntity.ok(updatedUser);
         }
     }
+
+    @PutMapping("/users/rembal/{userId}/{amount}")
+    public ResponseEntity<UserDTO> removeBalance(@PathVariable Integer userId, @PathVariable Integer amount) {
+        UserDTO updatedUser = uService.removeBalance(userId, amount);
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(updatedUser);
+        }
+    }
 }
