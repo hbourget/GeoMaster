@@ -1,0 +1,26 @@
+meta {
+  name: Register - Failure
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{proxyauth_service_url}}/auth/register
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {"username": "new_user", "password": "password123"}
+}
+
+tests {
+  test("should not be able to register", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(409);
+  });
+}

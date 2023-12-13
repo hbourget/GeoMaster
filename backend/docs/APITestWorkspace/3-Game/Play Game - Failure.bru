@@ -1,0 +1,26 @@
+meta {
+  name: Play Game - Failure
+  type: http
+  seq: 8
+}
+
+put {
+  url: {{game_service_url}}/game/play
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {"gameId": 1, "userId": 5, "countryGuesses": ["France", "Brazil", "Japan", "Canada", "Australia"]}
+}
+
+tests {
+  test("should be able to play a round in the game", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(404);
+  });
+}

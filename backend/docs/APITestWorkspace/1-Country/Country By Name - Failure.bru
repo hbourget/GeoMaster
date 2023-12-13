@@ -1,0 +1,18 @@
+meta {
+  name: Country By Name - Failure
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{country_service_url}}/countries/name/InvalidCountryName
+  body: none
+  auth: none
+}
+
+tests {
+  test("should not be able to get country byName", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(404);
+  });
+}

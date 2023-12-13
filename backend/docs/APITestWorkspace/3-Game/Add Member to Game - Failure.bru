@@ -1,0 +1,18 @@
+meta {
+  name: Add Member to Game - Failure
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{game_service_url}}/game/addMember/99/99
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to add member to game", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(404);
+  });
+}

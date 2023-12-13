@@ -63,6 +63,16 @@ public class GameService {
         if (game == null) {
             return null;
         }
+
+        try {
+            ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
+            if (responseEntity.getStatusCode().is4xxClientError()) {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+
         if (game.getStatus() == 0) {
             for (int i = 0; i < 5; i++) {
                 for (String countryName : countryGuesses) {

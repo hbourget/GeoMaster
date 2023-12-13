@@ -1,0 +1,18 @@
+meta {
+  name: Create Game - Success
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{game_service_url}}/game/1
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to create game", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

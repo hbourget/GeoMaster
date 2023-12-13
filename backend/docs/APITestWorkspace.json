@@ -1,0 +1,956 @@
+{
+  "name": "API Test Workspace",
+  "version": "1",
+  "items": [
+    {
+      "type": "folder",
+      "name": "1-Country",
+      "items": [
+        {
+          "type": "http",
+          "name": "Country By Capital - Failure",
+          "seq": 4,
+          "request": {
+            "url": "{{country_service_url}}/countries/capital/InvalidCapitalName",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to get country byCapital\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Country By Flag - Failure",
+          "seq": 6,
+          "request": {
+            "url": "{{country_service_url}}/countries/flag/InvalidFlagName",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to get country byFlag\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "All Countries",
+          "seq": 7,
+          "request": {
+            "url": "{{country_service_url}}/countries",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get all countries\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Country By Capital - Success -Paris-",
+          "seq": 3,
+          "request": {
+            "url": "{{country_service_url}}/countries/capital/Paris",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get country byCapital\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Country By Flag - Success -Antigua And Barbuda-",
+          "seq": 5,
+          "request": {
+            "url": "{{country_service_url}}/countries/flag/Antigua%20And%20Barbuda",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get country byFlag\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Country By Name - Success -France-",
+          "seq": 1,
+          "request": {
+            "url": "{{country_service_url}}/countries/name/France",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get country byName\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Country By Name - Failure",
+          "seq": 2,
+          "request": {
+            "url": "{{country_service_url}}/countries/name/InvalidCountryName",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to get country byName\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "3-Game",
+      "items": [
+        {
+          "type": "http",
+          "name": "Create Game - Success",
+          "seq": 1,
+          "request": {
+            "url": "{{game_service_url}}/game/1",
+            "method": "POST",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to create game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Create Game - Failure",
+          "seq": 2,
+          "request": {
+            "url": "{{game_service_url}}/game/99",
+            "method": "POST",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to create game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Add Member to Game - Failure",
+          "seq": 4,
+          "request": {
+            "url": "{{game_service_url}}/game/addMember/99/99",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to add member to game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Delete Game - Failure",
+          "seq": 15,
+          "request": {
+            "url": "{{game_service_url}}/game/99",
+            "method": "DELETE",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to delete game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Delete Game - Success",
+          "seq": 14,
+          "request": {
+            "url": "{{game_service_url}}/game/1",
+            "method": "DELETE",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to delete game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get Game By ID - Failure",
+          "seq": 10,
+          "request": {
+            "url": "{{game_service_url}}/game/g/99",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get game by gameId\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get All Games - Success",
+          "seq": 11,
+          "request": {
+            "url": "{{game_service_url}}/games",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get all games\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Add Member to Game - Success",
+          "seq": 3,
+          "request": {
+            "url": "{{game_service_url}}/game/addMember/1/2",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to add member to game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get Game By User ID - Failure",
+          "seq": 13,
+          "request": {
+            "url": "{{game_service_url}}/game/u/99",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get game by userId\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Play Game - Success",
+          "seq": 7,
+          "request": {
+            "url": "{{game_service_url}}/game/play",
+            "method": "PUT",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"gameId\": 1, \"userId\": 1, \"countryGuesses\": [\"France\", \"Brazil\", \"Japan\", \"Canada\", \"Australia\"]}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to play a round in the game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get Game By ID - Success",
+          "seq": 9,
+          "request": {
+            "url": "{{game_service_url}}/game/g/1",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get game by gameId\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Play Game - Failure",
+          "seq": 8,
+          "request": {
+            "url": "{{game_service_url}}/game/play",
+            "method": "PUT",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"gameId\": 1, \"userId\": 5, \"countryGuesses\": [\"France\", \"Brazil\", \"Japan\", \"Canada\", \"Australia\"]}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to play a round in the game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Remove Member from Game - Failure",
+          "seq": 6,
+          "request": {
+            "url": "{{game_service_url}}/game/removeMember/99/99",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to add remove member from game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(404);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Get Game By User ID - Success",
+          "seq": 12,
+          "request": {
+            "url": "{{game_service_url}}/game/u/1",
+            "method": "GET",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to get game by userId\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Remove Member from Game - Success",
+          "seq": 5,
+          "request": {
+            "url": "{{game_service_url}}/game/removeMember/1/2",
+            "method": "PUT",
+            "headers": [],
+            "body": {
+              "mode": "none",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to add remove member from game\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "name": "2-ProxyAuth",
+      "items": [
+        {
+          "type": "http",
+          "name": "Register2 - Success",
+          "seq": 2,
+          "request": {
+            "url": "{{proxyauth_service_url}}/auth/register",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"username\": \"new_user_2\", \"password\": \"correct_password\"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to register\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Register - Success",
+          "seq": 1,
+          "request": {
+            "url": "{{proxyauth_service_url}}/auth/register",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"username\": \"new_user\", \"password\": \"correct_password\"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should be able to register\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Login - Failure",
+          "seq": 4,
+          "request": {
+            "url": "{{proxyauth_service_url}}/auth/login",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"username\": \"new_user\", \"password\": \"wrong_password\"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to register\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(401);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Register - Failure",
+          "seq": 3,
+          "request": {
+            "url": "{{proxyauth_service_url}}/auth/register",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"username\": \"new_user\", \"password\": \"password123\"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to register\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(409);\n});",
+            "query": []
+          }
+        },
+        {
+          "type": "http",
+          "name": "Login - Failure 2",
+          "seq": 5,
+          "request": {
+            "url": "{{proxyauth_service_url}}/auth/login",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json",
+                "enabled": true
+              }
+            ],
+            "body": {
+              "mode": "json",
+              "json": "{\"username\": \"wrong_user\", \"password\": \"wrong_password\"}",
+              "formUrlEncoded": [],
+              "multipartForm": []
+            },
+            "auth": {
+              "mode": "none",
+              "basic": {
+                "username": "",
+                "password": ""
+              },
+              "bearer": {
+                "token": ""
+              }
+            },
+            "script": {},
+            "vars": {},
+            "assertions": [],
+            "tests": "test(\"should not be able to register\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(401);\n});",
+            "query": []
+          }
+        }
+      ]
+    },
+    {
+      "type": "http",
+      "name": "Login - Success",
+      "seq": 1,
+      "request": {
+        "url": "{{proxyauth_service_url}}/auth/login",
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json",
+            "enabled": true
+          }
+        ],
+        "body": {
+          "mode": "json",
+          "json": "{\"username\": \"new_user\", \"password\": \"correct_password\"}",
+          "formUrlEncoded": [],
+          "multipartForm": []
+        },
+        "auth": {
+          "mode": "none",
+          "basic": {
+            "username": "",
+            "password": ""
+          },
+          "bearer": {
+            "token": ""
+          }
+        },
+        "script": {},
+        "vars": {},
+        "assertions": [],
+        "tests": "test(\"should be able to login\", function() {\n  const data = res.getBody();\n  expect(res.getStatus()).to.equal(200);\n});",
+        "query": []
+      }
+    }
+  ],
+  "activeEnvironmentUid": "xB0E9E1Ydfr6IrBM2OJv2",
+  "environments": [
+    {
+      "variables": [
+        {
+          "name": "proxyauth_service_url",
+          "value": "http://localhost:8080",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        },
+        {
+          "name": "user_service_url",
+          "value": "http://localhost:8081",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        },
+        {
+          "name": "country_service_url",
+          "value": "http://localhost:8082",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        },
+        {
+          "name": "game_service_url",
+          "value": "http://localhost:8083",
+          "enabled": true,
+          "secret": false,
+          "type": "text"
+        }
+      ],
+      "name": "GeoMasterEnv"
+    }
+  ]
+}

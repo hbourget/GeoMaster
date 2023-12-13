@@ -1,0 +1,18 @@
+meta {
+  name: Remove Member from Game - Success
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{game_service_url}}/game/removeMember/1/2
+  body: none
+  auth: none
+}
+
+tests {
+  test("should be able to add remove member from game", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(200);
+  });
+}

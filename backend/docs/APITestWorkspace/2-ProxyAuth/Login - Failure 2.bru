@@ -1,0 +1,26 @@
+meta {
+  name: Login - Failure 2
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{proxyauth_service_url}}/auth/login
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {"username": "wrong_user", "password": "wrong_password"}
+}
+
+tests {
+  test("should not be able to register", function() {
+    const data = res.getBody();
+    expect(res.getStatus()).to.equal(401);
+  });
+}
