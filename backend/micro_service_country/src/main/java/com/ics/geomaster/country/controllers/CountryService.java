@@ -38,8 +38,13 @@ public class CountryService {
 
             for (Country country : countries) {
                 country.setName(country.getName().replace(" ", "-"));
-                country.setFlag("https://restfulcountries.com//assets//images//flags//" + country.getName() + ".png");
-                country.setMonument("monument.png");
+                if(country.getName().equalsIgnoreCase("France")){
+                    country.setMonument("Eiffel-Tower");
+                }
+
+                else {
+                    country.setMonument("Unknown");
+                }
             }
 
             if (countries.isEmpty()) {
@@ -65,24 +70,15 @@ public class CountryService {
         return Optional.empty();
     }
 
-    public Optional<Country> getCountryByCapital(String capital) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getCapital().toLowerCase().replace("-", " ").contains(capital.toLowerCase())) {
-                return Optional.of(country);
+    public Boolean getCountryByMonument(String countryMonument, String gameMonument) {
+        Optional<Country> country = countryRepository.findByName(countryMonument);
+        if (country.isPresent()) {
+            System.out.println("COUNTRYSERVICE: " + country.get().getMonument() + " " + gameMonument + " " +countryMonument);
+            if (country.get().getMonument().equalsIgnoreCase(gameMonument)) {
+                return true;
             }
         }
-        return Optional.empty();
-    }
-
-    public Optional<Country> getCountryByFlag(String flag) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getFlag().toLowerCase().replace("-", " ").contains(flag.toLowerCase())) {
-                return Optional.of(country);
-            }
-        }
-        return Optional.empty();
+        return false;
     }
 
     public List<Country> getCountries() {

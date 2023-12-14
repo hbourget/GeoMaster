@@ -46,11 +46,14 @@ public class GameService {
 
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
-            game.getCountriesFlag().add(countries.get(random).getFlag());
+            game.getCountriesFlag().add(countries.get(random).getName());
         }
 
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
+            while (countries.get(random).getMonument().equalsIgnoreCase("Unknown")) {
+                random = (int) (Math.random() * countries.size());
+            }
             game.getCountriesMonument().add(countries.get(random).getMonument());
         }
 
@@ -74,25 +77,28 @@ public class GameService {
         }
 
         if (game.getStatus() == 0) {
-            for (int i = 0; i < 5; i++) {
-                for (String countryName : countryGuesses) {
-                    if (countryName.equalsIgnoreCase(game.getCountriesMap().get(i))) {
-                        Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
-                        userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
-                        game.setUserIdsAndScores(userIdsAndScores);
-                    }
-                }
-            }
             game.setStatus(1);
+            gameRepository.save(game);
+            return game;
         }
 
-        else if (game.getStatus() == 1) {
+        if (game.getStatus() == 4) {
+            return null;
+        }
+
+        if (game.getStatus() == 1) {
             for (int i = 0; i < 5; i++) {
                 for (String countryName : countryGuesses) {
-                    if (countryName.equalsIgnoreCase(game.getCountriesFlag().get(i))) {
-                        Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
-                        userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
-                        game.setUserIdsAndScores(userIdsAndScores);
+                    ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + countryName, Country.class);
+                    if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                        Country country = responseEntity.getBody();
+                        if (country != null) {
+                            if (country.getName().equalsIgnoreCase(game.getCountriesMap().get(i))) {
+                                Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
+                                userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
+                                game.setUserIdsAndScores(userIdsAndScores);
+                            }
+                        }
                     }
                 }
             }
@@ -102,15 +108,36 @@ public class GameService {
         else if (game.getStatus() == 2) {
             for (int i = 0; i < 5; i++) {
                 for (String countryName : countryGuesses) {
-                    if (countryName.equalsIgnoreCase(game.getCountriesMonument().get(i))) {
-                        Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
-                        userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
-                        game.setUserIdsAndScores(userIdsAndScores);
+                    ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + countryName, Country.class);
+                    if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                        Country country = responseEntity.getBody();
+                        if (country != null) {
+                            if (country.getName().equalsIgnoreCase(game.getCountriesFlag().get(i))) {
+                                Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
+                                userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
+                                game.setUserIdsAndScores(userIdsAndScores);
+                            }
+                        }
                     }
                 }
             }
             game.setStatus(3);
         }
+
+        else if (game.getStatus() == 3) {
+            for (int i = 0; i < 5; i++) {
+                for (String countryName : countryGuesses) {
+                    ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/monument/" + countryName + "/" + game.getCountriesMonument().get(i), Boolean.class);
+                    if (responseEntity.getStatusCode().value() == 200) {
+                            Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
+                            userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 1);
+                            game.setUserIdsAndScores(userIdsAndScores);
+                        }
+                    }
+                }
+            game.setStatus(4);
+            }
+
         gameRepository.save(game);
         return game;
     }
