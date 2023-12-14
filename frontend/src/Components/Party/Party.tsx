@@ -81,8 +81,7 @@ const Party = () => {
   const [roomName, setRoomName] = useState('');
   // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
-
-  const mutation = usePostQuery({ url: 'http://localhost:8080/game' });
+  const mutation = usePostQuery({ url: 'http://localhost:8080/game/1' });
 
   const handleCreateRoom = () => {
     const newRoom = {
@@ -92,10 +91,17 @@ const Party = () => {
       status: 1, // Recuperer le status depuis le backend
     };
 
-    mutation.mutate({ id: 1 });
+    const data = mutation.mutate({});
+    if (mutation.isSuccess) {
+      console.log('success:');
+      console.log('data:', data);
+      setRooms((prevRooms) => [...prevRooms, newRoom]);
+      setRoomName('');
+    }
 
-    setRooms((prevRooms) => [...prevRooms, newRoom]);
-    setRoomName('');
+    if (mutation.isError) {
+      console.log('error:', mutation.error);
+    }
   };
 
   const handleJoinRoom = (roomId: number) => {
