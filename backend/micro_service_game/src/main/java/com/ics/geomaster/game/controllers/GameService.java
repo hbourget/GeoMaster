@@ -46,12 +46,12 @@ public class GameService {
 
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
-            game.getCountriesFlag().add(countries.get(random).getName());
+            game.getCountriesFlag().add(countries.get(random).getFlag());
         }
 
         for (int i = 0; i < 5; i++) {
             int random = (int) (Math.random() * countries.size());
-            game.getCountriesMonument().add(countries.get(random).getName());
+            game.getCountriesMonument().add(countries.get(random).getMonument());
         }
 
         gameRepository.save(game);
