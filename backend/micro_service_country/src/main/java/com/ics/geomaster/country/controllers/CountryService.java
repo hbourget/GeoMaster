@@ -134,9 +134,9 @@ public class CountryService {
     }
 
     public Boolean getCountryByMonument(String countryMonument, String gameMonument) {
-        Optional<Country> country = countryRepository.findByName(countryMonument);
+        String countrySanitized = countryMonument.replace(" ", "-");
+        Optional<Country> country = countryRepository.findByName(countrySanitized);
         if (country.isPresent()) {
-            System.out.println("COUNTRYSERVICE: " + country.get().getMonument() + " " + gameMonument + " " +countryMonument);
             if (country.get().getMonument().equalsIgnoreCase(gameMonument)) {
                 return true;
             }
