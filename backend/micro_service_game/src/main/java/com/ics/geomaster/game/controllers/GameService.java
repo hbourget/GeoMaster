@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Service
 public class GameService {
@@ -49,12 +50,14 @@ public class GameService {
             game.getCountriesFlag().add(countries.get(random).getName());
         }
 
+        Random rnd = new Random();
+
         for (int i = 0; i < 5; i++) {
-            int random = (int) (Math.random() * countries.size());
-            while (countries.get(random).getMonument().equalsIgnoreCase("Unknown")) {
-                random = (int) (Math.random() * countries.size());
+            int randomIndex = rnd.nextInt(countries.size());
+            while (countries.get(randomIndex).getMonument().equals("Unknown")) {
+                randomIndex = rnd.nextInt(countries.size());
             }
-            game.getCountriesMonument().add(countries.get(random).getMonument());
+            game.getCountriesMonument().add(countries.get(randomIndex).getMonument());
         }
 
         gameRepository.save(game);
