@@ -65,7 +65,7 @@ public class GameCrt {
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
 
-    @GetMapping("/games")
+    @GetMapping("/game/all")
     public ResponseEntity<Iterable<Game>> getGames() {
         Iterable<Game> games = gameService.getGames();
         if (games == null) {
