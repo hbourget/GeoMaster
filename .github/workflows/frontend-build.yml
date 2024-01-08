@@ -1,7 +1,9 @@
 name: pnpm Example Workflow
+
 on:
   push:
     branches: [master]
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -11,15 +13,18 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up Node.js and pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 20
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
+
       - name: Install dependencies
         run: |
           cd frontend
@@ -29,3 +34,10 @@ jobs:
         run: |
           cd frontend
           pnpm run build
+
+      - name: Cache pnpm lock file
+        uses: actions/cache@v2
+        with:
+          path: |
+            frontend/pnpm-lock.yaml
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('frontend/pnpm-lock.yaml') }}
