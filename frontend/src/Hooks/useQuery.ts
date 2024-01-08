@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-const useGetQuery = ({ queryKey, url }: { queryKey: string[]; url: string }) => {
+const useGetQuery = <T>({ queryKey, url }: { queryKey: string[]; url: string }) => {
   return useQuery({
     queryKey,
     queryFn: async () => {
@@ -16,7 +16,7 @@ const useGetQuery = ({ queryKey, url }: { queryKey: string[]; url: string }) => 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
+      return response.json() as T;
     },
   });
 };

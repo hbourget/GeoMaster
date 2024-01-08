@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
 import { usePostQuery } from '../../Hooks/useQuery';
+import { useAtom } from 'jotai';
+import { currentUserID } from '../../jotai';
 
 const formStyle = css({
   backgroundColor: '#fff',
@@ -41,6 +43,9 @@ const buttonStyle = css({
 });
 
 const Inscription = () => {
+  const [userID, setUserID] = useAtom(currentUserID);
+  console.log('store:', userID);
+
   const [formData, setFormData] = useState({
     password: '',
     username: '',
@@ -67,7 +72,10 @@ const Inscription = () => {
     e.preventDefault();
     mutation.mutate(formData);
     console.log('Submitted data:', formData);
+    // mutation.isSuccess && setUserID(1);
   };
+
+  // mutation.isSuccess && store.set('user', mutation.data);
 
   return (
     <form onSubmit={handleSubmit} className={formStyle} style={{ marginTop: '2%' }}>
