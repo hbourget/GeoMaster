@@ -3,6 +3,7 @@ import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 import { usePostQuery } from '../../Hooks/useQuery';
 import { Button, Input } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
 
 const containerStyle = css({
   width: '65%',
@@ -76,32 +77,43 @@ const joinButtonStyle = css({
   },
 });
 
+type RoomData = {
+  id: number;
+  name: string;
+  status: number;
+};
+// { url: 'http://localhost:8080/game/1' }
+
+const createRoom = async () => {
+  const response = await fetch('http://localhost:8080/game/1', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+
+  return response.json();
+};
+
 const Party = () => {
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState('');
   // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
-  const mutation = usePostQuery({ url: 'http://localhost:8080/game/1' });
-
-  const handleCreateRoom = () => {
-    const newRoom = {
-      id: Date.now(),
-      name: roomName,
-      players: [],
-      status: 1, // Recuperer le status depuis le backend
-    };
-
-    const data = mutation.mutate({});
-    if (mutation.isSuccess) {
-      console.log('success:');
-      console.log('data:', data);
-      setRooms((prevRooms) => [...prevRooms, newRoom]);
-      setRoomName('');
-    }
-
-    if (mutation.isError) {
-      console.log('error:', mutation.error);
-    }
+  const mutation = useMutation({
+    mutationFn: createRoom,
+    onSuccess(data) {
+      setRooms((prevRooms) => [...prevRooms, { id: data.id, name: roomName, status: data.status }]);
+    },
+  });
+  const handleCreateRoom = async () => {
+    mutation.mutate();
   };
 
   const handleJoinRoom = (roomId: number) => {
@@ -138,10 +150,10 @@ const Party = () => {
             <li key={room.id} className={listItemStyle(index, room.status)}>
               <div>
                 <strong>{room.name}</strong>
-                <p style={{ color: 'black' }}>{`${room.players.length}/4 joueurs`}</p>
+                {/* <p style={{ color: 'black' }}>{`${room.players.length}/4 joueurs`}</p> */}
                 <p style={{ color: getStatusColor(room.status) }}>{getStatusText(room.status)}</p>
               </div>
-              {room.players.length < 4 && room.status !== 2 && (
+              {/* {room.players.length < 4 && room.status !== 2 && (
                 <Button
                   style={{ background: '#007BFF', padding: '5px', color: '#fff' }}
                   onClick={() => handleJoinRoom(room.id)}
@@ -149,7 +161,7 @@ const Party = () => {
                 >
                   Rejoindre
                 </Button>
-              )}
+              )} */}
             </li>
           ))}
         </ul>

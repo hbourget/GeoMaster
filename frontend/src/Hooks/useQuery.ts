@@ -27,7 +27,7 @@ type FormData = {
   id?: number;
 };
 
-const usePostQuery = ({ url }: { url: string }) => {
+const usePostQuery = <T>({ url }: { url: string }) => {
   return useMutation({
     mutationFn: async (formData: FormData) => {
       const response = await fetch(url, {
@@ -42,16 +42,17 @@ const usePostQuery = ({ url }: { url: string }) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      return response.json();
+      return response.json() as T;
     },
     onSuccess(data, variables, context) {
       console.log('data:', data);
-      if (data.access_token) {
-        localStorage.setItem('token', data.access_token);
-      }
-
       console.log('variables:', variables);
       console.log('context:', context);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((data as any).access_token) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        localStorage.setItem('token', (data as any).access_token);
+      }
     },
     onError(error, variables, context) {
       console.log('error:', error);
