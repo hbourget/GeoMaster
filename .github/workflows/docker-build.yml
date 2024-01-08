@@ -1,0 +1,17 @@
+name: CI/CD with Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy with Docker Compose
+        run: docker-compose up -d
