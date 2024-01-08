@@ -20,6 +20,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install dependencies
-        run: cd frontend && pnpm install
+        run: |
+          cd frontend
+          pnpm install
+
       - name: Build
-        run: cd frontend && pnpm run build
+        run: |
+          cd frontend
+          pnpm run build
