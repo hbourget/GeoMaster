@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
-import { usePostQuery } from '../../Hooks/useQuery';
+import { useGetQuery, usePostQuery } from '../../Hooks/useQuery';
 import { Button, Input } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 
@@ -85,6 +85,7 @@ type RoomData = {
 // { url: 'http://localhost:8080/game/1' }
 
 const createRoom = async () => {
+  // todo: recuperer l'user id dans le state global (jotai)
   const response = await fetch('http://localhost:8080/game/1', {
     method: 'POST',
     headers: {
@@ -102,18 +103,22 @@ const createRoom = async () => {
 };
 
 const Party = () => {
+  // todo put rooms in a global state to not lose them when navigating
   const [rooms, setRooms] = useState([]);
   const [roomName, setRoomName] = useState('');
   // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
-  const mutation = useMutation({
+  const gamesList = useGetQuery({ queryKey: ['gamesList'], url: 'http://localhost:8080/games' });
+  // console.log('gamesList:', gamesList);
+  const createGameMutation = useMutation({
     mutationFn: createRoom,
     onSuccess(data) {
+      console.log('data:', data);
       setRooms((prevRooms) => [...prevRooms, { id: data.id, name: roomName, status: data.status }]);
     },
   });
   const handleCreateRoom = async () => {
-    mutation.mutate();
+    createGameMutation.mutate();
   };
 
   const handleJoinRoom = (roomId: number) => {
