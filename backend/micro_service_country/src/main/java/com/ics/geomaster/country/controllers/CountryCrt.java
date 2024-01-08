@@ -29,9 +29,9 @@ public class CountryCrt {
         }
     }
 
-    @GetMapping("/countries/monument/{countryMonument}/{gameMonument}")
-    public ResponseEntity<Boolean> getCountryByMonument(@PathVariable String countryMonument, @PathVariable String gameMonument) {
-        Boolean ret = countryService.getCountryByMonument(countryMonument, gameMonument);
+    @GetMapping("/countries/monument/{country}/{gameMonument}")
+    public ResponseEntity<Boolean> getCountryByMonument(@PathVariable String country, @PathVariable String gameMonument) {
+        Boolean ret = countryService.getCountryByMonument(country, gameMonument);
         if (ret) {
             return new ResponseEntity<>(ret, HttpStatus.OK);
         } else {

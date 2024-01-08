@@ -87,17 +87,8 @@ public class CountryService {
                 if(country.getName().equalsIgnoreCase("Cuba")){
                     country.setMonument("El-Capitolio");
                 }
-                if(country.getName().equalsIgnoreCase("Croatia")){
-                    country.setMonument("Dubrovnik-City-Walls");
-                }
-                if(country.getName().equalsIgnoreCase("Colombia")){
-                    country.setMonument("Catedral-de-Sal-de-Zipaquira");
-                }
                 if(country.getName().equalsIgnoreCase("China")){
                     country.setMonument("Great-Wall-of-China");
-                }
-                if(country.getName().equalsIgnoreCase("Chile")){
-                    country.setMonument("Torres-del-Paine-National-Park");
                 }
                 if(country.getName().equalsIgnoreCase("Canada")){
                     country.setMonument("CN-Tower");
@@ -107,6 +98,9 @@ public class CountryService {
                 }
                 if(country.getName().equalsIgnoreCase("Cambodia")){
                     country.setMonument("Angkor-Wat");
+                }
+                if(country.getName().equalsIgnoreCase("Bulgaria")){
+                    country.setMonument("Alexander-Nevsky-Cathedral");
                 }
             }
 
@@ -133,11 +127,11 @@ public class CountryService {
         return Optional.empty();
     }
 
-    public Boolean getCountryByMonument(String countryMonument, String gameMonument) {
-        String countrySanitized = countryMonument.replace(" ", "-");
-        Optional<Country> country = countryRepository.findByName(countrySanitized);
-        if (country.isPresent()) {
-            if (country.get().getMonument().equalsIgnoreCase(gameMonument)) {
+    public Boolean getCountryByMonument(String country, String gameMonument) {
+        String countrySanitized = country.replace(" ", "-");
+        Optional<Country> countryget = countryRepository.findByName(countrySanitized);
+        if (countryget.isPresent()) {
+            if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                 return true;
             }
         }

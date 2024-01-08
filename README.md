@@ -2,6 +2,11 @@
 
 ## Documentation API
 
+Lancements des tests API avec Bruno : 
+- `cd backed/docs/APITestWorkspace`
+- `docker compose up --build`
+- `bru run --env GeoMasterEnv`
+
 Ports des services :
 
 - Frontend : **80**

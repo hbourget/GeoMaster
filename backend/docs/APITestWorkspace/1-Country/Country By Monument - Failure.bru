@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{country_service_url}}/countries/monument/France/Statue-Of-Liberty
+  url: {{country_service_url}}/countries/monument/France/Statue-Of-Libertsqdsy
   body: none
   auth: none
 }
 
 tests {
-  test("should not be able to get country by monument", function() {
+  test("should not be able to get country by monument, no content 204", function() {
     const data = res.getBody();
-    expect(res.getStatus()).to.equal(404);
+    expect(res.getStatus()).to.equal(204);
   });
 }
