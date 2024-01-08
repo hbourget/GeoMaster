@@ -22,34 +22,38 @@ public class Game {
 
     @ElementCollection
     private List<String> countriesMonument;
-
     @ElementCollection
     private Map<Integer, Integer> userIdsAndScores;
+    @ElementCollection
+    private Map<Integer, Integer> userIdsAndStatus;
 
     private Integer status;
 
     public Game() {
         this.status = 0;
-        this.userIdsAndScores = new HashMap<>();
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
         this.countriesMap = new ArrayList<>();
+        this.userIdsAndScores = new HashMap<>();
+        this.userIdsAndStatus = new HashMap<>();
     }
 
     public Game(Integer status) {
-        this.userIdsAndScores = new HashMap<>();
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
         this.countriesMap = new ArrayList<>();
         this.status = status;
+        this.userIdsAndScores = new HashMap<>();
+        this.userIdsAndStatus = new HashMap<>();
     }
 
-    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds) {
+    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds, Map<Integer, Integer> userIdsAndStatus) {
         this.status = status;
         this.countriesMap = countriesMap;
         this.countriesFlag = countriesFlag;
         this.countriesMonument = countriesMonument;
         this.userIdsAndScores = userIds;
+        this.userIdsAndStatus = userIdsAndStatus;
     }
 
     public Integer getId() { return id; }
@@ -75,5 +79,9 @@ public class Game {
     public Map<Integer, Integer> getUserIdsAndScores() { return userIdsAndScores; }
 
     public void setUserIdsAndScores(Map<Integer, Integer> userIds) { this.userIdsAndScores = userIds; }
+
+    public Map<Integer, Integer> getUserIdsAndStatus() { return userIdsAndStatus; }
+
+    public void setUserIdsAndStatus(Map<Integer, Integer> userIdsAndStatus) { this.userIdsAndStatus = userIdsAndStatus; }
 
 }
