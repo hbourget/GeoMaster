@@ -2,8 +2,7 @@ name: CI/CD with Docker Compose
 
 on:
   push:
-    branches:
-      - main
+    branches: [master]
 
 jobs:
   build:
