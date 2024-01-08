@@ -39,10 +39,3 @@ jobs:
         run: |
           cd frontend
           pnpm run build
-
-      - name: Cache pnpm lock file
-        uses: actions/cache@v2
-        with:
-          path: |
-            frontend/pnpm-lock.yaml
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('frontend/pnpm-lock.yaml') }}
