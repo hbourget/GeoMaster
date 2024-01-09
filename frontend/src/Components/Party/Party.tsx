@@ -129,7 +129,7 @@ const joinRoom = async (gameId: number, userId: number) => {
 
 const Party = () => {
   const [userID] = useAtom(currentUserID);
-  console.log('store:', userID);
+  console.log('userID Store:', userID);
 
   // todo put rooms in a global state to not lose them when navigating
   const [rooms, setRooms] = useState([]);
@@ -150,7 +150,7 @@ const Party = () => {
   });
 
   const joinGameMutation = useMutation({
-    mutationFn: () => joinRoom(1, 1),
+    mutationFn: (roomId: number) => joinRoom(roomId, userID), // Assuming 'userID' is defined
     onSuccess(data) {
       console.log('joinGameData:', data);
     },
@@ -161,7 +161,7 @@ const Party = () => {
   };
 
   const handleJoinRoom = (roomId: number) => {
-    joinGameMutation.mutate();
+    joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     navigate('/home');
     console.log(roomId);
   };
@@ -174,6 +174,7 @@ const Party = () => {
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
         <Button className={joinButtonStyle} onClick={handleCreateRoom}>
+          {/* todo refresh mutation to trigger refetch and update game list below */}
           Créer
         </Button>
       </div>

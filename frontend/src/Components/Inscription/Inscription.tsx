@@ -4,6 +4,7 @@ import { Button, Input } from '@chakra-ui/react';
 import { usePostQuery } from '../../Hooks/useQuery';
 import { useAtom } from 'jotai';
 import { currentUserID } from '../../jotai';
+import { useMutation } from '@tanstack/react-query';
 
 const formStyle = css({
   backgroundColor: '#fff',
@@ -42,9 +43,22 @@ const buttonStyle = css({
   },
 });
 
+const register = async (data) => {
+  const response = await fetch('http://localhost:8080/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    mode: 'cors',
+  });
+  const json = await response.json();
+  return json;
+};
+
 const Inscription = () => {
-  const [userID, setUserID] = useAtom(currentUserID);
-  console.log('store:', userID);
+  const [, setUserID] = useAtom(currentUserID);
 
   const [formData, setFormData] = useState({
     password: '',
@@ -54,7 +68,12 @@ const Inscription = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [password, setPassword] = useState('');
 
-  const mutation = usePostQuery({ url: 'http://localhost:8080/auth/register' });
+  const mutation = useMutation({
+    mutationFn: register,
+    onSuccess: (data) => {
+      setUserID(data.userId);
+    },
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
