@@ -90,10 +90,7 @@ interface Party extends RoomData {
   countriesMonument: string[];
 }
 
-// { url: 'http://localhost:8080/game/1' }
-
 const createRoom = async (userId: number) => {
-  // todo: recuperer l'user id dans le state global (jotai)
   const response = await fetch(`http://localhost:8080/game/${userId}`, {
     method: 'POST',
     headers: {
@@ -130,8 +127,6 @@ const joinRoom = async (gameId: number, userId: number) => {
 const Party = () => {
   const [userID] = useAtom(currentUserID);
   console.log('userID Store:', userID);
-
-  // todo put rooms in a global state to not lose them when navigating
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
@@ -156,9 +151,9 @@ const Party = () => {
     },
   });
 
-  const handleCreateRoom = async (userID) => {
+  const handleCreateRoom = async (userID: number) => {
     console.log('Creating room for user:', userID);
-    createGameMutation.mutate(userID);
+    createGameMutation.mutate();
   };
 
   const handleJoinRoom = (roomId: number) => {
@@ -167,15 +162,12 @@ const Party = () => {
     navigate('/home');
   };
 
-  console.log(gamesList.data);
-
   return (
     <div className={containerStyle} style={{ marginTop: '2%' }}>
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
         <Button className={joinButtonStyle} onClick={() => handleCreateRoom(userID)}>
-          {/* todo refresh mutation to trigger refetch and update game list below */}
           Créer
         </Button>
       </div>
