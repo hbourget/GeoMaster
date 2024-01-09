@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
-import { usePostQuery } from '../../Hooks/useQuery';
+// import { usePostQuery } from '../../Hooks/useQuery';
 import { useAtom } from 'jotai';
 import { currentUserID } from '../../jotai';
 import { useMutation } from '@tanstack/react-query';

@@ -2,7 +2,22 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
-import { usePostQuery } from '../../Hooks/useQuery';
+// import { usePostQuery } from '../../Hooks/useQuery';
+import { useMutation } from '@tanstack/react-query';
+
+const login = async (data) => {
+  const response = await fetch('http://localhost:8080/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    mode: 'cors',
+  });
+  const json = await response.json();
+  return json;
+};
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
@@ -12,14 +27,18 @@ const Navbar = () => {
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
-  const mutation = usePostQuery({ url: 'http://localhost:8080/auth/login' });
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess(data) {
+      console.log('dataLogin:', data);
+      localStorage.setItem('token', data.access_token);
+      setLoggedIn(true);
+      setUser(userInput);
+    },
+  });
 
   const handleLogin = () => {
     mutation.mutate({ username: userInput, password: passwordInput });
-    if (mutation.isSuccess) {
-      setLoggedIn(true);
-      setUser(userInput);
-    }
   };
 
   const handleLogout = () => {

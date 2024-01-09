@@ -92,9 +92,9 @@ interface Party extends RoomData {
 
 // { url: 'http://localhost:8080/game/1' }
 
-const createRoom = async () => {
+const createRoom = async (userId: number) => {
   // todo: recuperer l'user id dans le state global (jotai)
-  const response = await fetch('http://localhost:8080/game/1', {
+  const response = await fetch(`http://localhost:8080/game/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -133,7 +133,6 @@ const Party = () => {
 
   // todo put rooms in a global state to not lose them when navigating
   const [rooms, setRooms] = useState([]);
-  // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
 
   const gamesList = useGetQuery<Party[]>({
@@ -142,28 +141,30 @@ const Party = () => {
   });
 
   const createGameMutation = useMutation({
-    mutationFn: createRoom,
+    mutationFn: () => createRoom(userID),
     onSuccess(data) {
       setRooms((prevRooms) => [...prevRooms, { id: data.id, status: data.status }]);
-      console.log('rooms:', rooms);
+      gamesList.refetch();
+      console.log('Create room data:', rooms);
     },
   });
 
   const joinGameMutation = useMutation({
-    mutationFn: (roomId: number) => joinRoom(roomId, userID), // Assuming 'userID' is defined
+    mutationFn: (roomId: number) => joinRoom(roomId, userID),
     onSuccess(data) {
-      console.log('joinGameData:', data);
+      console.log('Joining room data:', data);
     },
   });
 
-  const handleCreateRoom = async () => {
-    createGameMutation.mutate();
+  const handleCreateRoom = async (userID) => {
+    console.log('Creating room for user:', userID);
+    createGameMutation.mutate(userID);
   };
 
   const handleJoinRoom = (roomId: number) => {
+    console.log(`Joining room ${roomId} for user ${userID}`);
     joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     navigate('/home');
-    console.log(roomId);
   };
 
   console.log(gamesList.data);
@@ -173,7 +174,7 @@ const Party = () => {
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
-        <Button className={joinButtonStyle} onClick={handleCreateRoom}>
+        <Button className={joinButtonStyle} onClick={() => handleCreateRoom(userID)}>
           {/* todo refresh mutation to trigger refetch and update game list below */}
           Créer
         </Button>
