@@ -2,8 +2,9 @@
 
 ## Documentation API
 
-Lancements des tests API avec Bruno : 
-- `cd backed/docs/APITestWorkspace`
+Lancements des tests API avec Bruno :
+
+- `cd backend/docs/APITestWorkspace`
 - `docker compose up --build`
 - `bru run --env GeoMasterEnv`
 
