@@ -22,7 +22,7 @@ jobs:
         run: docker-compose up --build -d
 
       - name: Run Bruno CLI tests
-        run: cd backend/docs/APITestWorkspace && bunx bru run --env GeoMasterEnv
+        run: cd backend/docs/APITestWorkspace && bun install --global @usebruno/cli && bru run --env GeoMasterEnv
 
       - name: Stop Docker Compose
         run: docker-compose down
