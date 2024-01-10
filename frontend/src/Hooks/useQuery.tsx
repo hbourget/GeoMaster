@@ -2,7 +2,7 @@
 
 import { useQuery, useMutation } from '@tanstack/react-query';
 
-const useGetQuery = (queryKey: string[], url: string) => {
+const useGetQuery = ({ queryKey, url }: { queryKey: string[]; url: string }) => {
   return useQuery({
     queryKey,
     queryFn: async () => {
@@ -10,6 +10,7 @@ const useGetQuery = (queryKey: string[], url: string) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
       if (!response.ok) {
@@ -69,6 +70,7 @@ const usePutQuery = (queryKey: string[], url: string, body) => {
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
       if (!response.ok) {
@@ -87,6 +89,7 @@ const useDeleteQuery = (queryKey: string[], url: string) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
       });
       if (!response.ok) {

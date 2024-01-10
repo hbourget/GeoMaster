@@ -2,6 +2,12 @@
 
 ## Documentation API
 
+Lancements des tests API avec Bruno :
+
+- `cd backend/docs/APITestWorkspace`
+- `docker compose up --build`
+- `bru run --env GeoMasterEnv`
+
 Ports des services :
 
 - Frontend : **80**
@@ -22,8 +28,6 @@ Ports des services :
 | Endpoint                         | HTTP Method | Success Response | Failure Response | Description                                    |
 | -------------------------------- | ----------- | ---------------- | ---------------- | ---------------------------------------------- |
 | /countries/name/{countryName}    | GET         | 200 OK           | 404 Not Found    | Retrieves country information by name.         |
-| /countries/capital/{capitalName} | GET         | 200 OK           | 404 Not Found    | Retrieves country information by capital name. |
-| /countries/flag/{flagName}       | GET         | 200 OK           | 404 Not Found    | Retrieves country information by flag name.    |
 | /countries                       | GET         | 200 OK           | N/A              | Retrieves information of all countries.        |
 
 ### Game Service Endpoints

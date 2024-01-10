@@ -37,9 +37,71 @@ public class CountryService {
             List<Country> countries = apiResponse.getData();
 
             for (Country country : countries) {
+                country.setMonument("Unknown");
                 country.setName(country.getName().replace(" ", "-"));
-                country.setFlag("https://restfulcountries.com//assets//images//flags//" + country.getName() + ".png");
-                country.setMonument("monument.png");
+                if(country.getName().equalsIgnoreCase("France")){
+                    country.setMonument("Eiffel-Tower");
+                }
+                if(country.getName().equalsIgnoreCase("United-States")){
+                    country.setMonument("Statue-of-Liberty");
+                }
+                if(country.getName().equalsIgnoreCase("United-Kingdom")){
+                    country.setMonument("Big-Ben");
+                }
+                if(country.getName().equalsIgnoreCase("United-Arab-Emirates")){
+                    country.setMonument("Burj-Khalifa");
+                }
+                if(country.getName().equalsIgnoreCase("Saudi-Arabia")){
+                    country.setMonument("Mecca");
+                }
+                if(country.getName().equalsIgnoreCase("South-Africa")){
+                    country.setMonument("Table-Mountain");
+                }
+                if(country.getName().equalsIgnoreCase("South-Korea")){
+                    country.setMonument("Gyeongbokgung-Palace");
+                }
+                if(country.getName().equalsIgnoreCase("North-Korea")){
+                    country.setMonument("Juche-Tower");
+                }
+                if(country.getName().equalsIgnoreCase("New-Zealand")){
+                    country.setMonument("Sky-Tower");
+                }
+                if(country.getName().equalsIgnoreCase("Czech-Republic")){
+                    country.setMonument("Prague-Castle");
+                }
+                if(country.getName().equalsIgnoreCase("Congo")){
+                    country.setMonument("Brazzaville-Cathedral");
+                }
+                if(country.getName().equalsIgnoreCase("Costa-Rica")){
+                    country.setMonument("Arenal-Volcano");
+                }
+                if(country.getName().equalsIgnoreCase("Brazil")){
+                    country.setMonument("Christ-the-Redeemer");
+                }
+                if(country.getName().equalsIgnoreCase("El-Salvador")){
+                    country.setMonument("San-Salvador-Volcano");
+                }
+                if(country.getName().equalsIgnoreCase("Denmark")){
+                    country.setMonument("Little-Mermaid");
+                }
+                if(country.getName().equalsIgnoreCase("Cuba")){
+                    country.setMonument("El-Capitolio");
+                }
+                if(country.getName().equalsIgnoreCase("China")){
+                    country.setMonument("Great-Wall-of-China");
+                }
+                if(country.getName().equalsIgnoreCase("Canada")){
+                    country.setMonument("CN-Tower");
+                }
+                if(country.getName().equalsIgnoreCase("Cameroon")){
+                    country.setMonument("Mount-Cameroon");
+                }
+                if(country.getName().equalsIgnoreCase("Cambodia")){
+                    country.setMonument("Angkor-Wat");
+                }
+                if(country.getName().equalsIgnoreCase("Bulgaria")){
+                    country.setMonument("Alexander-Nevsky-Cathedral");
+                }
             }
 
             if (countries.isEmpty()) {
@@ -65,24 +127,15 @@ public class CountryService {
         return Optional.empty();
     }
 
-    public Optional<Country> getCountryByCapital(String capital) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getCapital().toLowerCase().replace("-", " ").contains(capital.toLowerCase())) {
-                return Optional.of(country);
+    public Boolean getCountryByMonument(String country, String gameMonument) {
+        String countrySanitized = country.replace(" ", "-");
+        Optional<Country> countryget = countryRepository.findByName(countrySanitized);
+        if (countryget.isPresent()) {
+            if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
+                return true;
             }
         }
-        return Optional.empty();
-    }
-
-    public Optional<Country> getCountryByFlag(String flag) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getFlag().toLowerCase().replace("-", " ").contains(flag.toLowerCase())) {
-                return Optional.of(country);
-            }
-        }
-        return Optional.empty();
+        return false;
     }
 
     public List<Country> getCountries() {

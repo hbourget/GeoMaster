@@ -8,25 +8,22 @@ public class Country {
     @Id
     private String name;
     private String capital;
-    private String flag;
     private String continent;
     private String population;
     private String monument;
 
     public Country() {}
 
-    public Country(String name, String capital, String flag, String continent, String population) {
+    public Country(String name, String capital, String continent, String population) {
         this.name = name;
         this.capital = capital;
-        this.flag = flag;
         this.continent = continent;
         this.population = population;
     }
 
-    public Country(String name, String capital, String flag, String continent, String population, String monument) {
+    public Country(String name, String capital, String continent, String population, String monument) {
             this.name = name;
             this.capital = capital;
-            this.flag = flag;
             this.continent = continent;
             this.population = population;
             this.monument = monument;
@@ -48,14 +45,6 @@ public class Country {
 
     public void setCapital(String capital) {
         this.capital = capital;
-    }
-
-     public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 
      public String getContinent() {
@@ -87,7 +76,6 @@ public class Country {
         return "Country{" +
                 "name='" + name + '\'' +
                 ", capital='" + capital + '\'' +
-                ", flag='" + flag + '\'' +
                 ", continent='" + continent + '\'' +
                 ", population='" + population + '\'' +
                 ", monument='" + monument + '\'' +

@@ -29,23 +29,13 @@ public class CountryCrt {
         }
     }
 
-    @GetMapping("/countries/capital/{capitalName}")
-    public ResponseEntity<Country> getCountryByCapital(@PathVariable String capitalName) {
-        Optional<Country> country = countryService.getCountryByCapital(capitalName);
-        if (country.isPresent()) {
-            return new ResponseEntity<>(country.get(), HttpStatus.OK);
+    @GetMapping("/countries/monument/{country}/{gameMonument}")
+    public ResponseEntity<Boolean> getCountryByMonument(@PathVariable String country, @PathVariable String gameMonument) {
+        Boolean ret = countryService.getCountryByMonument(country, gameMonument);
+        if (ret) {
+            return new ResponseEntity<>(ret, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/countries/flag/{flagName}")
-    public ResponseEntity<Country> getCountryByFlag(@PathVariable String flagName) {
-        Optional<Country> country = countryService.getCountryByFlag(flagName);
-        if (country.isPresent()) {
-            return new ResponseEntity<>(country.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(ret, HttpStatus.NO_CONTENT);
         }
     }
 
