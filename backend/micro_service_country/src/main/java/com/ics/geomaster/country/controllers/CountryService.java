@@ -104,13 +104,6 @@ public class CountryService {
                 }
             }
 
-            if (countries.isEmpty()) {
-                System.out.println("\n\n[API] ERROR FETCHING COUNTRIES\n\n");
-            }
-            else {
-                System.out.println("\n\n[API] COUNTRIES LOADED\n\n");
-            }
-
             countryRepository.saveAll(countries);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -141,5 +134,15 @@ public class CountryService {
     public List<Country> getCountries() {
         Iterable<Country> countries = countryRepository.findAll();
         return (List<Country>) countries;
+    }
+
+    public List<Country> getCountriesByContinent(String continent) {
+        Iterable<Country> countries = countryRepository.findAll();
+        for (Country country : countries) {
+            if (country.getContinent().toLowerCase().replace("-", " ").contains(continent.toLowerCase())) {
+                return (List<Country>) countries;
+            }
+        }
+        return null;
     }
 }
