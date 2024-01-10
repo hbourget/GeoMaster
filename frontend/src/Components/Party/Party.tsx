@@ -107,6 +107,24 @@ const createRoom = async (userId: number) => {
   return response.json();
 };
 
+// | /game/play                           | PUT         | JSON: { "gameId": Integer, "userId": Integer, "countryGuesses": List\<String\> } | 200 OK           | 404 Not Found    | Updates game scores and guesses.           |
+const launchGame = async (userId: number) => {
+  const response = await fetch(`http://localhost:8080/game/party`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+
+  return response.json();
+};
+
 const joinRoom = async (gameId: number, userId: number) => {
   const response = await fetch(`http://localhost:8080/game/addMember/${gameId}/${userId}`, {
     method: 'PUT',
@@ -148,6 +166,13 @@ const Party = () => {
     mutationFn: (roomId: number) => joinRoom(roomId, userID),
     onSuccess(data) {
       console.log('Joining room data:', data);
+    },
+  });
+
+  const launchGameMutation = useMutation({
+    mutationFn: () => launchGame(userID),
+    onSuccess(data) {
+      console.log('Launching game data:', data);
     },
   });
 
