@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Bruno API tests
         run: |
-          cd backend/docs/APITestWorkspace && bun install --global @usebruno/cli && bunx bru run --env GeoMasterEnv && echo debug
+          cd backend/docs/APITestWorkspace && bun install --global @usebruno/cli && sleep 30 && bunx bru run --env GeoMasterEnv && echo debug
 
       - name: Stop Docker Compose
         run: docker-compose down
