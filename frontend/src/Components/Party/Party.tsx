@@ -107,10 +107,9 @@ const createRoom = async (userId: number) => {
   return response.json();
 };
 
-// | /game/play                           | PUT         | JSON: { "gameId": Integer, "userId": Integer, "countryGuesses": List\<String\> } | 200 OK           | 404 Not Found    | Updates game scores and guesses.           |
 const launchGame = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/party`, {
-    method: 'POST',
+  const response = await fetch(`http://localhost:8080/game/play`, {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -118,7 +117,7 @@ const launchGame = async (gameId: number, userId: number) => {
     body: JSON.stringify({
       userId: userId,
       gameId: gameId,
-      countryGuesses: [''],
+      countryGuesses: [],
     }),
   });
 
