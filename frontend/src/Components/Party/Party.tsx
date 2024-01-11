@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
-import { usePostQuery } from '../../Hooks/useQuery';
-import { Button, Input } from '@chakra-ui/react';
+import { useGetQuery } from '../../Hooks/useQuery';
+import { Button } from '@chakra-ui/react';
+import { useMutation } from '@tanstack/react-query';
+import { useAtom } from 'jotai';
+import { currentUserID } from '../../jotai';
 
 const containerStyle = css({
   width: '65%',
@@ -76,38 +79,120 @@ const joinButtonStyle = css({
   },
 });
 
+type RoomData = {
+  id: number;
+  status: number;
+};
+
+interface Party extends RoomData {
+  countriesFlag: string[];
+  countriesMap: string[];
+  countriesMonument: string[];
+}
+
+const createRoom = async (userId: number) => {
+  const response = await fetch(`http://localhost:8080/game/${userId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+
+  return response.json();
+};
+
+const launchGame = async (gameId: number, userId: number) => {
+  const response = await fetch(`http://localhost:8080/game/play`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      userId: userId,
+      gameId: gameId,
+      countryGuesses: [],
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+
+  return response.json();
+};
+
+const joinRoom = async (gameId: number, userId: number) => {
+  const response = await fetch(`http://localhost:8080/game/addMember/${gameId}/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+
+  return response.json();
+};
+
 const Party = () => {
+  const [userID] = useAtom(currentUserID);
+  console.log('userID Store:', userID);
   const [rooms, setRooms] = useState([]);
-  const [roomName, setRoomName] = useState('');
-  // const [playerScore, setPlayerScore] = useState(0);
   const navigate = useNavigate();
-  const mutation = usePostQuery({ url: 'http://localhost:8080/game/1' });
 
-  const handleCreateRoom = () => {
-    const newRoom = {
-      id: Date.now(),
-      name: roomName,
-      players: [],
-      status: 1, // Recuperer le status depuis le backend
-    };
+  const gamesList = useGetQuery<Party[]>({
+    queryKey: ['game', 'all'],
+    url: 'http://localhost:8080/game/all',
+  });
 
-    const data = mutation.mutate({});
-    if (mutation.isSuccess) {
-      console.log('success:');
-      console.log('data:', data);
-      setRooms((prevRooms) => [...prevRooms, newRoom]);
-      setRoomName('');
-    }
+  const createGameMutation = useMutation({
+    mutationFn: () => createRoom(userID),
+    onSuccess(data) {
+      setRooms((prevRooms) => [...prevRooms, { id: data.id, status: data.status }]);
+      gamesList.refetch();
+      console.log('Create room data:', rooms);
+    },
+  });
 
-    if (mutation.isError) {
-      console.log('error:', mutation.error);
-    }
+  const joinGameMutation = useMutation({
+    mutationFn: (roomId: number) => joinRoom(roomId, userID),
+    onSuccess(data) {
+      console.log('Joining room data:', data);
+    },
+  });
+
+  const launchGameMutation = useMutation({
+    mutationFn: (roomId: number) => launchGame(roomId, userID),
+    onSuccess(data) {
+      console.log('Launching game data:', data);
+    },
+    onError(error, variables) {
+      console.log('Error launching game:', error);
+      console.log('Error launching game variables:', variables);
+    },
+  });
+
+  const handleCreateRoom = async (userID: number) => {
+    console.log('Creating room for user:', userID);
+    createGameMutation.mutate();
   };
 
   const handleJoinRoom = (roomId: number) => {
-    // Rediriger vers la page "Home"
+    console.log(`Joining room ${roomId} for user ${userID}`);
+    joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
+    launchGameMutation.mutate(roomId);
     navigate('/home');
-    console.log(roomId);
   };
 
   return (
@@ -115,18 +200,7 @@ const Party = () => {
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
-        <Input
-          type="text"
-          placeholder="Nom de la room"
-          value={roomName}
-          onChange={(e) => setRoomName(e.target.value)}
-          style={{ marginBottom: '10px' }}
-        />
-
-        <Button
-          style={{ background: '#007BFF', padding: '5px', color: '#fff', borderRadius: '4px' }}
-          onClick={handleCreateRoom}
-        >
+        <Button className={joinButtonStyle} onClick={() => handleCreateRoom(userID)}>
           Créer
         </Button>
       </div>
@@ -134,24 +208,18 @@ const Party = () => {
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold', color: 'black' }}>Liste des rooms</h2>
         <ul style={{ listStyle: 'none', padding: 0, overflowY: 'auto', maxHeight: '300px' }}>
-          {rooms.map((room, index) => (
-            <li key={room.id} className={listItemStyle(index, room.status)}>
-              <div>
-                <strong>{room.name}</strong>
-                <p style={{ color: 'black' }}>{`${room.players.length}/4 joueurs`}</p>
-                <p style={{ color: getStatusColor(room.status) }}>{getStatusText(room.status)}</p>
-              </div>
-              {room.players.length < 4 && room.status !== 2 && (
-                <Button
-                  style={{ background: '#007BFF', padding: '5px', color: '#fff' }}
-                  onClick={() => handleJoinRoom(room.id)}
-                  className={joinButtonStyle}
-                >
+          {gamesList.isLoading && <div>Loading rooms...</div>}
+          {gamesList.isError && <div>Error loading rooms</div>}
+          {gamesList.isSuccess &&
+            gamesList.data.map((game, index) => (
+              <li key={game.id} className={listItemStyle(index, game.status)}>
+                <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
+                <span>{getStatusText(game.status)}</span>
+                <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
                   Rejoindre
                 </Button>
-              )}
-            </li>
-          ))}
+              </li>
+            ))}
         </ul>
       </div>
     </div>
