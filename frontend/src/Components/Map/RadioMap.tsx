@@ -19,18 +19,13 @@ const infoRoomStyle = css({
 });
 
 const RadioMap = () => {
-  const [prouti, setPointedLocation] = useState(null);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
   const handleLocationMouseOver = (event) => {
-    const pointedLocation = getLocationName(event);
-    setPointedLocation(pointedLocation);
-    console.log(prouti);
-    console.log(selectedLocation);
-  };
-
-  const handleLocationMouseOut = () => {
-    setPointedLocation(null);
+    const LocationName = getLocationName(event);
+    console.log('--------------------------------------------');
+    console.log('LocationName:', LocationName);
+    console.log('selectedLocation:', selectedLocation);
   };
 
   const handleOnChange = (selectedNode) => {
@@ -50,7 +45,6 @@ const RadioMap = () => {
       <RadioSVGMap
         map={World}
         onLocationMouseOver={handleLocationMouseOver}
-        onLocationMouseOut={handleLocationMouseOut}
         onChange={handleOnChange}
       />
 
