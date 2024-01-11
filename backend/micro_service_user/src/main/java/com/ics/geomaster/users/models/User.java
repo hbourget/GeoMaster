@@ -18,6 +18,13 @@ public class User {
     this.balance = 0;
   }
 
+  public User(Integer id, String username, String password, Integer balance) {
+    this.id = id;
+    this.username = username;
+    this.password = password;
+    this.balance = 0;
+  }
+
   public User(String username, String password) {
     this.username = username;
     this.password = password;
