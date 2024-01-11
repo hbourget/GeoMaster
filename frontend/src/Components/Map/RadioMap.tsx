@@ -51,6 +51,19 @@ const RadioMap = () => {
     setPointedLocation(null);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timer > 0) {
+        setTimer(timer - 1);
+      } else if (timer === 0) {
+        // todo 1 send a request to the server with the selectedLocation
+        // todo 2 update the country to guess
+        // todo 3 reset the timer to 10
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
+
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);
   };

@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
 // import { usePostQuery } from '../../Hooks/useQuery';
-import { useAtom } from 'jotai';
-import { currentUserID } from '../../jotai';
 import { useMutation } from '@tanstack/react-query';
 
 const formStyle = css({
@@ -58,8 +56,6 @@ const register = async (data) => {
 };
 
 const Inscription = () => {
-  const [, setUserID] = useAtom(currentUserID);
-
   const [formData, setFormData] = useState({
     password: '',
     username: '',
@@ -71,7 +67,7 @@ const Inscription = () => {
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: (data) => {
-      setUserID(data.userId);
+      console.log('User inscription data:', data);
     },
   });
 
