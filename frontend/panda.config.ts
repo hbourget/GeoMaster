@@ -7,7 +7,7 @@ export default defineConfig({
   // Where to look for your css declarations
   include: ['./src/**/*.{js,jsx,ts,tsx}', './pages/**/*.{js,jsx,ts,tsx}'],
 
-  strictTokens: true,
+  strictTokens: false,
 
   // Files to exclude
   exclude: [],
