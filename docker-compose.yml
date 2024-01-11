@@ -1,9 +1,50 @@
 version: '3'
 
 services:
-  frontend:
+  # Backend
+  country:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: ./backend
+      dockerfile: ./micro_service_country/Dockerfile
     ports:
-      - 80:80
+      - '8082:8082'
+    networks:
+      - archistack
+
+  user:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_user/Dockerfile
+    ports:
+      - '8081:8081'
+    networks:
+      - archistack
+
+  game:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_game/Dockerfile
+    ports:
+      - '8083:8083'
+    networks:
+      - archistack
+
+  proxyauth:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_proxyauth/Dockerfile
+    ports:
+      - '8080:8080'
+    networks:
+      - archistack
+
+  # Frontend
+  frontend:
+    build: ./frontend
+    ports:
+      - '80:80'
+    networks:
+      - archistack
+
+networks:
+  archistack:
