@@ -1,0 +1,31 @@
+name: CI/CD with Bruno
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: Start Java backend
+        run: |
+          cd backend/docs/APITestWorkspace
+          docker-compose up --build -d
+
+      - name: Run Bruno API tests
+        run: |
+          cd backend/docs/APITestWorkspace && bun install --global @usebruno/cli && while ! curl -sSf http://localhost:8082/countries/name/France ; do sleep 1; done && bunx bru run --env GeoMasterEnv
+
+      - name: Stop Docker Compose
+        run: docker-compose down
