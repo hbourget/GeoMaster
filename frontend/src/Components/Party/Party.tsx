@@ -5,7 +5,7 @@ import { useGetQuery } from '../../Hooks/useQuery';
 import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { currentUserID } from '../../jotai';
+import { currentUserID, currentGamePlaying } from '../../jotai';
 
 const containerStyle = css({
   width: '65%',
@@ -17,6 +17,7 @@ const containerStyle = css({
   overflow: 'hidden',
 });
 
+//todo update style for room list to not overflow until screen border
 const sectionStyle = css({
   marginBottom: '20px',
   padding: '20px',
@@ -147,6 +148,7 @@ const joinRoom = async (gameId: number, userId: number) => {
 
 const Party = () => {
   const [userID] = useAtom(currentUserID);
+  const [currentGameState, setCurrentGameState] = useAtom(currentGamePlaying);
   console.log('userID Store:', userID);
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
@@ -192,6 +194,12 @@ const Party = () => {
     console.log(`Joining room ${roomId} for user ${userID}`);
     joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     launchGameMutation.mutate(roomId);
+    console.log('currentGameStatePARTY:', currentGameState);
+    setCurrentGameState((prevGameState) => ({
+      ...prevGameState,
+      id: roomId,
+    }));
+    console.log('updatedGameStatePARTY:', currentGameState);
     navigate('/home');
   };
 

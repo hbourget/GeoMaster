@@ -4,6 +4,8 @@ import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
 // import { usePostQuery } from '../../Hooks/useQuery';
 import { useMutation } from '@tanstack/react-query';
+import { currentUserID } from '../../jotai';
+import { useAtom } from 'jotai';
 
 const login = async (data) => {
   const response = await fetch('http://localhost:8080/auth/login', {
@@ -23,6 +25,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState('Home');
+  const [, setUserID] = useAtom(currentUserID);
 
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -32,6 +35,7 @@ const Navbar = () => {
     onSuccess(data) {
       console.log('dataLogin:', data);
       localStorage.setItem('token', data.access_token);
+      setUserID(data.userId);
       setLoggedIn(true);
       setUser(userInput);
     },
