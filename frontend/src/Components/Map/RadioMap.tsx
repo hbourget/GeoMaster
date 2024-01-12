@@ -52,40 +52,42 @@ const RadioMap = () => {
   };
 
   useEffect(() => {
-    if (gameEnd) {
-      console.log('GAME END');
-      return;
-    }
+    const handleTimerEnd = () => {
+      arrayData.push(selectedLocation);
+      setIteration((prevIteration) => prevIteration - 1);
+      setTimer(GAME_TIMER);
+
+      if (iteration === 1) {
+        // TODO: array is filled with user data, make a request if needed
+        handleGameEnd();
+      }
+    };
+
+    const handleGameEnd = () => {
+      console.log('arrayData:', arrayData);
+      setCurrentGameState('end');
+      setGameType((prevGameType) => prevGameType - 1);
+      setIteration(GAME_ITERATION);
+      setArrayData([]);
+
+      if (gameType === 1) {
+        setGameEnd(true);
+        // TODO: Make a request to the server
+      }
+    };
+
+    if (gameEnd) return;
 
     const interval = setInterval(() => {
-      if (timer > 0) {
-        setTimer(timer - 1);
-      } else if (timer === 0) {
-        // todo 1 send a request to the server with the selectedLocation
-        // todo 2 update the country to guess
-        // todo 3 reset the timer to 10
-        arrayData.push(selectedLocation);
-        setIteration(iteration - 1);
-        setTimer(GAME_TIMER);
-        // TODO reset user selection ?
-        console.log('timer ended');
-        if (iteration === 1) {
-          console.log('arrayData:', arrayData);
-          setCurrentGameState('end');
-          setGameType(gameType - 1);
-          // TODO make a request to the server
-          setIteration(GAME_ITERATION);
-          setArrayData([]);
-          if (gameType === 1) {
-            console.log('END OF THE GAME');
-
-            setGameEnd(true);
-          }
-        }
+      if (timer > 1) {
+        setTimer((prevTimer) => prevTimer - 1);
+      } else if (timer === 1) {
+        handleTimerEnd();
       }
     }, 1000);
-    return () => clearInterval(interval); // Clear the interval when the component unmounts
-  }, []);
+
+    return () => clearInterval(interval);
+  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
 
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);
