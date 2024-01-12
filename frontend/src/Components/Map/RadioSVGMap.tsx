@@ -43,48 +43,47 @@ const RadioSVGMap = ({
     return tabIndex;
   };
 
-  const isLocationSelected = (location: SVGPathElement): boolean =>
-    selectedLocation && selectedLocation.id === location.id;
-
-  const MapColor = '#DBDCB6'; // Changer aussi la variable "fill" dans SVGMap.tsx
-  const SelectionColor = '#C9FF7C';
-
-  const selectLocation = (location: SVGPathElement): void => {
-    // Reset the color of all locations
-    const allLocations = locationsRef.current?.getElementsByTagName('path');
-    if (allLocations) {
-      Array.from(allLocations).forEach((loc) => {
-        loc.style.fill = MapColor;
-      });
-    }
-
-    location.style.fill = SelectionColor;
-
-    setSelectedLocation(location);
-
-    if (onChange) {
-      onChange(location);
-    }
+  const isLocationSelected = (location: SVGPathElement): boolean => {
+    console.log('location:', location.id);
+    return selectedLocation && selectedLocation.id === location.id;
   };
 
-  const handleLocationClick = (event: React.MouseEvent): void => {
-    const clickedLocation = event.target as SVGPathElement;
+  // const MapColor = '#DBDCB6'; // Changer aussi la variable "fill" dans SVGMap.tsx
+  // const SelectionColor = '#C9FF7C';
 
-    if (clickedLocation !== selectedLocation) {
-      if (selectedLocation) {
-        selectedLocation.style.fill = MapColor;
-      }
+  // const selectLocation = (location: SVGPathElement): void => {
+  // Reset the color of all locations
+  // const allLocations = locationsRef.current?.getElementsByTagName('path');
+  // if (allLocations) {
+  //   Array.from(allLocations).forEach((loc) => {
+  //     loc.style.fill = MapColor;
+  //   });
+  // }
+  // location.style.fill = SelectionColor;
+  // setSelectedLocation(location);
+  // if (onChange) {
+  //   onChange(location);
+  // }
+  // };
 
-      selectLocation(clickedLocation);
-    } else {
-      clickedLocation.style.fill = MapColor;
-      setSelectedLocation(null);
+  // const handleLocationClick = (event: React.MouseEvent): void => {
+  //   const clickedLocation = event.target as SVGPathElement;
 
-      if (onChange) {
-        onChange(null);
-      }
-    }
-  };
+  //   if (clickedLocation !== selectedLocation) {
+  //     if (selectedLocation) {
+  //       // selectedLocation.style.fill = MapColor;
+  //     }
+
+  //     selectLocation(clickedLocation);
+  //   } else {
+  //     // clickedLocation.style.fill = MapColor;
+  //     setSelectedLocation(null);
+
+  //     if (onChange) {
+  //       onChange(null);
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     if (selectedLocationId) {
@@ -110,7 +109,7 @@ const RadioSVGMap = ({
       locationClassName={locationClassName}
       locationAriaLabel={locationAriaLabel}
       isLocationSelected={isLocationSelected}
-      onLocationClick={handleLocationClick}
+      // onLocationClick={handleLocationClick}
       onLocationMouseOver={onLocationMouseOver}
       onLocationMouseOut={onLocationMouseOut}
       onLocationMouseMove={onLocationMouseMove}

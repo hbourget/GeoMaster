@@ -1,5 +1,7 @@
 import { css } from '@styled-system/css';
 
+//svg-map.jsx
+
 const mapStyle = css({
   'width': '100%',
   'height': '100%',
@@ -11,6 +13,12 @@ const mapStyle = css({
   '&:hover': {
     fill: 'gray',
   },
+  '_checked': {
+    fill: '#C9FF7C',
+  },
+  // '&:checked': {
+  //   fill: '#C9FF7C',
+  // },
 });
 
 function SVGMap(props) {
