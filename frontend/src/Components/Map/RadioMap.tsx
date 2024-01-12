@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
-import { getLocationName } from './utils';
+// import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
 
 const RadioMap = () => {
@@ -57,37 +57,37 @@ const RadioMap = () => {
       setIteration((prevIteration) => prevIteration - 1);
       setTimer(GAME_TIMER);
 
-      if (iteration === 1) {
-        // TODO: array is filled with user data, make a request if needed
-        handleGameEnd();
-      }
-    };
+  //     if (iteration === 1) {
+  //       // TODO: array is filled with user data, make a request if needed
+  //       handleGameEnd();
+  //     }
+  //   };
 
-    const handleGameEnd = () => {
-      console.log('arrayData:', arrayData);
-      setCurrentGameState('end');
-      setGameType((prevGameType) => prevGameType - 1);
-      setIteration(GAME_ITERATION);
-      setArrayData([]);
+  //   const handleGameEnd = () => {
+  //     console.log('arrayData:', arrayData);
+  //     setCurrentGameState('end');
+  //     setGameType((prevGameType) => prevGameType - 1);
+  //     setIteration(GAME_ITERATION);
+  //     setArrayData([]);
 
-      if (gameType === 1) {
-        setGameEnd(true);
-        // TODO: Make a request to the server
-      }
-    };
+  //     if (gameType === 1) {
+  //       setGameEnd(true);
+  //       // TODO: Make a request to the server
+  //     }
+  //   };
 
-    if (gameEnd) return;
+  //   if (gameEnd) return;
 
-    const interval = setInterval(() => {
-      if (timer > 1) {
-        setTimer((prevTimer) => prevTimer - 1);
-      } else if (timer === 1) {
-        handleTimerEnd();
-      }
-    }, 1000);
+  //   const interval = setInterval(() => {
+  //     if (timer > 1) {
+  //       setTimer((prevTimer) => prevTimer - 1);
+  //     } else if (timer === 1) {
+  //       handleTimerEnd();
+  //     }
+  //   }, 1000);
 
-    return () => clearInterval(interval);
-  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
+  //   return () => clearInterval(interval);
+  // }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
 
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);
