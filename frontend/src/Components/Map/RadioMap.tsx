@@ -52,6 +52,11 @@ const RadioMap = () => {
   };
 
   useEffect(() => {
+    if (gameEnd) {
+      console.log('GAME END');
+      return;
+    }
+
     const interval = setInterval(() => {
       if (timer > 0) {
         setTimer(timer - 1);
@@ -59,10 +64,28 @@ const RadioMap = () => {
         // todo 1 send a request to the server with the selectedLocation
         // todo 2 update the country to guess
         // todo 3 reset the timer to 10
+        arrayData.push(selectedLocation);
+        setIteration(iteration - 1);
+        setTimer(GAME_TIMER);
+        // TODO reset user selection ?
+        console.log('timer ended');
+        if (iteration === 1) {
+          console.log('arrayData:', arrayData);
+          setCurrentGameState('end');
+          setGameType(gameType - 1);
+          // TODO make a request to the server
+          setIteration(GAME_ITERATION);
+          setArrayData([]);
+          if (gameType === 1) {
+            console.log('END OF THE GAME');
+
+            setGameEnd(true);
+          }
+        }
       }
     }, 1000);
-    return () => clearInterval(interval);
-  }, [timer]);
+    return () => clearInterval(interval); // Clear the interval when the component unmounts
+  }, []);
 
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);
