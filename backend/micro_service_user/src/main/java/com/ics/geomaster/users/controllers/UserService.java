@@ -16,7 +16,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     private UserMapper userMapper = new UserMapper();
-    private final RestTemplate restTemplate = new RestTemplate();
 
     public UserDTO getUserById(Integer id) {
         Optional<User> userOptional = userRepository.findById(id);

@@ -37,6 +37,13 @@ public class CountryService {
             List<Country> countries = apiResponse.getData();
 
             for (Country country : countries) {
+
+                Optional<Country> countryget = countryRepository.findByName(country.getName());
+                if (countryget.isPresent()) {
+                    System.out.println("Country already exists in database");
+                    continue;
+                }
+
                 country.setMonument("Unknown");
                 country.setName(country.getName().replace(" ", "-"));
                 if(country.getName().equalsIgnoreCase("France")){
@@ -105,6 +112,7 @@ public class CountryService {
             }
 
             countryRepository.saveAll(countries);
+            System.out.println("Countries saved to database");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
