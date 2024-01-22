@@ -94,8 +94,8 @@ const Navbar = () => {
     <div className={navbarStyle}>
       <div className={sideSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
       <div className={middleSectionStyle}>
-        <Link className={buttonStyle} to="/home">
-          Home
+        <Link className={buttonStyle} to="/Accueil">
+        Accueil
         </Link>
         <Link className={buttonStyle} to="/party">
           Party

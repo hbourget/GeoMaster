@@ -161,10 +161,10 @@ const RadioMap = () => {
       <div className={infoRoomStyle}>
         <p>NOM ROOM</p>
         <br />
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
+        <p>Joueur 1 - SCORE</p>
+        <p>Joueur 2 - SCORE</p>
+        <p>Joueur 3 - SCORE</p>
+        <p>Joueur 4 - SCORE</p>
       </div>
     </div>
   );
