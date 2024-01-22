@@ -59,20 +59,18 @@ const RadioMap = () => {
 
       if (iteration === 1) {
         // TODO: array is filled with user data, make a request if needed
-        handleGameEnd();
+        handleRoundEnd();
       }
     };
 
-    const handleGameEnd = () => {
-      console.log('arrayData:', arrayData);
-      setCurrentGameState('end');
+    const handleRoundEnd = () => {
       setGameType((prevGameType) => prevGameType - 1);
       setIteration(GAME_ITERATION);
+      sendGameDataMutation.mutate();
       setArrayData([]);
 
       if (gameType === 1) {
         setGameEnd(true);
-        // TODO: Make a request to the server
       }
     };
 
@@ -87,7 +85,7 @@ const RadioMap = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
+  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, sendGameDataMutation, timer]);
 
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);
