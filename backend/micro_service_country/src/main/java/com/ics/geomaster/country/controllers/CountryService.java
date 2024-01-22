@@ -128,13 +128,17 @@ public class CountryService {
         }
         else {
             String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, name);
-            country = countryRepository.findByName(toDisplayCase(nameEnglishFromFrench));
+            System.out.println(nameEnglishFromFrench);
+            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
+            System.out.println(formattedContryEnglishFrench);
+            country = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
             if (country.isPresent()) {
                 return country;
             }
             else {
                 String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, name);
-                country = countryRepository.findByName(toDisplayCase(nameEnglishFromSpanish));
+                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
+                country = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
                 if (country.isPresent()) {
                     return country;
                 }
@@ -153,16 +157,18 @@ public class CountryService {
             }
         }
         else {
-            String countryEnglish = Translator.translate(Language.FRENCH, Language.ENGLISH, countrySanitized);
-            countryget = countryRepository.findByName(toDisplayCase(countryEnglish));
+            String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, countrySanitized);
+            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
+            countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
             if (countryget.isPresent()) {
                 if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                     return true;
                 }
             }
             else {
-                String countrySpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, countrySanitized);
-                countryget = countryRepository.findByName(toDisplayCase(countrySpanish));
+                String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, countrySanitized);
+                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
+                countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
                 if (countryget.isPresent()) {
                     if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                         return true;
