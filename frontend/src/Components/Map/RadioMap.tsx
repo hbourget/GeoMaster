@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
 import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
 import { useAtom } from 'jotai';
-import { currentGamePlaying } from '../../jotai';
+import { currentGameID, currentUserID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
+import { useMutation } from '@tanstack/react-query';
+import { Text } from '@chakra-ui/react';
 
 const infoRoomStyle = css({
   marginLeft: '20px',
@@ -20,14 +22,48 @@ const infoRoomStyle = css({
   zIndex: '1',
 });
 
+const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
+  const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
+  console.log('gameData:', gameData);
+  console.log('filteredArray:', filteredArray);
+
+  const response = await fetch('http://localhost:8080/game/play', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+    body: JSON.stringify({
+      userId: userId,
+      gameId: gameId,
+      countryGuesses: filteredArray,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Something went wrong');
+  }
+};
+
 const RadioMap = () => {
-  const GAME_TIMER = 10;
+  const GAME_TIMER = 2;
   const GAME_ITERATION = 5;
   const GAME_TYPE = 3;
 
+  const [userID] = useAtom(currentUserID);
+  console.log('userID:', userID);
+  const [gameID] = useAtom(currentGameID);
+  console.log('gameID:', gameID);
+
+  const [countriesFlag] = useAtom(flagGuess);
+  // console.log('countriesFlag:', countriesFlag);
+  const [countriesMap] = useAtom(mapGuess);
+  // console.log('countriesMap:', countriesMap);
+  const [countriesMonument] = useAtom(monumentGuess);
+  // console.log('countriesMonument:', countriesMonument);
+
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [timer, setTimer] = useState(GAME_TIMER);
-  const [currentGameState, setCurrentGameState] = useAtom(currentGamePlaying);
   const [arrayData, setArrayData] = useState([]);
   const [iteration, setIteration] = useState(GAME_ITERATION);
   const [gameType, setGameType] = useState(GAME_TYPE); // 3 country, 2 city, 1 flag
@@ -40,6 +76,16 @@ const RadioMap = () => {
     // console.log('selectedLocation:', selectedLocation);
   };
 
+  const sendGameDataMutation = useMutation({
+    mutationFn: () => sendGameData(userID, gameID, arrayData),
+    onSuccess: () => {
+      console.log('sendGameDataMutation success');
+    },
+    onError: () => {
+      console.log('sendGameDataMutation error');
+    },
+  });
+
   useEffect(() => {
     const handleTimerEnd = () => {
       arrayData.push(selectedLocation);
@@ -48,20 +94,18 @@ const RadioMap = () => {
 
       if (iteration === 1) {
         // TODO: array is filled with user data, make a request if needed
-        handleGameEnd();
+        handleRoundEnd();
       }
     };
 
-    const handleGameEnd = () => {
-      console.log('arrayData:', arrayData);
-      setCurrentGameState('end');
+    const handleRoundEnd = () => {
       setGameType((prevGameType) => prevGameType - 1);
       setIteration(GAME_ITERATION);
+      sendGameDataMutation.mutate();
       setArrayData([]);
 
       if (gameType === 1) {
         setGameEnd(true);
-        // TODO: Make a request to the server
       }
     };
 
@@ -76,7 +120,7 @@ const RadioMap = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
+  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, sendGameDataMutation, timer]);
 
   const handleOnChange = (selectedNode) => {
     const country = selectedNode.attributes.name.value;
@@ -96,7 +140,27 @@ const RadioMap = () => {
         overflow: 'hidden',
       })}
     >
-      {!gameEnd && <p style={{ color: 'white' }}>Temps restant : {timer}</p>}
+      {!gameEnd && userID !== -1 && gameID !== -1 && (
+        <>
+          <Text fontSize="2xl" color="white">
+            You have to guess
+            {gameType === 3 ? (
+              <Text fontSize="2xl" color="white">
+                {countriesFlag[iteration]}
+              </Text>
+            ) : gameType === 2 ? (
+              <Text fontSize="2xl" color="white">
+                {countriesMap[iteration]}
+              </Text>
+            ) : gameType === 1 ? (
+              <Text fontSize="2xl" color="white">
+                {countriesMonument[iteration]}
+              </Text>
+            ) : null}
+          </Text>
+          <p style={{ color: 'white' }}>Temps restant : {timer}</p>
+        </>
+      )}
       <RadioSVGMap
         map={World}
         onLocationMouseOver={handleLocationMouseOver}

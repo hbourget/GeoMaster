@@ -5,7 +5,7 @@ import { useGetQuery } from '../../Hooks/useQuery';
 import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { currentUserID, currentGamePlaying } from '../../jotai';
+import { currentUserID, currentGameID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
 
 const containerStyle = css({
   width: '65%',
@@ -148,8 +148,10 @@ const joinRoom = async (gameId: number, userId: number) => {
 
 const Party = () => {
   const [userID] = useAtom(currentUserID);
-  const [currentGameState, setCurrentGameState] = useAtom(currentGamePlaying);
-  console.log('userID Store:', userID);
+  const [, setGameID] = useAtom(currentGameID);
+  const [, setCountriesFlag] = useAtom(flagGuess);
+  const [, setCountriesMap] = useAtom(mapGuess);
+  const [, setCountriesMonument] = useAtom(monumentGuess);
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
@@ -170,7 +172,11 @@ const Party = () => {
   const joinGameMutation = useMutation({
     mutationFn: (roomId: number) => joinRoom(roomId, userID),
     onSuccess(data) {
+      setGameID(data.id);
       console.log('Joining room data:', data);
+      setCountriesFlag(data.countriesFlag);
+      setCountriesMap(data.countriesMap);
+      setCountriesMonument(data.countriesMonument);
     },
   });
 
@@ -194,12 +200,10 @@ const Party = () => {
     console.log(`Joining room ${roomId} for user ${userID}`);
     joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     launchGameMutation.mutate(roomId);
-    console.log('currentGameStatePARTY:', currentGameState);
-    setCurrentGameState((prevGameState) => ({
-      ...prevGameState,
-      id: roomId,
-    }));
-    console.log('updatedGameStatePARTY:', currentGameState);
+    // setCurrentGameState((prevGameState) => ({
+    //   ...prevGameState,
+    //   gameID: roomId,
+    // }));
     navigate('/home');
   };
 
