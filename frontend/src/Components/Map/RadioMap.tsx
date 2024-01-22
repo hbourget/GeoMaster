@@ -8,6 +8,7 @@ import { currentGameID, currentUserID, flagGuess, mapGuess, monumentGuess } from
 import { useMutation } from '@tanstack/react-query';
 import { Text } from '@chakra-ui/react';
 import { useRef } from 'react';
+import { ElementRef } from 'react';
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
   const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
@@ -81,7 +82,7 @@ const RadioMap = () => {
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const locationsRef = useRef<SVGGElement | null>(null);
+  const locationsRef = useRef<ElementRef<'div'>>(null);
   // MAX
 
   const handleLocationMouseOver = (event) => {
@@ -105,7 +106,6 @@ const RadioMap = () => {
       setTimer(GAME_TIMER);
 
       if (iteration === 1) {
-        // TODO: array is filled with user data, make a request if needed
         handleRoundEnd();
       }
     };
@@ -144,8 +144,8 @@ const RadioMap = () => {
     userID,
   ]);
 
-  const handleOnChange = (selectedNode) => {
-    const country = selectedNode.attributes.name.value;
+  const handleOnChange = (selectedNode: SVGPathElement) => {
+    const country = selectedNode.getAttribute('name');
     console.log('country:', country);
     // if (!selectedLocation === country) {
     setSelectedLocation(country);
@@ -153,19 +153,19 @@ const RadioMap = () => {
   };
 
   // MAX
-  const handleZoom = (deltaY) => {
+  const handleZoom = (deltaY: number) => {
     setZoomLevel((prevZoom) => {
       const newZoom = deltaY > 0 ? prevZoom - 0.1 : prevZoom + 0.1;
       return Math.max(1, Math.min(newZoom, 3));
     });
   };
 
-  const handlePanStart = (event) => {
+  const handlePanStart: React.MouseEventHandler<HTMLDivElement> = (event) => {
     setPanning(true);
     setPanStart({ x: event.clientX, y: event.clientY });
   };
 
-  const handlePanMove = (event) => {
+  const handlePanMove: React.MouseEventHandler<HTMLDivElement> = (event) => {
     if (panning) {
       const dx = event.clientX - panStart.x;
       const dy = event.clientY - panStart.y;
@@ -181,7 +181,7 @@ const RadioMap = () => {
     setPanning(false);
   };
 
-  const handleWheel = (event) => {
+  const handleWheel: React.WheelEventHandler<HTMLDivElement> = (event) => {
     event.preventDefault();
     handleZoom(event.deltaY);
   };
