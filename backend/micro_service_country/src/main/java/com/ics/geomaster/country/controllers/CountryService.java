@@ -3,6 +3,8 @@ import com.google.gson.Gson;
 import com.ics.geomaster.country.models.ApiResponse;
 import com.ics.geomaster.country.models.Country;
 import com.ics.geomaster.country.models.CountryRepository;
+import net.suuft.libretranslate.Language;
+import net.suuft.libretranslate.Translator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
@@ -119,21 +121,59 @@ public class CountryService {
     }
 
     public Optional<Country> getCountry(String name) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getName().toLowerCase().replace("-", " ").contains(name.toLowerCase())) {
-                return Optional.of(country);
+        Translator.setUrlApi("http://libretranslate:5000/translate");
+        Optional<Country> country = countryRepository.findByName(toDisplayCase(name));
+        if (country.isPresent()) {
+            return country;
+        }
+        else {
+            String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, name);
+            System.out.println(nameEnglishFromFrench);
+            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
+            System.out.println(formattedContryEnglishFrench);
+            country = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
+            if (country.isPresent()) {
+                return country;
+            }
+            else {
+                String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, name);
+                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
+                country = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
+                if (country.isPresent()) {
+                    return country;
+                }
             }
         }
         return Optional.empty();
     }
 
     public Boolean getCountryByMonument(String country, String gameMonument) {
+        Translator.setUrlApi("http://libretranslate:5000/translate");
         String countrySanitized = country.replace(" ", "-");
-        Optional<Country> countryget = countryRepository.findByName(countrySanitized);
+        Optional<Country> countryget = countryRepository.findByName(toDisplayCase(countrySanitized));
         if (countryget.isPresent()) {
             if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                 return true;
+            }
+        }
+        else {
+            String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, countrySanitized);
+            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
+            countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
+            if (countryget.isPresent()) {
+                if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
+                    return true;
+                }
+            }
+            else {
+                String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, countrySanitized);
+                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
+                countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
+                if (countryget.isPresent()) {
+                    if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -144,13 +184,20 @@ public class CountryService {
         return (List<Country>) countries;
     }
 
-    public List<Country> getCountriesByContinent(String continent) {
-        Iterable<Country> countries = countryRepository.findAll();
-        for (Country country : countries) {
-            if (country.getContinent().toLowerCase().replace("-", " ").contains(continent.toLowerCase())) {
-                return (List<Country>) countries;
-            }
+    public static String toDisplayCase(String s) {
+
+        final String ACTIONABLE_DELIMITERS = " '-/";
+
+        StringBuilder sb = new StringBuilder();
+        boolean capNext = true;
+
+        for (char c : s.toCharArray()) {
+            c = (capNext)
+                    ? Character.toUpperCase(c)
+                    : Character.toLowerCase(c);
+            sb.append(c);
+            capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0);
         }
-        return null;
+        return sb.toString();
     }
 }

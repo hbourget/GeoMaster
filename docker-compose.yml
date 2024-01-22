@@ -94,6 +94,13 @@ services:
     networks:
       - archistack
 
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    ports:
+      - '5000:5000'
+    networks:
+      - archistack
+
 volumes:
   postgres-data:
 

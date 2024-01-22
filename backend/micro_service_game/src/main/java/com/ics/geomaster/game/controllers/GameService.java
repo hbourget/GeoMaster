@@ -123,7 +123,8 @@ public class GameService {
         else if (game.getStatus() == 2) {
             for (int i = 0; i < 5; i++) {
                 String countryName = countryGuesses.get(i);
-                ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + countryName, Country.class);
+                String formattedCountryName = countryName.replace(" ", "-");
+                ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
                 if (responseEntity.getStatusCode().is2xxSuccessful()) {
                     Country country = responseEntity.getBody();
                     if (country != null) {
@@ -143,7 +144,8 @@ public class GameService {
         else if (game.getStatus() == 3) {
             for (int i = 0; i < 5; i++) {
                 String countryName = countryGuesses.get(i);
-                ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/monument/" + countryName + "/" + game.getCountriesMonument().get(i), Boolean.class);
+                String formattedCountryName = countryName.replace(" ", "-");
+                ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/monument/" + formattedCountryName + "/" + game.getCountriesMonument().get(i), Boolean.class);
                 if (responseEntity.getStatusCode().value() == 200) {
                     Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
                     userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 15);
