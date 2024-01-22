@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
 import { getLocationName } from './utils';
@@ -7,20 +7,6 @@ import { useAtom } from 'jotai';
 import { currentGameID, currentUserID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
 import { useMutation } from '@tanstack/react-query';
 import { Text } from '@chakra-ui/react';
-
-const infoRoomStyle = css({
-  marginLeft: '20px',
-  marginTop: '20px',
-  color: 'white',
-  fontWeight: 'bold',
-  backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  padding: '10px',
-  borderRadius: '8px',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '1',
-});
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
   const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
@@ -46,7 +32,7 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
 };
 
 const RadioMap = () => {
-  const GAME_TIMER = 2;
+  const GAME_TIMER = 10;
   const GAME_ITERATION = 5;
   const GAME_TYPE = 3;
 
@@ -64,14 +50,11 @@ const RadioMap = () => {
   const [arrayData, setArrayData] = useState([]);
   const [iteration, setIteration] = useState(GAME_ITERATION);
   const guessIteration = 5 - iteration;
-  const [gameType, setGameType] = useState(GAME_TYPE); // 3 country, 2 city, 1 flag
+  const [gameType, setGameType] = useState(GAME_TYPE);
   const [gameEnd, setGameEnd] = useState(false);
 
   const handleLocationMouseOver = (event) => {
-    const LocationName = getLocationName(event);
-    // console.log('--------------------------------------------');
-    // console.log('LocationName:', LocationName);
-    // console.log('selectedLocation:', selectedLocation);
+    getLocationName(event);
   };
 
   const sendGameDataMutation = useMutation({
@@ -110,7 +93,7 @@ const RadioMap = () => {
     if (gameEnd) return;
 
     const interval = setInterval(() => {
-      if (timer > 1) {
+      if (timer > 1 && userID !== -1 && gameID !== -1) {
         setTimer((prevTimer) => prevTimer - 1);
       } else if (timer === 1) {
         handleTimerEnd();
@@ -118,7 +101,17 @@ const RadioMap = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, sendGameDataMutation, timer]);
+  }, [
+    arrayData,
+    gameEnd,
+    gameID,
+    gameType,
+    iteration,
+    selectedLocation,
+    sendGameDataMutation,
+    timer,
+    userID,
+  ]);
 
   const handleOnChange = (selectedNode) => {
     const country = selectedNode.attributes.name.value;
@@ -141,7 +134,8 @@ const RadioMap = () => {
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text fontSize="2xl" color="white">
-            You have to guess
+            You have to guess{' '}
+            {gameType === 3 ? 'the country' : gameType === 2 ? 'the city' : 'the flag'} of{' '}
             {gameType === 3 ? (
               <Text fontSize="2xl" color="white">
                 {countriesFlag[guessIteration]}
@@ -164,14 +158,6 @@ const RadioMap = () => {
         onLocationMouseOver={handleLocationMouseOver}
         onChange={handleOnChange}
       />
-      <div className={infoRoomStyle}>
-        <p>NOM ROOM</p>
-        <br></br>
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
-        <p>Maxime - SCORE</p>
-      </div>
     </div>
   );
 };
