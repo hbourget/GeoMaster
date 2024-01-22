@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  # PostgreSQL
+  # Database
   db:
     image: postgres:latest
     environment:
@@ -13,7 +13,7 @@ services:
     networks:
       - archistack
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -26,9 +26,9 @@ services:
         - archistack
     depends_on:
       - db
-    restart: always
 
   # Backend
+
   country:
     build:
       context: ./backend
@@ -36,68 +36,57 @@ services:
     depends_on:
       - db
     environment:
-      JDBC_URL: db
-      JDBC_PORT: 5432
-      JDBC_DB: postgres
-      JDBC_USER: postgres
-      JDBC_PASSWORD: postgres
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     ports:
       - '8082:8082'
     networks:
       - archistack
 
-#  user:
-#    build:
-#      context: ./backend
-#      dockerfile: ./micro_service_user/Dockerfile
-#    depends_on:
-#      - db
-#    environment:
-#      JDBC_URL: db
-#      JDBC_PORT: 5432
-#      JDBC_DB: postgres
-#      JDBC_USER: postgres
-#      JDBC_PASSWORD: postgres
-#    ports:
-#      - '8081:8081'
-#    networks:
-#      - archistack
-#
-#  game:
-#    build:
-#      context: ./backend
-#      dockerfile: ./micro_service_game/Dockerfile
-#    depends_on:
-#      - db
-#    environment:
-#      JDBC_URL: db
-#      JDBC_PORT: 5432
-#      JDBC_DB: postgres
-#      JDBC_USER: postgres
-#      JDBC_PASSWORD: postgres
-#    ports:
-#      - '8083:8083'
-#    networks:
-#      - archistack
-#
-#  proxyauth:
-#    build:
-#      context: ./backend
-#      dockerfile: ./micro_service_proxyauth/Dockerfile
-#    depends_on:
-#      - db
-#    environment:
-#      JDBC_URL: db
-#      JDBC_PORT: 5432
-#      JDBC_DB: postgres
-#      JDBC_USER: postgres
-#      JDBC_PASSWORD: postgres
-#    ports:
-#      - '8080:8080'
-#    networks:
-#      - archistack
+  user:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_user/Dockerfile
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - '8081:8081'
+    networks:
+      - archistack
+
+  game:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_game/Dockerfile
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - '8083:8083'
+    networks:
+      - archistack
+
+  proxyauth:
+    build:
+      context: ./backend
+      dockerfile: ./micro_service_proxyauth/Dockerfile
+    depends_on:
+      - db
+    ports:
+      - '8080:8080'
+    networks:
+      - archistack
 
   # Frontend
+
   frontend:
     build: ./frontend
     ports:
