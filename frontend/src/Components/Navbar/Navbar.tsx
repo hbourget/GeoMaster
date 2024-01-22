@@ -58,6 +58,11 @@ const Navbar = () => {
     color: '#fff',
   });
 
+  const inputStyle = css({
+    width: '50%',
+    backgroundColor: '#fff',
+  });
+
   const sideSectionStyle = css({
     display: 'flex',
     alignItems: 'center',
@@ -80,6 +85,11 @@ const Navbar = () => {
     },
   });
 
+  const ConnexionButtonStyle = css({
+    width: '100%',
+  });
+
+
   return (
     <div className={navbarStyle}>
       <div className={sideSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
@@ -100,26 +110,25 @@ const Navbar = () => {
           <form
             className={css({
               display: 'flex',
+              marginRight: '30px',
             })}
             action="GET"
           >
             <Input
               onChange={(e) => setUserInput(e.target.value)}
-              // className={inputStyle}
               value={userInput}
               autoComplete="user"
               type="text"
               placeholder="Nom d'utilisateur"
             />
             <Input
-              // className={inputStyle}
               onChange={(e) => setPasswordInput(e.target.value)}
               value={passwordInput}
               autoComplete="current-password"
               type="password"
               placeholder="Mot de passe"
             />
-            <Button className={buttonStyle} onClick={() => handleLogin()}>
+            <Button className={ConnexionButtonStyle} onClick={() => handleLogin()}>
               Connexion
             </Button>
           </form>
