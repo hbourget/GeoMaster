@@ -1,42 +1,101 @@
 version: '3'
 
 services:
+  # PostgreSQL
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    networks:
+      - archistack
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@test.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    ports:
+      - "5050:80"
+    networks:
+        - archistack
+    depends_on:
+      - db
+    restart: always
+
   # Backend
   country:
     build:
       context: ./backend
       dockerfile: ./micro_service_country/Dockerfile
+    depends_on:
+      - db
+    environment:
+      JDBC_URL: db
+      JDBC_PORT: 5432
+      JDBC_DB: postgres
+      JDBC_USER: postgres
+      JDBC_PASSWORD: postgres
     ports:
       - '8082:8082'
     networks:
       - archistack
 
-  user:
-    build:
-      context: ./backend
-      dockerfile: ./micro_service_user/Dockerfile
-    ports:
-      - '8081:8081'
-    networks:
-      - archistack
-
-  game:
-    build:
-      context: ./backend
-      dockerfile: ./micro_service_game/Dockerfile
-    ports:
-      - '8083:8083'
-    networks:
-      - archistack
-
-  proxyauth:
-    build:
-      context: ./backend
-      dockerfile: ./micro_service_proxyauth/Dockerfile
-    ports:
-      - '8080:8080'
-    networks:
-      - archistack
+#  user:
+#    build:
+#      context: ./backend
+#      dockerfile: ./micro_service_user/Dockerfile
+#    depends_on:
+#      - db
+#    environment:
+#      JDBC_URL: db
+#      JDBC_PORT: 5432
+#      JDBC_DB: postgres
+#      JDBC_USER: postgres
+#      JDBC_PASSWORD: postgres
+#    ports:
+#      - '8081:8081'
+#    networks:
+#      - archistack
+#
+#  game:
+#    build:
+#      context: ./backend
+#      dockerfile: ./micro_service_game/Dockerfile
+#    depends_on:
+#      - db
+#    environment:
+#      JDBC_URL: db
+#      JDBC_PORT: 5432
+#      JDBC_DB: postgres
+#      JDBC_USER: postgres
+#      JDBC_PASSWORD: postgres
+#    ports:
+#      - '8083:8083'
+#    networks:
+#      - archistack
+#
+#  proxyauth:
+#    build:
+#      context: ./backend
+#      dockerfile: ./micro_service_proxyauth/Dockerfile
+#    depends_on:
+#      - db
+#    environment:
+#      JDBC_URL: db
+#      JDBC_PORT: 5432
+#      JDBC_DB: postgres
+#      JDBC_USER: postgres
+#      JDBC_PASSWORD: postgres
+#    ports:
+#      - '8080:8080'
+#    networks:
+#      - archistack
 
   # Frontend
   frontend:
@@ -45,6 +104,9 @@ services:
       - '80:80'
     networks:
       - archistack
+
+volumes:
+  postgres-data:
 
 networks:
   archistack:
