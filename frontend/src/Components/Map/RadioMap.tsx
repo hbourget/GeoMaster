@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
-// import { getLocationName } from './utils';
+import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
 import { useAtom } from 'jotai';
 import { currentGamePlaying } from '../../jotai';
@@ -33,57 +33,57 @@ const RadioMap = () => {
   const [gameType, setGameType] = useState(GAME_TYPE); // 3 country, 2 city, 1 flag
   const [gameEnd, setGameEnd] = useState(false);
 
-  // const handleLocationMouseOver = (event) => {
-  //   event.target.setAttribute('style', 'fill: #777');
-  //   // const LocationName = getLocationName(event);
-  // };
+  const handleLocationMouseOver = (event) => {
+    const LocationName = getLocationName(event);
+    // console.log('--------------------------------------------');
+    // console.log('LocationName:', LocationName);
+    // console.log('selectedLocation:', selectedLocation);
+  };
 
-  // const handleLocationMouseOut = (event) => {
-  //   event.target.setAttribute('style', 'fill: #DBDCB6');
-  //   // const LocationName = getLocationName(event);
-  // };
+  useEffect(() => {
+    const handleTimerEnd = () => {
+      arrayData.push(selectedLocation);
+      setIteration((prevIteration) => prevIteration - 1);
+      setTimer(GAME_TIMER);
 
-  // useEffect(() => {
-  //   const handleTimerEnd = () => {
-  //     arrayData.push(selectedLocation);
-  //     setIteration((prevIteration) => prevIteration - 1);
-  //     setTimer(GAME_TIMER);
+      if (iteration === 1) {
+        // TODO: array is filled with user data, make a request if needed
+        handleGameEnd();
+      }
+    };
 
-  //     if (iteration === 1) {
-  //       // TODO: array is filled with user data, make a request if needed
-  //       handleGameEnd();
-  //     }
-  //   };
+    const handleGameEnd = () => {
+      console.log('arrayData:', arrayData);
+      setCurrentGameState('end');
+      setGameType((prevGameType) => prevGameType - 1);
+      setIteration(GAME_ITERATION);
+      setArrayData([]);
 
-  //   const handleGameEnd = () => {
-  //     console.log('arrayData:', arrayData);
-  //     setCurrentGameState('end');
-  //     setGameType((prevGameType) => prevGameType - 1);
-  //     setIteration(GAME_ITERATION);
-  //     setArrayData([]);
+      if (gameType === 1) {
+        setGameEnd(true);
+        // TODO: Make a request to the server
+      }
+    };
 
-  //     if (gameType === 1) {
-  //       setGameEnd(true);
-  //       // TODO: Make a request to the server
-  //     }
-  //   };
+    if (gameEnd) return;
 
-  //   if (gameEnd) return;
+    const interval = setInterval(() => {
+      if (timer > 1) {
+        setTimer((prevTimer) => prevTimer - 1);
+      } else if (timer === 1) {
+        handleTimerEnd();
+      }
+    }, 1000);
 
-  //   const interval = setInterval(() => {
-  //     if (timer > 1) {
-  //       setTimer((prevTimer) => prevTimer - 1);
-  //     } else if (timer === 1) {
-  //       handleTimerEnd();
-  //     }
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
+    return () => clearInterval(interval);
+  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, setCurrentGameState, timer]);
 
   const handleOnChange = (selectedNode) => {
     const country = selectedNode.attributes.name.value;
+    console.log('country:', country);
+    // if (!selectedLocation === country) {
     setSelectedLocation(country);
+    // }
   };
 
   return (
@@ -99,8 +99,7 @@ const RadioMap = () => {
       {!gameEnd && <p style={{ color: 'white' }}>Temps restant : {timer}</p>}
       <RadioSVGMap
         map={World}
-        // onLocationMouseOver={handleLocationMouseOver}
-        // onLocationMouseOut={handleLocationMouseOut}
+        onLocationMouseOver={handleLocationMouseOver}
         onChange={handleOnChange}
       />
       <div className={infoRoomStyle}>
