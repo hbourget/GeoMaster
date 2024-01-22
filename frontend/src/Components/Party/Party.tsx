@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 import { useGetQuery } from '../../Hooks/useQuery';
@@ -152,7 +151,6 @@ const Party = () => {
   const [, setCountriesFlag] = useAtom(flagGuess);
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
-  const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
   const gamesList = useGetQuery<Party[]>({
@@ -162,10 +160,8 @@ const Party = () => {
 
   const createGameMutation = useMutation({
     mutationFn: () => createRoom(userID),
-    onSuccess(data) {
-      setRooms((prevRooms) => [...prevRooms, { id: data.id, status: data.status }]);
+    onSuccess() {
       gamesList.refetch();
-      console.log('Create room data:', rooms);
     },
   });
 
@@ -173,7 +169,6 @@ const Party = () => {
     mutationFn: (roomId: number) => joinRoom(roomId, userID),
     onSuccess(data) {
       setGameID(data.id);
-      console.log('Joining room data:', data);
       setCountriesFlag(data.countriesFlag);
       setCountriesMap(data.countriesMap);
       setCountriesMonument(data.countriesMonument);
@@ -191,8 +186,7 @@ const Party = () => {
     },
   });
 
-  const handleCreateRoom = async (userID: number) => {
-    console.log('Creating room for user:', userID);
+  const handleCreateRoom = async () => {
     createGameMutation.mutate();
   };
 
@@ -200,10 +194,6 @@ const Party = () => {
     console.log(`Joining room ${roomId} for user ${userID}`);
     joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     launchGameMutation.mutate(roomId);
-    // setCurrentGameState((prevGameState) => ({
-    //   ...prevGameState,
-    //   gameID: roomId,
-    // }));
     navigate('/home');
   };
 
@@ -212,7 +202,7 @@ const Party = () => {
       <div className={sectionStyle}>
         <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
 
-        <Button className={joinButtonStyle} onClick={() => handleCreateRoom(userID)}>
+        <Button className={joinButtonStyle} onClick={() => handleCreateRoom()}>
           Créer
         </Button>
       </div>

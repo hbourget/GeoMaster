@@ -77,7 +77,7 @@ const RadioMap = () => {
     if (gameEnd) return;
 
     const interval = setInterval(() => {
-      if (timer > 1) {
+      if (timer > 1 && userID !== -1 && gameID !== -1) {
         setTimer((prevTimer) => prevTimer - 1);
       } else if (timer === 1) {
         handleTimerEnd();
@@ -85,7 +85,17 @@ const RadioMap = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [arrayData, gameEnd, gameType, iteration, selectedLocation, sendGameDataMutation, timer]);
+  }, [
+    arrayData,
+    gameEnd,
+    gameID,
+    gameType,
+    iteration,
+    selectedLocation,
+    sendGameDataMutation,
+    timer,
+    userID,
+  ]);
 
   const handleOnChange = (selectedNode) => {
     setSelectedLocation(selectedNode.attributes.name.value);

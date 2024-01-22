@@ -108,7 +108,6 @@ const Navbar = () => {
           Inscription
         </Link>
       </div>
-      <p>Score:</p>
       <div className={sideSectionStyle}>
         {!loggedIn ? (
           <form
