@@ -1,47 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import World from '@svg-maps/world';
 import RadioSVGMap from './RadioSVGMap';
 import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
 
-const infoRoomStyle = css({
-  marginLeft: '20px',
-  marginTop: '20px',
-  color: 'white',
-  fontWeight: 'bold',
-  backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  padding: '10px',
-  borderRadius: '8px',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '1',
-});
-
-const containerStyle = css({
-  width: '100%',
-  marginTop: '2%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white',
-  overflow: 'hidden',
-});
-
-const zoomControlStyle = css({
-  display: 'flex',
-  justifyContent: 'center',
-  marginBottom: '10px',
-  width: '100%',
-  position: 'absolute',
-  top: '10px',
-  zIndex: '2',
-});
-
 const RadioMap = () => {
-  const [prouti, setPointedLocation] = useState(null);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [, setPointedLocation] = useState(null);
+  const [, setSelectedLocation] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panning, setPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
@@ -52,7 +17,7 @@ const RadioMap = () => {
   const handleZoom = (deltaY) => {
     setZoomLevel((prevZoom) => {
       const newZoom = deltaY > 0 ? prevZoom - 0.1 : prevZoom + 0.1;
-      return Math.max(1 , Math.min(newZoom, 3)); // Limitation du niveau de zoom
+      return Math.max(1, Math.min(newZoom, 3)); // Limitation du niveau de zoom
     });
   };
 
@@ -110,7 +75,7 @@ const RadioMap = () => {
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
-    position: 'relative', // Ajout de cette propriété
+    position: 'relative',
   });
 
   const zoomControlStyle = css({
@@ -118,8 +83,8 @@ const RadioMap = () => {
     justifyContent: 'space-between',
     marginBottom: '10px',
     width: '60%',
-    position: 'absolute', // Ajout de cette propriété
-    top: '10px', // Ajustez cette valeur selon votre mise en page
+    position: 'absolute',
+    top: '10px',
   });
 
   return (
@@ -132,11 +97,11 @@ const RadioMap = () => {
       <div
         className={zoomControlStyle}
         style={{
-          transformOrigin: `${(mousePosition.x - panOffset.x) / locationsRef.current?.clientWidth * 100}% ${(mousePosition.y - panOffset.y) / locationsRef.current?.clientHeight * 100}%`,
+          transformOrigin: `${
+            ((mousePosition.x - panOffset.x) / locationsRef.current?.clientWidth) * 100
+          }% ${((mousePosition.y - panOffset.y) / locationsRef.current?.clientHeight) * 100}%`,
         }}
-      >
-        {/* ... Boutons Zoom In et Zoom Out ici si vous le souhaitez */}
-      </div>
+      ></div>
 
       <div
         style={{
@@ -156,15 +121,6 @@ const RadioMap = () => {
           onLocationMouseOut={handleLocationMouseOut}
           onChange={handleOnChange}
         />
-      </div>
-
-      <div className={infoRoomStyle}>
-        <p>NOM ROOM</p>
-        <br />
-        <p>Joueur 1 - SCORE</p>
-        <p>Joueur 2 - SCORE</p>
-        <p>Joueur 3 - SCORE</p>
-        <p>Joueur 4 - SCORE</p>
       </div>
     </div>
   );
