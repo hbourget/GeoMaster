@@ -56,16 +56,14 @@ const RadioMap = () => {
   console.log('gameID:', gameID);
 
   const [countriesFlag] = useAtom(flagGuess);
-  // console.log('countriesFlag:', countriesFlag);
   const [countriesMap] = useAtom(mapGuess);
-  // console.log('countriesMap:', countriesMap);
   const [countriesMonument] = useAtom(monumentGuess);
-  // console.log('countriesMonument:', countriesMonument);
 
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [timer, setTimer] = useState(GAME_TIMER);
   const [arrayData, setArrayData] = useState([]);
   const [iteration, setIteration] = useState(GAME_ITERATION);
+  const guessIteration = 5 - iteration;
   const [gameType, setGameType] = useState(GAME_TYPE); // 3 country, 2 city, 1 flag
   const [gameEnd, setGameEnd] = useState(false);
 
@@ -146,15 +144,15 @@ const RadioMap = () => {
             You have to guess
             {gameType === 3 ? (
               <Text fontSize="2xl" color="white">
-                {countriesFlag[iteration]}
+                {countriesFlag[guessIteration]}
               </Text>
             ) : gameType === 2 ? (
               <Text fontSize="2xl" color="white">
-                {countriesMap[iteration]}
+                {countriesMap[guessIteration]}
               </Text>
             ) : gameType === 1 ? (
               <Text fontSize="2xl" color="white">
-                {countriesMonument[iteration]}
+                {countriesMonument[guessIteration]}
               </Text>
             ) : null}
           </Text>
