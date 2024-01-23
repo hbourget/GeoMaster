@@ -22,6 +22,7 @@ const labelStyle = css({
   marginBottom: '20px',
   marginTop: '-15px',
   fontWeight: 'bold',
+  color: 'black',
 });
 
 const inputStyle = css({

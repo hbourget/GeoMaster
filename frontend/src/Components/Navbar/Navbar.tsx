@@ -165,6 +165,7 @@ const Navbar = () => {
               placeholder="Nom d'utilisateur"
               marginRight={2}
               backgroundColor={'white'}
+              color={'black'}
             />
             <Input
               className={`${responsiveInputStyles}`}
@@ -175,6 +176,7 @@ const Navbar = () => {
               placeholder="Mot de passe"
               marginRight={2}
               backgroundColor={'white'}
+              color={'black'}
             />
             <button type="button" className="btn btn-primary" style={start}>
               Connexion
