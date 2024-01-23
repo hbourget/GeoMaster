@@ -5,6 +5,7 @@ import { Button } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { currentUserID, currentGameID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
+import { useState } from 'react';
 
 const containerStyle = css({
   width: '65%',
@@ -151,6 +152,8 @@ const Party = () => {
   const [, setCountriesFlag] = useAtom(flagGuess);
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
+  const [play, setPlay] = useState(false);
+  const [tojoinRoomID, setTojoinRoomID] = useState(-1);
   const navigate = useNavigate();
 
   const gamesList = useGetQuery<Party[]>({
@@ -193,8 +196,9 @@ const Party = () => {
   const handleJoinRoom = (roomId: number) => {
     console.log(`Joining room ${roomId} for user ${userID}`);
     joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
-    launchGameMutation.mutate(roomId);
-    navigate('/home');
+    // launchGameMutation.mutate(roomId);
+    setPlay(true);
+    setTojoinRoomID(roomId);
   };
 
   return (
@@ -223,6 +227,17 @@ const Party = () => {
               </li>
             ))}
         </ul>
+        {play && (
+          <Button
+            backgroundColor={'#007BFF'}
+            onClick={() => {
+              launchGameMutation.mutate(tojoinRoomID);
+              navigate('/home');
+            }}
+          >
+            Play
+          </Button>
+        )}
       </div>
     </div>
   );
