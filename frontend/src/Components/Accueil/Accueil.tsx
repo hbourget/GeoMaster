@@ -24,42 +24,66 @@ const leaderboard = css({
   boxShadow: '0 0 10px white',
 });
 
-const triangleStyle = css({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: 0,
-  height: 0,
-  borderStyle: 'solid',
-  borderWidth: '0 50px 50px 0',
-  borderColor: 'transparent #007BFF transparent transparent',
-});
+const MasterligneStyles = {
+  backgroundColor: '#004590',
+  borderRadius: '8px',
+  padding: '3%',
+  marginBottom: '2%',
+  fontWeight: 'bold',
+};
 
+const ligneStyles = {
+  backgroundColor: '#007BFF',
+  borderRadius: '8px',
+  padding: '3%',
+  marginBottom: '2%',
+  fontWeight: 'bold',
+};
 
 const Accueil = () => {
   return (
     <div className={containerStyle}>
-      <h1 style={{ fontSize: '40px', fontWeight: 'bold' }}>Bienvenue</h1>
+      <h1
+        style={{
+          fontSize: '40px',
+          fontWeight: 'bold',
+          marginBottom: '1%',
+          textShadow: '0 0 10px black',
+        }}
+      >
+        GeoMaster
+      </h1>
       <br />
-      <button className="btn btn-primary">Primary button</button>
-
-
-
 
       <div className={leaderboard}>
-      <div className={triangleStyle}></div>
-      <p>Contenu du conteneur</p>
-    </div>
+        <h4>Meilleurs joueurs</h4>
+        <br></br>
 
+        <div className="container text-center conteneur">
+          <div className="AccueilHover row row-cols-3" style={MasterligneStyles}>
+            <div className="col">Rang</div>
+            <div className="col">Nom</div>
+            <div className="col">Score</div>
+          </div>
 
-
-
+          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
+            <div className="col">1</div>
+            <div className="col">Hug</div>
+            <div className="col">4500</div>
+          </div>
+          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
+            <div className="col">2</div>
+            <div className="col">Max</div>
+            <div className="col">2500</div>
+          </div>
+          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
+            <div className="col">3</div>
+            <div className="col">Clem</div>
+            <div className="col">300</div>
+          </div>
+        </div>
+      </div>
       <br />
-      <button
-        style={{ background: '#007BFF', padding: '5px', color: '#fff', borderRadius: '5px' }}
-      >
-        Valider
-      </button>
     </div>
   );
 };

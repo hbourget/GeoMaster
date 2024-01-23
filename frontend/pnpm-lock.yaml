@@ -20,6 +20,9 @@ dependencies:
   '@svg-maps/world':
     specifier: ^1.0.1
     version: 1.0.1
+  '@syncfusion/ej2-maps':
+    specifier: ^24.1.47
+    version: 24.1.47
   '@tanstack/react-query':
     specifier: ^5.17.9
     version: 5.17.9(react@18.2.0)
@@ -32,6 +35,9 @@ dependencies:
   jotai:
     specifier: ^2.6.1
     version: 2.6.1(@types/react@18.2.47)(react@18.2.0)
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -2335,6 +2341,63 @@ packages:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
 
+  /@syncfusion/ej2-base@24.1.46:
+    resolution: {integrity: sha512-j3vP58FDERsePoEKf3IieMIBc9R/9tkesKlMjoAlwDYDLXX1ugTpVA3S0ebKq7FqzUt5GLnqcHV86kbCMcUINQ==}
+    hasBin: true
+    dependencies:
+      '@syncfusion/ej2-icons': 24.1.41
+    dev: false
+
+  /@syncfusion/ej2-buttons@24.1.46:
+    resolution: {integrity: sha512-qkMtytjJh+3CBdtobli28n4SATBdyKrTVVSSs3JT8uWQmN40h13TYk1bwZSm/NthImI1jjTRdb+01BI/hA8Imw==}
+    dependencies:
+      '@syncfusion/ej2-base': 24.1.46
+    dev: false
+
+  /@syncfusion/ej2-compression@24.1.41:
+    resolution: {integrity: sha512-OO3Am1WXMi+6V25QG3iySmikWA2gXWgKh4B9p1L8nksUptrvfdNFJqzNEEdZWoF9ftOMWHcagwklbFATjxEgRw==}
+    dependencies:
+      '@syncfusion/ej2-file-utils': 24.1.41
+    dev: false
+
+  /@syncfusion/ej2-data@24.1.41:
+    resolution: {integrity: sha512-xKSaV7CaF8K37nIf9SuG6387mqXoNt+k4uqiAI1Xsp9Z+UkpEd8wm1skeW2qJao5AyxVhUhV6MtX9grO8udCjg==}
+    dependencies:
+      '@syncfusion/ej2-base': 24.1.46
+    dev: false
+
+  /@syncfusion/ej2-file-utils@24.1.41:
+    resolution: {integrity: sha512-lMCSB9kZrn2qe7UvFq8N2xERCu8sCg+5LRESjlsB4+k+02MLhponHmMzAPbvMr3DJ5ctb7A1dihAdQT0Mwd3Jg==}
+    dev: false
+
+  /@syncfusion/ej2-icons@24.1.41:
+    resolution: {integrity: sha512-r44Xr0QC1iGP6Ed5UVNyfIa3lmcDn680nzNoUbykUv02JaJv6nF0OQZeZNjjY3m8YrFhYCHdms0h9A9sU7c9/Q==}
+    dev: false
+
+  /@syncfusion/ej2-maps@24.1.47:
+    resolution: {integrity: sha512-Yc489St6k8GFgY/mdRW+d7cXRDELIpnaovLjfD/zK6rPIEIJE7FH6B4zSE75WltzSl+QSBiuhLAHxDcZVTgUmA==}
+    dependencies:
+      '@syncfusion/ej2-base': 24.1.46
+      '@syncfusion/ej2-buttons': 24.1.46
+      '@syncfusion/ej2-compression': 24.1.41
+      '@syncfusion/ej2-data': 24.1.41
+      '@syncfusion/ej2-file-utils': 24.1.41
+      '@syncfusion/ej2-pdf-export': 24.1.47
+      '@syncfusion/ej2-svg-base': 24.1.47
+    dev: false
+
+  /@syncfusion/ej2-pdf-export@24.1.47:
+    resolution: {integrity: sha512-S6MQTXdCAQFWJoD+3Xm86TvBc/o93GrZQsoSonO/MRRLNJ/HCKvlzKtwXohyJ8kuTtwNKxB84yTU0/t/lCCsCA==}
+    dependencies:
+      '@syncfusion/ej2-compression': 24.1.41
+    dev: false
+
+  /@syncfusion/ej2-svg-base@24.1.47:
+    resolution: {integrity: sha512-WXzs3dYx4fXmqsAVnq8HqBLgj8artBROW7KjSpA6oeYC+IxgEJlQBObCSOc8NZnj3HVH160zNcdzOmc5R4tvcg==}
+    dependencies:
+      '@syncfusion/ej2-base': 24.1.46
+    dev: false
+
   /@tanstack/query-core@5.17.9:
     resolution: {integrity: sha512-8xcvpWIPaRMDNLMvG9ugcUJMgFK316ZsqkPPbsI+TMZsb10N9jk0B6XgPk4/kgWC2ziHyWR7n7wUhxmD0pChQw==}
     dev: false
@@ -3619,6 +3682,10 @@ packages:
   /lodash.uniq@4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
     dev: true
+
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
 
   /look-it-up@2.1.0:
     resolution: {integrity: sha512-nMoGWW2HurtuJf6XAL56FWTDCWLOTSsanrgwOyaR5Y4e3zfG5N/0cU5xWZSEU3tBxhQugRbV1xL9jb+ug7yZww==}

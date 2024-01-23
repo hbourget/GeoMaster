@@ -196,9 +196,8 @@ const RadioMap = () => {
 
   return (
     <div
-      style={{ marginTop: '1%' }}
       className={css({
-        width: '60%',
+        width: '99%',
         height: '100%',
         margin: 'auto',
         overflow: 'hidden',

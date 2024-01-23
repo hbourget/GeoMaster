@@ -1,1 +1,7 @@
 @layer reset, base, tokens, recipes, utilities;
+
+.AccueilHover:hover {
+    background-color: #004590 !important;
+    transition: 0.5s;
+    border: none !important;
+}

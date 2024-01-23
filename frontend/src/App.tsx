@@ -13,7 +13,7 @@ const containerStyle = css({
   height: '100vh',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#73CAFF',
+  backgroundColor: '#4ABBFF',
   // background: 'radial-gradient(circle, #35B2F1, #003366)',
   flexDirection: 'column',
 });
@@ -36,8 +36,8 @@ const App = () => {
           <div className={contentStyle}>
             <Routes>
               <Route path="/" element={<Accueil />} />
-              <Route path="/accueil" element={<Accueil />} />
-              <Route path="/home" element={<RadioMap />} />
+              <Route path="/map" element={<RadioMap />} />
+              <Route path="/home" element={<Accueil />} />
               <Route path="/party" element={<Party />} />
               <Route path="/inscription" element={<Inscription />} />
               <Route path="/flagguesser" element={<FlagGuesser />} />

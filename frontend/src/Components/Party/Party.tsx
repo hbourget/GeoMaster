@@ -19,9 +19,11 @@ const containerStyle = css({
 //todo update style for room list to not overflow until screen border
 const sectionStyle = css({
   marginBottom: '20px',
+  marginTop: '20px',
   padding: '20px',
-  backgroundColor: '#fff',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  backgroundColor: '#007BFF',
+  boxShadow: '0 0 10px #004590',
+  color: 'white',
   borderRadius: '8px',
   width: '100%',
   maxWidth: '400px',
@@ -197,18 +199,22 @@ const Party = () => {
     navigate('/home');
   };
 
-  return (
-    <div className={containerStyle} style={{ marginTop: '2%' }}>
-      <div className={sectionStyle}>
-        <h2 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h2>
+  const Createbutton = {
+    backgroundColor: '#004590',
+  };
 
-        <Button className={joinButtonStyle} onClick={() => handleCreateRoom()}>
+  return (
+    <div className={containerStyle} style={{ marginTop: '5%' }}>
+      <div className={sectionStyle}>
+        <h3 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h3>
+
+        <button type="button" className="btn btn-primary" style={Createbutton}>
           Créer
-        </Button>
+        </button>
       </div>
 
       <div className={sectionStyle}>
-        <h2 style={{ fontWeight: 'bold', color: 'black' }}>Liste des rooms</h2>
+        <h2>Liste des rooms</h2>
         <ul style={{ listStyle: 'none', padding: 0, overflowY: 'auto', maxHeight: '300px' }}>
           {gamesList.isLoading && <div>Loading rooms...</div>}
           {gamesList.isError && <div>Error loading rooms</div>}

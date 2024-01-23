@@ -58,7 +58,7 @@ const Navbar = () => {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px',
-    backgroundColor: '#73CAFF',
+    backgroundColor: '#4ABBFF',
     color: '#fff',
   });
 
@@ -71,29 +71,49 @@ const Navbar = () => {
     display: 'flex',
   });
 
-  const buttonStyle = css({
+  const linkStyle = css({
     marginLeft: '10px',
+    fontSize: '20px',
     color: '#fff',
-    border: 'none',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
+    padding: '8px ',
+    fontWeight: 'bold',
     _hover: {
-      backgroundColor: '#777 !important',
+      color: '#007BFF !important',
+      transition: '0.5s',
     },
   });
 
+  const buttonStyle = css({
+    width: '70%',
+    backgroundColor: '#004590',
+    _hover: {
+      color: '#fff',
+      backgroundColor: '#007BFF !important',
+      transition: '0.5s',
+    },
+  });
+
+  const start = {
+    width: '70%',
+    backgroundColor: '#004590',
+    border: 'none',
+    _hover: {
+      color: '#black',
+      backgroundColor: '#fff !important',
+      transition: '0.5s',
+    },
+  };
+
   return (
     <div className={navbarStyle}>
-      <div className={sideSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
       <div className={middleSectionStyle}>
-        <Link className={buttonStyle} to="/home">
+        <Link className={linkStyle} to="/home">
           Home
         </Link>
-        <Link className={buttonStyle} to="/party">
+        <Link className={linkStyle} to="/party">
           Party
         </Link>
-        <Link className={buttonStyle} to="/inscription">
+        <Link className={linkStyle} to="/inscription">
           Inscription
         </Link>
       </div>
@@ -107,23 +127,25 @@ const Navbar = () => {
           >
             <Input
               onChange={(e) => setUserInput(e.target.value)}
-              // className={inputStyle}
               value={userInput}
               autoComplete="user"
               type="text"
               placeholder="Nom d'utilisateur"
+              marginRight={2}
+              backgroundColor={'white'}
             />
             <Input
-              // className={inputStyle}
               onChange={(e) => setPasswordInput(e.target.value)}
               value={passwordInput}
               autoComplete="current-password"
               type="password"
               placeholder="Mot de passe"
+              marginRight={2}
+              backgroundColor={'white'}
             />
-            <Button className={buttonStyle} onClick={() => handleLogin()}>
+            <button type="button" className="btn btn-primary" style={start}>
               Connexion
-            </Button>
+            </button>
           </form>
         ) : (
           <Button className={buttonStyle} onClick={handleLogout}>

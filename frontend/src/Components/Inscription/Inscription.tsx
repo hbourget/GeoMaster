@@ -5,17 +5,22 @@ import { Button, Input } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 
 const formStyle = css({
-  backgroundColor: '#fff',
-  maxWidth: '400px',
+  backgroundColor: '#007BFF',
+  maxWidth: '350px',
   margin: 'auto',
   padding: '20px',
   borderRadius: '8px',
-  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  boxShadow: '0 0 10px #004590',
+  marginBottom: '2%',
+  color: 'white',
+  textAlign: 'center',
+  fontWeight: 'bold',
 });
 
 const labelStyle = css({
   display: 'block',
-  margin: '15px 0',
+  marginBottom: '20px',
+  marginTop: '-15px',
   fontWeight: 'bold',
 });
 
@@ -25,7 +30,6 @@ const inputStyle = css({
   boxSizing: 'border-box',
   borderRadius: '4px',
   border: '1px solid #ccc',
-  marginBottom: '10px',
 });
 
 const buttonStyle = css({
@@ -93,11 +97,10 @@ const Inscription = () => {
   // mutation.isSuccess && store.set('user', mutation.data);
 
   return (
-    <form onSubmit={handleSubmit} className={formStyle} style={{ marginTop: '2%' }}>
-      <h1 style={{ textAlign: 'center', fontWeight: 'bold', fontSize: '20px' }}>Inscription</h1>
-
+    <form onSubmit={handleSubmit} className={formStyle} style={{ marginTop: '5%' }}>
+      <h4>Inscription</h4>
+      <p> Username:</p>
       <label className={labelStyle}>
-        Username:
         <Input
           type="text"
           name="username"
@@ -106,12 +109,12 @@ const Inscription = () => {
           onChange={handleChange}
           required
           className={inputStyle}
-          style={{ fontWeight: 'normal' }}
+          style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
 
+      <p> Mot de passe:</p>
       <label className={labelStyle}>
-        Mot de passe:
         <Input
           type="password"
           name="password"
@@ -120,12 +123,12 @@ const Inscription = () => {
           onChange={handleChange}
           required
           className={inputStyle}
-          style={{ fontWeight: 'normal' }}
+          style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
 
+      <p> Confirmation du mot de passe:</p>
       <label className={labelStyle}>
-        Confirmation du mot de passe:
         <Input
           type="password"
           name="password-confirm"
@@ -133,7 +136,7 @@ const Inscription = () => {
           onChange={handleChange}
           required
           className={inputStyle}
-          style={{ fontWeight: 'normal' }}
+          style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
 
@@ -143,7 +146,11 @@ const Inscription = () => {
 
       <Button
         type="submit"
-        style={{ background: '#007BFF', color: 'white' }}
+        style={{
+          background: '#004590',
+          color: 'white',
+          width: '50%',
+        }}
         className={buttonStyle}
         // disabled={password !== passwordConfirm}
         disabled
