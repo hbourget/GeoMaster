@@ -9,6 +9,10 @@ import { useMutation } from '@tanstack/react-query';
 import { Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { ElementRef } from 'react';
+import { Combobox, Portal } from '@ark-ui/react';
+
+// import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
+// import { world_map } from './world_map';
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
   const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
@@ -194,6 +198,8 @@ const RadioMap = () => {
   }, []);
   // MAX
 
+  const items = ['France', 'Germany', 'Italy', 'Spain', 'United Kingdom'];
+
   return (
     <div
       style={{ marginTop: '1%' }}
@@ -210,58 +216,121 @@ const RadioMap = () => {
             You have to guess{' '}
             {gameType === 3 ? 'the country' : gameType === 2 ? 'the city' : 'the flag'} of{' '}
             {gameType === 3 ? (
-              <img
-                src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
-              ></img>
+              <>
+                <img
+                  src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
+                ></img>
+                <Combobox.Root items={items} lazyMount unmountOnExit>
+                  <Combobox.Label>Countries</Combobox.Label>
+                  <Combobox.Control>
+                    <Combobox.Input />
+                    <Combobox.Trigger>Open</Combobox.Trigger>
+                    <Combobox.ClearTrigger>Clear</Combobox.ClearTrigger>
+                  </Combobox.Control>
+                  <Portal>
+                    <Combobox.Positioner>
+                      <Combobox.Content>
+                        <Combobox.ItemGroup id="countries">
+                          <Combobox.ItemGroupLabel htmlFor="countries">
+                            Countries
+                          </Combobox.ItemGroupLabel>
+                          {items.map((item) => (
+                            <Combobox.Item key={item} item={item}>
+                              <Combobox.ItemText>{item}</Combobox.ItemText>
+                              <Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
+                            </Combobox.Item>
+                          ))}
+                        </Combobox.ItemGroup>
+                      </Combobox.Content>
+                    </Combobox.Positioner>
+                  </Portal>
+                </Combobox.Root>
+              </>
             ) : gameType === 2 ? (
-              <Text fontSize="2xl" color="white">
-                {countriesMap[guessIteration]}
-              </Text>
+              <>
+                <Text fontSize="2xl" color="white">
+                  {countriesMap[guessIteration]}
+                </Text>
+                <div
+                  className={containerStyle}
+                  onMouseMove={handlePanMove}
+                  onMouseUp={handlePanEnd}
+                  onWheel={handleWheel}
+                >
+                  <div
+                    className={zoomControlStyle}
+                    style={{
+                      transformOrigin: `${
+                        ((mousePosition.x - panOffset.x) / locationsRef.current?.clientWidth) * 100
+                      }% ${
+                        ((mousePosition.y - panOffset.y) / locationsRef.current?.clientHeight) * 100
+                      }%`,
+                    }}
+                  ></div>
+
+                  <div
+                    style={{
+                      width: '60%',
+                      height: '100%',
+                      margin: 'auto',
+                      overflow: 'hidden',
+                      transform: `scale(${zoomLevel}) translate(${panOffset.x}px, ${panOffset.y}px)`,
+                      cursor: panning ? 'grabbing' : 'grab',
+                    }}
+                    onMouseDown={handlePanStart}
+                    ref={locationsRef}
+                  >
+                    <RadioSVGMap
+                      map={World}
+                      onLocationMouseOver={handleLocationMouseOver}
+                      // onLocationMouseOut={handleLocationMouseOut}
+                      onChange={handleOnChange}
+                    />
+                  </div>
+                </div>
+              </>
             ) : gameType === 1 ? (
-              <Text fontSize="2xl" color="white">
-                {countriesMonument[guessIteration]}
-              </Text>
+              <>
+                <Text fontSize="2xl" color="white">
+                  {countriesMonument[guessIteration]}
+                </Text>
+                <Combobox.Root items={items} lazyMount unmountOnExit>
+                  <Combobox.Label>Countries</Combobox.Label>
+                  <Combobox.Control>
+                    <Combobox.Input />
+                    <Combobox.Trigger>Open</Combobox.Trigger>
+                    <Combobox.ClearTrigger>Clear</Combobox.ClearTrigger>
+                  </Combobox.Control>
+                  <Portal>
+                    <Combobox.Positioner>
+                      <Combobox.Content>
+                        <Combobox.ItemGroup id="countries">
+                          <Combobox.ItemGroupLabel htmlFor="countries">
+                            Countries
+                          </Combobox.ItemGroupLabel>
+                          {items.map((item) => (
+                            <Combobox.Item key={item} item={item}>
+                              <Combobox.ItemText>{item}</Combobox.ItemText>
+                              <Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
+                            </Combobox.Item>
+                          ))}
+                        </Combobox.ItemGroup>
+                      </Combobox.Content>
+                    </Combobox.Positioner>
+                  </Portal>
+                </Combobox.Root>
+              </>
             ) : null}
           </Text>
           <p style={{ color: 'white' }}>Temps restant : {timer}</p>
         </>
       )}
 
-      <div
-        className={containerStyle}
-        onMouseMove={handlePanMove}
-        onMouseUp={handlePanEnd}
-        onWheel={handleWheel}
-      >
-        <div
-          className={zoomControlStyle}
-          style={{
-            transformOrigin: `${
-              ((mousePosition.x - panOffset.x) / locationsRef.current?.clientWidth) * 100
-            }% ${((mousePosition.y - panOffset.y) / locationsRef.current?.clientHeight) * 100}%`,
-          }}
-        ></div>
-
-        <div
-          style={{
-            width: '60%',
-            height: '100%',
-            margin: 'auto',
-            overflow: 'hidden',
-            transform: `scale(${zoomLevel}) translate(${panOffset.x}px, ${panOffset.y}px)`,
-            cursor: panning ? 'grabbing' : 'grab',
-          }}
-          onMouseDown={handlePanStart}
-          ref={locationsRef}
-        >
-          <RadioSVGMap
-            map={World}
-            onLocationMouseOver={handleLocationMouseOver}
-            // onLocationMouseOut={handleLocationMouseOut}
-            onChange={handleOnChange}
-          />
-        </div>
-      </div>
+      {/* <MapsComponent id="maps">
+        <LayersDirective>
+          <LayerDirective shapeData={world_map}></LayerDirective>
+        </LayersDirective>
+      </MapsComponent> */}
     </div>
   );
 };
