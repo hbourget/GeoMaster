@@ -25,7 +25,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState('Home');
-  const [, setUserID] = useAtom(currentUserID);
+  const [userID, setUserID] = useAtom(currentUserID);
 
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -91,9 +91,11 @@ const Navbar = () => {
         <Link className={buttonStyle} to="/home">
           Home
         </Link>
-        <Link className={buttonStyle} to="/party">
-          Party
-        </Link>
+        {userID !== -1 && (
+          <Link className={buttonStyle} to="/party">
+            Party
+          </Link>
+        )}
         <Link className={buttonStyle} to="/inscription">
           Inscription
         </Link>
