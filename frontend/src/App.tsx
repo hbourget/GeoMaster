@@ -3,6 +3,7 @@ import { css } from '@styled-system/css';
 import Navbar from './Components/Navbar/Navbar';
 import RadioMap from './Components/Map/RadioMap';
 import Party from './Components/Party/Party';
+import Accueil from './Components/Accueil/Accueil';
 import Inscription from './Components/Inscription/Inscription';
 import FlagGuesser from './Components/FlagGuesser/FlagGuesser';
 import Monument from './Components/Map/Monument';
@@ -12,7 +13,8 @@ const containerStyle = css({
   height: '100vh',
   justifyContent: 'center',
   alignItems: 'center',
-  background: 'radial-gradient(circle, #35B2F1, #003366)',
+  backgroundColor: '#73CAFF',
+  // background: 'radial-gradient(circle, #35B2F1, #003366)',
   flexDirection: 'column',
 });
 
@@ -33,7 +35,8 @@ const App = () => {
           <Navbar />
           <div className={contentStyle}>
             <Routes>
-              <Route path="/" element={<RadioMap />} />
+              <Route path="/" element={<Accueil />} />
+              <Route path="/accueil" element={<Accueil />} />
               <Route path="/home" element={<RadioMap />} />
               <Route path="/party" element={<Party />} />
               <Route path="/inscription" element={<Inscription />} />

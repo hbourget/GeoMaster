@@ -58,7 +58,7 @@ const Navbar = () => {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px',
-    backgroundColor: '#333',
+    backgroundColor: '#73CAFF',
     color: '#fff',
   });
 
@@ -73,7 +73,6 @@ const Navbar = () => {
 
   const buttonStyle = css({
     marginLeft: '10px',
-    backgroundColor: '#555 !important',
     color: '#fff',
     border: 'none',
     padding: '8px 16px',
