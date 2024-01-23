@@ -6,6 +6,7 @@ import { Button, Input } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { currentUserID } from '../../jotai';
 import { useAtom } from 'jotai';
+import logo from '../../assets/img/logo.png';
 
 const login = async (data) => {
   const response = await fetch('http://localhost:8080/auth/login', {
@@ -73,8 +74,7 @@ const Navbar = () => {
   });
 
   const linkStyle = css({
-    marginLeft: '10px',
-    fontSize: '20px',
+    fontSize: '25px',
     color: '#fff',
     padding: '8px ',
     fontWeight: 'bold',
@@ -105,20 +105,50 @@ const Navbar = () => {
     },
   };
 
+  const navbarFlex = css({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  });
+
+  const middleSectionFlex = css({
+    display: 'flex',
+  });
+
+  const sideSectionFlex = css({
+    display: 'flex',
+    alignItems: 'center',
+  });
+
+  const responsiveStyles = css({
+    '@media (max-width: 600px)': {
+      flexDirection: 'column',
+    },
+  });
+
+  const responsiveInputStyles = css({
+    'marginBottom': '10px',
+    '@media (max-width: 600px)': {
+      marginBottom: '0',
+    },
+  });
+
   return (
-    <div className={navbarStyle}>
-      <div className={middleSectionStyle}>
-        <Link className={linkStyle} to="/home">
+    <div className={`${navbarStyle} ${navbarFlex} ${responsiveStyles}`}>
+      {/* logo */}
+      <img src={logo} alt="logo" width="100px" height="100px" />
+      <div className={`${middleSectionStyle} ${middleSectionFlex}`}>
+        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
           Home
         </Link>
-        <Link className={linkStyle} to="/party">
+        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
           Party
         </Link>
-        <Link className={linkStyle} to="/inscription">
+        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
           Inscription
         </Link>
       </div>
-      <div className={sideSectionStyle}>
+      <div className={`${sideSectionStyle} ${sideSectionFlex}`}>
         {!loggedIn ? (
           <form
             className={css({
@@ -127,6 +157,7 @@ const Navbar = () => {
             action="GET"
           >
             <Input
+              className={`${responsiveInputStyles}`}
               onChange={(e) => setUserInput(e.target.value)}
               value={userInput}
               autoComplete="user"
@@ -136,6 +167,7 @@ const Navbar = () => {
               backgroundColor={'white'}
             />
             <Input
+              className={`${responsiveInputStyles}`}
               onChange={(e) => setPasswordInput(e.target.value)}
               value={passwordInput}
               autoComplete="current-password"

@@ -4,12 +4,12 @@ const mapStyle = css({
   'width': '100%',
   'height': '100%',
   'overflow': 'hidden',
-  'fill': '#007BFF',
+  'fill': '#D4E0EB', //color
   'stroke': 'black',
   'strokeWidth': '1px',
   'transition': 'fill 0.3s',
   '&:hover': {
-    fill: '#004590',
+    fill: '#007BFF',
   },
 });
 

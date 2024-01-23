@@ -8,11 +8,13 @@
 
 @font-face {
     font-family: grapenuts;
-    src: url(./assets/fonts/JandaManateeBubble.ttf);
+    /* src: url(./assets/fonts/Janda/JandaManateeBubble.ttf); */
+    /* src: url(./assets/fonts/Happy/HappySchool.ttf); */
+     src: url(./assets/fonts/HeyComic/HeyComic.ttf);
   }
 
 @font-face {
-  font-family: grapenutssolid;
+  font-family: grapenutssolid;  
   src: url(./assets/fonts/JandaManateeSolid.ttf);
 }
   

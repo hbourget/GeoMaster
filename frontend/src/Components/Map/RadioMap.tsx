@@ -85,9 +85,9 @@ const RadioMap = () => {
   const locationsRef = useRef<ElementRef<'div'>>(null);
   // MAX
 
-  const handleLocationMouseOver = (event) => {
-    getLocationName(event);
-  };
+  // const handleLocationMouseOver = (event) => {
+  //   getLocationName(event);
+  // };
 
   const sendGameDataMutation = useMutation({
     mutationFn: () => sendGameData(userID, gameID, arrayData),
@@ -147,9 +147,7 @@ const RadioMap = () => {
   const handleOnChange = (selectedNode: SVGPathElement) => {
     const country = selectedNode.getAttribute('name');
     console.log('country:', country);
-    // if (!selectedLocation === country) {
     setSelectedLocation(country);
-    // }
   };
 
   // MAX
@@ -228,7 +226,7 @@ const RadioMap = () => {
 
       <div
         className={containerStyle}
-        onMouseMove={handlePanMove}
+        // onMouseMove={handlePanMove}
         onMouseUp={handlePanEnd}
         onWheel={handleWheel}
       >
@@ -255,7 +253,7 @@ const RadioMap = () => {
         >
           <RadioSVGMap
             map={World}
-            onLocationMouseOver={handleLocationMouseOver}
+            // onLocationMouseOver={handleLocationMouseOver}
             // onLocationMouseOut={handleLocationMouseOut}
             onChange={handleOnChange}
           />
