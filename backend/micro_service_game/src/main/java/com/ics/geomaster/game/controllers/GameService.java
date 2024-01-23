@@ -164,6 +164,9 @@ public class GameService {
                 }
             }
             if (hasEveryPlayerPlayed(gameId)) {
+                for (Map.Entry<Integer, Integer> entry : game.getUserIdsAndScores().entrySet()) {
+                    restTemplate.put(userService + "/users/addbal/" + entry.getKey() + "/" + entry.getValue(), null);
+                }
                 game.setStatus(4);
             }
         }
