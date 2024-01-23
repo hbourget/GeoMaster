@@ -17,12 +17,6 @@
     <properties>
         <java.version>17</java.version>
     </properties>
-    <repositories>
-        <repository>
-            <id>clojars.org</id>
-            <url>https://repo.clojars.org</url>
-        </repository>
-    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,9 +48,9 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-            <groupId>net.clojars.suuft</groupId>
-            <artifactId>libretranslate-java</artifactId>
-            <version>1.0.5</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
         </dependency>
 
     </dependencies>

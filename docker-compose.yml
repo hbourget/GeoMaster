@@ -94,10 +94,10 @@ services:
     networks:
       - archistack
 
-  libretranslate:
-    image: libretranslate/libretranslate:latest
+  translator:
+    image: easynmt/api:2.0-cpu
     ports:
-      - '5000:5000'
+      - '24080:80'
     networks:
       - archistack
 

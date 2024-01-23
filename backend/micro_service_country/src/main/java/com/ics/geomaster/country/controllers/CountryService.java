@@ -3,14 +3,17 @@ import com.google.gson.Gson;
 import com.ics.geomaster.country.models.ApiResponse;
 import com.ics.geomaster.country.models.Country;
 import com.ics.geomaster.country.models.CountryRepository;
-import net.suuft.libretranslate.Language;
-import net.suuft.libretranslate.Translator;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -106,31 +109,72 @@ public class CountryService {
                 }
             }
 
+            Country southKorea = new Country();
+            southKorea.setName("South-Korea");
+            southKorea.setMonument("Gyeongbokgung-Palace");
+            southKorea.setPopulation("51780579");
+            southKorea.setCapital("Seoul");
+            southKorea.setContinent("Asia");
+            countries.add(southKorea);
+
+            Country northKorea = new Country();
+            northKorea.setName("North-Korea");
+            northKorea.setMonument("Juche-Tower");
+            northKorea.setPopulation("25778816");
+            northKorea.setCapital("Pyongyang");
+            northKorea.setContinent("Asia");
+            countries.add(northKorea);
+
             countryRepository.saveAll(countries);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    private String translate(String sourceLang, String targetLang, String text) {
+        try {
+            String prefix = "Pays="; //Ce prefix permet au model de traduction de mieux performer
+            String urlString = String.format("http://translator:80/translate?target_lang=%s&source_lang=%s&text=%s",
+                    targetLang, sourceLang, java.net.URLEncoder.encode(prefix + toDisplayCase(text), "UTF-8"));
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+            System.out.println(response.toString());
+
+            JSONObject jsonResponse = new JSONObject(response.toString());
+            String translatedText = jsonResponse.getJSONArray("translated").getString(0);
+
+            int equalSignIndex = translatedText.indexOf('=');
+            if (equalSignIndex != -1) {
+                translatedText = translatedText.substring(equalSignIndex + 1).trim();
+            }
+
+            translatedText = translatedText.replace(" ", "-");
+            return toDisplayCase(translatedText);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Optional<Country> getCountry(String name) {
-        Translator.setUrlApi("http://libretranslate:5000/translate");
         Optional<Country> country = countryRepository.findByName(toDisplayCase(name));
         if (country.isPresent()) {
             return country;
-        }
-        else {
-            String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, name);
-            System.out.println(nameEnglishFromFrench);
-            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
-            System.out.println(formattedContryEnglishFrench);
-            country = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
-            if (country.isPresent()) {
-                return country;
-            }
-            else {
-                String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, name);
-                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
-                country = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
+        } else {
+            String formattedCountryEnglishFrench = name.replace(" ", "-");
+            String nameEnglishFromFrench = translate("fr", "en", formattedCountryEnglishFrench);
+            if (nameEnglishFromFrench != null) {
+                country = countryRepository.findByName(toDisplayCase(nameEnglishFromFrench));
                 if (country.isPresent()) {
                     return country;
                 }
@@ -140,31 +184,19 @@ public class CountryService {
     }
 
     public Boolean getCountryByMonument(String country, String gameMonument) {
-        Translator.setUrlApi("http://libretranslate:5000/translate");
         String countrySanitized = country.replace(" ", "-");
         Optional<Country> countryget = countryRepository.findByName(toDisplayCase(countrySanitized));
         if (countryget.isPresent()) {
             if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                 return true;
             }
-        }
-        else {
-            String nameEnglishFromFrench = Translator.translate(Language.FRENCH, Language.ENGLISH, countrySanitized);
-            String formattedContryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
-            countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishFrench));
+        } else {
+            String nameEnglishFromFrench = translate("fr", "en", countrySanitized);
+            String formattedCountryEnglishFrench = nameEnglishFromFrench.replace(" ", "-");
+            countryget = countryRepository.findByName(toDisplayCase(formattedCountryEnglishFrench));
             if (countryget.isPresent()) {
                 if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
                     return true;
-                }
-            }
-            else {
-                String nameEnglishFromSpanish = Translator.translate(Language.SPANISH, Language.ENGLISH, countrySanitized);
-                String formattedContryEnglishSpanish = nameEnglishFromSpanish.replace(" ", "-");
-                countryget = countryRepository.findByName(toDisplayCase(formattedContryEnglishSpanish));
-                if (countryget.isPresent()) {
-                    if (countryget.get().getMonument().equalsIgnoreCase(gameMonument)) {
-                        return true;
-                    }
                 }
             }
         }
