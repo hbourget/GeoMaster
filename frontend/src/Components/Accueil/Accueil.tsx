@@ -21,6 +21,7 @@ const leaderboard = css({
   overflowY: 'auto',
   color: 'white',
   textAlign: 'center',
+  textShadow: '0 0 10px black',
   boxShadow: '0 0 10px white',
 });
 

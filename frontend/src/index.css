@@ -5,3 +5,17 @@
     transition: 0.5s;
     border: none !important;
 }
+
+@font-face {
+    font-family: grapenuts;
+    src: url(./assets/fonts/JandaManateeBubble.ttf);
+  }
+
+@font-face {
+  font-family: grapenutssolid;
+  src: url(./assets/fonts/JandaManateeSolid.ttf);
+}
+  
+  * {
+    font-family: grapenuts !important;
+  }

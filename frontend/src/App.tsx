@@ -6,7 +6,7 @@ import Party from './Components/Party/Party';
 import Accueil from './Components/Accueil/Accueil';
 import Inscription from './Components/Inscription/Inscription';
 import FlagGuesser from './Components/FlagGuesser/FlagGuesser';
-import Monument from './Components/Map/Monument';
+import Monument from './Components/Monument/Monument';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const containerStyle = css({
