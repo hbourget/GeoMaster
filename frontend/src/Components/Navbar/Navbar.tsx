@@ -69,6 +69,7 @@ const Navbar = () => {
 
   const middleSectionStyle = css({
     display: 'flex',
+    marginLeft: '15%',
   });
 
   const linkStyle = css({
