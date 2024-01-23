@@ -24,6 +24,13 @@ public class GameService {
 
     public Game createGame(Integer userId) {
 
+        Iterable<Game> games = gameRepository.findAll();
+        for (Game game : games) {
+            if (game.getUserIdsAndScores().containsKey(userId)) {
+                return null;
+            }
+        }
+
         Game game = new Game();
         try {
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
@@ -69,6 +76,10 @@ public class GameService {
     public Game updateGameScores(Integer gameId, Integer userId, List<String> countryGuesses) {
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
+            return null;
+        }
+
+        if (!game.getUserIdsAndScores().containsKey(userId)) {
             return null;
         }
 
@@ -166,6 +177,13 @@ public class GameService {
     }
 
     public Game addMember(Integer gameId, Integer userId) {
+        Iterable<Game> games = gameRepository.findAll();
+        for (Game game : games) {
+            if (game.getUserIdsAndScores().containsKey(userId)) {
+                return null;
+            }
+        }
+
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
             return null;
@@ -189,6 +207,9 @@ public class GameService {
             return null;
         }
         Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
+        if (!userIdsAndScores.containsKey(userId)) {
+            return null;
+        }
         userIdsAndScores.remove(userId);
         game.setUserIdsAndScores(userIdsAndScores);
 
@@ -227,7 +248,13 @@ public class GameService {
         if (game == null) {
             return null;
         }
+
+        if (!game.getUserIdsAndStatus().containsKey(userId)) {
+            return null;
+        }
+
         Integer status = game.getStatus();
+
         if (game.getUserIdsAndStatus().get(userId).equals(status)) {
             return true;
         }
