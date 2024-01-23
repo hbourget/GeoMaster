@@ -22,7 +22,7 @@ public class GameService {
     private final String countryServiceUrl = "http://country:8082";
     private final String userService = "http://user:8081";
 
-    public Game createGame(Integer userId) {
+    public Game createGame(Integer userId, Integer numberOfCountryPerRound) {
 
         Iterable<Game> games = gameRepository.findAll();
         for (Game game : games) {
@@ -32,6 +32,7 @@ public class GameService {
         }
 
         Game game = new Game();
+
         try {
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -49,19 +50,19 @@ public class GameService {
             return null;
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numberOfCountryPerRound; i++) {
             int random = (int) (Math.random() * countries.size());
             game.getCountriesMap().add(countries.get(random).getName());
         }
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numberOfCountryPerRound; i++) {
             int random = (int) (Math.random() * countries.size());
             game.getCountriesFlag().add(countries.get(random).getName());
         }
 
         Random rnd = new Random();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < numberOfCountryPerRound; i++) {
             int randomIndex = rnd.nextInt(countries.size());
             while (countries.get(randomIndex).getMonument().equals("Unknown")) {
                 randomIndex = rnd.nextInt(countries.size());
