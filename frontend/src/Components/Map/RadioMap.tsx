@@ -242,7 +242,11 @@ const RadioMap = () => {
         overflow: 'hidden',
       })}
     >
-      <h1>Votre score est : {score}</h1>
+      <Center>
+        <Text fontSize={'4xl'} color={'white'}>
+          Votre score est : <span className="scoreuser">{score}</span>
+        </Text>
+      </Center>
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text color="white">
