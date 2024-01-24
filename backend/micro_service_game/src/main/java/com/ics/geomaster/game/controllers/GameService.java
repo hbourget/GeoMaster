@@ -38,6 +38,7 @@ public class GameService {
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 game.getUserIdsAndScores().put(userId, 0);
                 game.getUserIdsAndStatus().put(userId, 0);
+                game.setNumberOfCountriesPerRound(numberOfCountriesPerRound);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -50,19 +51,19 @@ public class GameService {
             return null;
         }
 
-        for (int i = 0; i < numberOfCountriesPerRound; i++) {
+        for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
             int random = (int) (Math.random() * countries.size());
             game.getCountriesMap().add(countries.get(random).getName());
         }
 
-        for (int i = 0; i < numberOfCountriesPerRound; i++) {
+        for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
             int random = (int) (Math.random() * countries.size());
             game.getCountriesFlag().add(countries.get(random).getName());
         }
 
         Random rnd = new Random();
 
-        for (int i = 0; i < numberOfCountriesPerRound; i++) {
+        for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
             int randomIndex = rnd.nextInt(countries.size());
             while (countries.get(randomIndex).getMonument().equals("Unknown")) {
                 randomIndex = rnd.nextInt(countries.size());

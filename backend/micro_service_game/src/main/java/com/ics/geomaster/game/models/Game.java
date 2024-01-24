@@ -14,6 +14,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer numberOfCountriesPerRound;
     @ElementCollection
     private List<String> countriesMap;
     @ElementCollection
@@ -29,6 +30,7 @@ public class Game {
 
     public Game() {
         this.status = 0;
+        this.numberOfCountriesPerRound = 5;
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
         this.countriesMap = new ArrayList<>();
@@ -38,6 +40,7 @@ public class Game {
 
     public Game(Integer status) {
         this.status = status;
+        this.numberOfCountriesPerRound = 5;
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
         this.countriesMap = new ArrayList<>();
@@ -45,8 +48,9 @@ public class Game {
         this.userIdsAndStatus = new HashMap<>();
     }
 
-    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds, Map<Integer, Integer> userIdsAndStatus) {
+    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds, Map<Integer, Integer> userIdsAndStatus, Integer numberOfCountriesPerRound) {
         this.status = status;
+        this.numberOfCountriesPerRound = numberOfCountriesPerRound;
         this.countriesMap = countriesMap;
         this.countriesFlag = countriesFlag;
         this.countriesMonument = countriesMonument;
@@ -82,4 +86,7 @@ public class Game {
 
     public void setUserIdsAndStatus(Map<Integer, Integer> userIdsAndStatus) { this.userIdsAndStatus = userIdsAndStatus; }
 
+    public Integer getNumberOfCountriesPerRound() { return numberOfCountriesPerRound; }
+
+    public void setNumberOfCountriesPerRound(Integer numberOfCountriesPerRound) { this.numberOfCountriesPerRound = numberOfCountriesPerRound; }
 }
