@@ -23,8 +23,6 @@ import { useNavigate } from 'react-router-dom';
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
   const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
-  console.log('gameData:', gameData);
-  console.log('filteredArray:', filteredArray);
 
   const response = await fetch('http://localhost:8080/game/play', {
     method: 'PUT',
@@ -66,7 +64,7 @@ const zoomControlStyle = css({
 });
 
 const RadioMap = () => {
-  const GAME_TIMER = 10;
+  const GAME_TIMER = 5;
   const [GAME_ITERATION] = useAtom(gameIteration);
   const GAME_TYPE = 3;
 
@@ -104,6 +102,10 @@ const RadioMap = () => {
 
   const sendGameDataMutation = useMutation({
     mutationFn: () => sendGameData(userID, gameID, arrayData),
+    onSuccess: (data) => {
+      console.log('success send game data');
+      console.log(data);
+    },
   });
 
   useEffect(() => {
@@ -122,6 +124,7 @@ const RadioMap = () => {
       setIteration(GAME_ITERATION);
       sendGameDataMutation.mutate();
       setArrayData([]);
+      setInputValue('');
 
       if (gameType === 1) {
         setGameEnd(true);
@@ -141,11 +144,13 @@ const RadioMap = () => {
 
     return () => clearInterval(interval);
   }, [
+    GAME_ITERATION,
     arrayData,
     gameEnd,
     gameID,
     gameType,
     iteration,
+    navigate,
     selectedLocation,
     sendGameDataMutation,
     timer,
@@ -188,7 +193,7 @@ const RadioMap = () => {
   };
 
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     handleZoom(event.deltaY);
   };
 
