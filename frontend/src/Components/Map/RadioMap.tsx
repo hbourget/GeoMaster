@@ -22,7 +22,14 @@ import { useNavigate } from 'react-router-dom';
 // import { world_map } from './world_map';
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
-  const filteredArray = gameData.map((value) => (value === null ? 'Unknown' : value));
+  const filteredArray = gameData.map((value) => {
+    if (value === '') return 'Unknown';
+    else if (value === null) return 'Unknown';
+    else return value;
+  });
+  console.log('Array:', filteredArray);
+  console.log('userid:', userId);
+  console.log('gameid:', gameId);
 
   const response = await fetch('http://localhost:8080/game/play', {
     method: 'PUT',
@@ -103,16 +110,18 @@ const RadioMap = () => {
   const sendGameDataMutation = useMutation({
     mutationFn: () => sendGameData(userID, gameID, arrayData),
     onSuccess: (data) => {
-      console.log('success send game data');
+      console.log('Radio map success send game data');
       console.log(data);
     },
   });
 
   useEffect(() => {
     const handleTimerEnd = () => {
-      arrayData.push(selectedLocation);
+      if (gameType === 2) arrayData.push(selectedLocation);
+      else arrayData.push(inputValue);
       setIteration((prevIteration) => prevIteration - 1);
       setTimer(GAME_TIMER);
+      setInputValue('');
 
       if (iteration === 1) {
         handleRoundEnd();
@@ -124,7 +133,6 @@ const RadioMap = () => {
       setIteration(GAME_ITERATION);
       sendGameDataMutation.mutate();
       setArrayData([]);
-      setInputValue('');
 
       if (gameType === 1) {
         setGameEnd(true);
@@ -149,6 +157,7 @@ const RadioMap = () => {
     gameEnd,
     gameID,
     gameType,
+    inputValue,
     iteration,
     navigate,
     selectedLocation,

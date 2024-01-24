@@ -126,6 +126,7 @@ const createRoom = async (userId: number, countryNumber: number) => {
 };
 
 const launchGame = async (gameId: number, userId: number) => {
+  console.log('Launching game debug:', gameId, userId);
   const response = await fetch(`http://localhost:8080/game/play`, {
     method: 'PUT',
     headers: {
@@ -138,6 +139,7 @@ const launchGame = async (gameId: number, userId: number) => {
       countryGuesses: [],
     }),
   });
+  console.log('Launching game response:', response);
 
   if (!response.ok) {
     throw new Error('Something went wrong');
@@ -171,7 +173,6 @@ const Party = () => {
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
   const [play, setPlay] = useState(false);
-  const [tojoinRoomID, setTojoinRoomID] = useState(-1);
   const navigate = useNavigate();
   const [countryNumber, setCountryNumber] = useState(5);
 
@@ -183,7 +184,7 @@ const Party = () => {
   const createGameMutation = useMutation({
     mutationFn: () => createRoom(userID, countryNumber),
     onSuccess(data) {
-      console.log('les data');
+      console.log('Party create game data');
       console.log(data);
       setGameID(data.id);
       setGameIteration(data.numberOfCountriesPerRound);
@@ -205,13 +206,13 @@ const Party = () => {
   });
 
   const launchGameMutation = useMutation({
-    mutationFn: (roomId: number) => launchGame(roomId, userID),
+    mutationFn: () => launchGame(gameID, userID),
     onSuccess(data) {
-      console.log('Launching game data:', data);
+      console.log('Party on success launch game data:', data);
     },
     onError(error, variables) {
-      console.log('Error launching game:', error);
-      console.log('Error launching game variables:', variables);
+      console.error('Party on Error launching game error:', error);
+      console.error('Party on Error launching game variables:', variables);
     },
   });
 
@@ -221,10 +222,10 @@ const Party = () => {
   };
 
   const handleJoinRoom = (roomId: number) => {
-    console.log(`Joining room ${roomId} for user ${userID}`);
+    console.log(`Party handle join room ${roomId} for user ${userID}`);
     // joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
-    launchGameMutation.mutate(roomId);
-    setTojoinRoomID(roomId);
+    launchGameMutation.mutate();
+    setGameID(roomId);
     navigate('/game');
   };
 
@@ -295,7 +296,7 @@ const Party = () => {
           <Button
             backgroundColor={'#007BFF'}
             onClick={() => {
-              launchGameMutation.mutate(tojoinRoomID);
+              launchGameMutation.mutate();
               navigate('/game');
             }}
           >
