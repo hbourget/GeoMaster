@@ -89,9 +89,9 @@ const RadioMap = () => {
   const locationsRef = useRef<ElementRef<'div'>>(null);
   // MAX
 
-  const handleLocationMouseOver = (event) => {
-    getLocationName(event);
-  };
+  // const handleLocationMouseOver = (event) => {
+  //   getLocationName(event);
+  // };
 
   const sendGameDataMutation = useMutation({
     mutationFn: () => sendGameData(userID, gameID, arrayData),
@@ -151,9 +151,7 @@ const RadioMap = () => {
   const handleOnChange = (selectedNode: SVGPathElement) => {
     const country = selectedNode.getAttribute('name');
     console.log('country:', country);
-    // if (!selectedLocation === country) {
     setSelectedLocation(country);
-    // }
   };
 
   // MAX
@@ -202,9 +200,8 @@ const RadioMap = () => {
 
   return (
     <div
-      style={{ marginTop: '1%' }}
       className={css({
-        width: '60%',
+        width: '99%',
         height: '100%',
         margin: 'auto',
         overflow: 'hidden',

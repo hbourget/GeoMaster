@@ -5,6 +5,7 @@ import './index.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import './index.scss';
 
 const emotionCache = createCache({ key: 'emotion-css-cache', prepend: true });
 

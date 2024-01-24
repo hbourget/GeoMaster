@@ -6,6 +6,7 @@ import { Button, Input } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { currentUserID } from '../../jotai';
 import { useAtom } from 'jotai';
+import logo from '../../assets/img/logo.png';
 
 const login = async (data) => {
   const response = await fetch('http://159.65.52.6:8080/auth/login', {
@@ -58,8 +59,9 @@ const Navbar = () => {
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px',
-    backgroundColor: '#333',
+    backgroundColor: '#4ABBFF',
     color: '#fff',
+    textShadow: '1px 1px 1px #000',
   });
 
   const sideSectionStyle = css({
@@ -69,38 +71,87 @@ const Navbar = () => {
 
   const middleSectionStyle = css({
     display: 'flex',
+    marginLeft: '15%',
+  });
+
+  const linkStyle = css({
+    fontSize: '25px',
+    color: '#fff',
+    padding: '8px ',
+    fontWeight: 'bold',
+    _hover: {
+      color: '#007BFF !important',
+      transition: '0.5s',
+    },
   });
 
   const buttonStyle = css({
-    marginLeft: '10px',
-    backgroundColor: '#555 !important',
-    color: '#fff',
-    border: 'none',
-    padding: '8px 16px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s',
+    width: '70%',
+    backgroundColor: '#004590',
     _hover: {
-      backgroundColor: '#777 !important',
+      color: '#fff',
+      backgroundColor: '#007BFF !important',
+      transition: '0.5s',
+    },
+  });
+
+  const connexion = {
+    width: '70%',
+    backgroundColor: '#004590',
+    border: 'none',
+    _hover: {
+      color: '#black',
+      backgroundColor: '#fff !important',
+      transition: '0.5s',
+    },
+  };
+
+  const navbarFlex = css({
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  });
+
+  const middleSectionFlex = css({
+    display: 'flex',
+  });
+
+  const sideSectionFlex = css({
+    display: 'flex',
+    alignItems: 'center',
+  });
+
+  const responsiveStyles = css({
+    '@media (max-width: 600px)': {
+      flexDirection: 'column',
+    },
+  });
+
+  const responsiveInputStyles = css({
+    'marginBottom': '10px',
+    '@media (max-width: 600px)': {
+      marginBottom: '0',
     },
   });
 
   return (
-    <div className={navbarStyle}>
-      <div className={sideSectionStyle}>{user && <span>Bienvenue, {user} !</span>}</div>
-      <div className={middleSectionStyle}>
-        <Link className={buttonStyle} to="/home">
+    <div className={`${navbarStyle} ${navbarFlex} ${responsiveStyles}`}>
+      {/* logo */}
+      <img src={logo} alt="logo" width="100px" height="100px" />
+      <div className={`${middleSectionStyle} ${middleSectionFlex}`}>
+        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
           Home
         </Link>
         {userID !== -1 && (
-          <Link className={buttonStyle} to="/party">
-            Party
+          <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
+            Jouer
           </Link>
         )}
-        <Link className={buttonStyle} to="/inscription">
+        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
           Inscription
         </Link>
       </div>
-      <div className={sideSectionStyle}>
+      <div className={`${sideSectionStyle} ${sideSectionFlex}`}>
         {!loggedIn ? (
           <form
             className={css({
@@ -109,24 +160,32 @@ const Navbar = () => {
             action="GET"
           >
             <Input
+              className={`${responsiveInputStyles}`}
               onChange={(e) => setUserInput(e.target.value)}
-              // className={inputStyle}
               value={userInput}
               autoComplete="user"
               type="text"
               placeholder="Nom d'utilisateur"
+              marginRight={2}
+              backgroundColor={'white'}
+              color={'black'}
+              boxShadow={'0 0 10px black'}
             />
             <Input
-              // className={inputStyle}
+              className={`${responsiveInputStyles}`}
               onChange={(e) => setPasswordInput(e.target.value)}
               value={passwordInput}
               autoComplete="current-password"
               type="password"
               placeholder="Mot de passe"
+              marginRight={2}
+              backgroundColor={'white'}
+              color={'black'}
+              boxShadow={'0 0 10px black'}
             />
-            <Button className={buttonStyle} onClick={() => handleLogin()}>
+            <button type="button" className="btn btn-primary" style={connexion}>
               Connexion
-            </Button>
+            </button>
           </form>
         ) : (
           <Button className={buttonStyle} onClick={handleLogout}>

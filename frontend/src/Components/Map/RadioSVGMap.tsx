@@ -46,8 +46,8 @@ const RadioSVGMap = ({
   const isLocationSelected = (location: SVGPathElement): boolean =>
     selectedLocation && selectedLocation.id === location.id;
 
-  const MapColor = '#DBDCB6'; // Changer aussi la variable "fill" dans SVGMap.tsx
-  const SelectionColor = '#C9FF7C';
+  const MapColor = '#D4E0EB'; // Changer aussi la variable "fill" dans SVGMap.tsx
+  const SelectionColor = '#004289';
 
   const selectLocation = (location: SVGPathElement): void => {
     // Reset the color of all locations
