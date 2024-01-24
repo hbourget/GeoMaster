@@ -240,15 +240,18 @@ const Party = () => {
           {gamesList.isLoading && <div>Loading rooms...</div>}
           {gamesList.isError && <div>Error loading rooms</div>}
           {gamesList.isSuccess &&
-            gamesList.data.map((game, index) => (
-              <li key={game.id} className={listItemStyle(index, game.status)}>
-                <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
-                <span>{getStatusText(game.status)}</span>
-                <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
-                  Rejoindre
-                </Button>
-              </li>
-            ))}
+            gamesList.data.map(
+              (game, index) =>
+                game.status !== 2 && (
+                  <li key={game.id} className={listItemStyle(index, game.status)}>
+                    <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
+                    <span>{getStatusText(game.status)}</span>
+                    <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
+                      Rejoindre
+                    </Button>
+                  </li>
+                ),
+            )}
         </ul>
         {play && (
           <Button
