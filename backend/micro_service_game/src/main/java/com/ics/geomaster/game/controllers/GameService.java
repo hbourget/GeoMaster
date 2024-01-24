@@ -127,12 +127,12 @@ public class GameService {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
-                if (responseEntity.getStatusCode().value() == 200) {
+                if (responseEntity.getStatusCode().is2xxSuccessful()) {
                     Country country = responseEntity.getBody();
                     if (country != null) {
-                        if (country.getName().equalsIgnoreCase(game.getCountriesMap().get(i))) {
+                        if (country.getName().equalsIgnoreCase(game.getCountriesFlag().get(i))) {
                             Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
-                            userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 10);
+                            userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 5);
                             game.setUserIdsAndScores(userIdsAndScores);
                         }
                     }
@@ -141,19 +141,18 @@ public class GameService {
             if (hasEveryPlayerPlayed(gameId)) {
                 game.setStatus(2);
             }
-        }
 
-        else if (game.getStatus() == 2) {
+        } else if (game.getStatus() == 2) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
-                if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                if (responseEntity.getStatusCode().value() == 200) {
                     Country country = responseEntity.getBody();
                     if (country != null) {
-                        if (country.getName().equalsIgnoreCase(game.getCountriesFlag().get(i))) {
+                        if (country.getName().equalsIgnoreCase(game.getCountriesMap().get(i))) {
                             Map<Integer, Integer> userIdsAndScores = game.getUserIdsAndScores();
-                            userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 5);
+                            userIdsAndScores.replace(userId, userIdsAndScores.get(userId) + 10);
                             game.setUserIdsAndScores(userIdsAndScores);
                         }
                     }
