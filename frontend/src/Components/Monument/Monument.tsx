@@ -90,7 +90,7 @@ const Monument = (props) => {
         />
         <span style={{ color: 'black' }}>Temps restant : {props.timer}</span>
 
-        <p>De quel PAYS vient ce monument ?</p>
+        <p>De quel pays vient ce monument : {props.guess} ?</p>
         <Input
           placeholder="Country"
           marginRight={2}

@@ -13,15 +13,12 @@ import {
   monumentGuess,
 } from '../../jotai';
 import { useMutation } from '@tanstack/react-query';
-import { Input, Text } from '@chakra-ui/react';
+import { Center, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { ElementRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FlagGuesser from '../FlagGuesser/FlagGuesser';
 import Monument from '../Monument/Monument';
-
-// import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
-// import { world_map } from './world_map';
 
 const sendGameData = async (userId: number, gameId: number, gameData: string[]) => {
   const filteredArray = gameData.map((value) => {
@@ -243,7 +240,6 @@ const RadioMap = () => {
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text fontSize="2xl" color="white">
-            Guess {gameType === 3 ? 'the country' : gameType === 2 ? '' : 'the flag'} of{' '}
             {gameType === 3 ? (
               <>
                 <FlagGuesser
@@ -255,12 +251,17 @@ const RadioMap = () => {
               </>
             ) : gameType === 2 ? (
               <>
-                <Text fontSize="2xl" color="white">
-                  {countriesMap[guessIteration]}
-                </Text>
-                <Text fontSize="2xl" color="white">
-                  Il vous reste {timer}
-                </Text>
+                <Center>
+                  <Center flexDir="column">
+                    <Text fontSize="2xl" color="white">
+                      Country : {countriesMap[guessIteration]}
+                    </Text>
+
+                    <Text fontSize="2xl" color="white">
+                      Il vous reste {timer}
+                    </Text>
+                  </Center>
+                </Center>
                 <div
                   className={containerStyle}
                   onMouseMove={handlePanMove}
@@ -301,9 +302,6 @@ const RadioMap = () => {
               </>
             ) : gameType === 1 ? (
               <>
-                <Text fontSize="2xl" color="white">
-                  {countriesMonument[guessIteration]}
-                </Text>
                 <Monument
                   guess={countriesMonument[guessIteration]}
                   timer={timer}
