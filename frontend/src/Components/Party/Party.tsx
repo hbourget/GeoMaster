@@ -1,7 +1,15 @@
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 import { useGetQuery } from '../../Hooks/useQuery';
-import { Button } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Text,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+} from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { currentUserID, currentGameID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
@@ -91,8 +99,8 @@ interface Party extends RoomData {
   countriesMonument: string[];
 }
 
-const createRoom = async (userId: number) => {
-  const response = await fetch(`http://159.65.52.6:8080/game/${userId}`, {
+const createRoom = async (userId: number, countryNumber: number) => {
+  const response = await fetch(`http://159.65.52.6:8080/game/${userId}/${countryNumber}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -155,6 +163,7 @@ const Party = () => {
   const [play, setPlay] = useState(false);
   const [tojoinRoomID, setTojoinRoomID] = useState(-1);
   const navigate = useNavigate();
+  const [countryNumber, setCountryNumber] = useState(5);
 
   const gamesList = useGetQuery<Party[]>({
     queryKey: ['game', 'all'],
@@ -162,7 +171,7 @@ const Party = () => {
   });
 
   const createGameMutation = useMutation({
-    mutationFn: () => createRoom(userID),
+    mutationFn: () => createRoom(userID, countryNumber),
     onSuccess() {
       gamesList.refetch();
     },
@@ -209,6 +218,20 @@ const Party = () => {
         <Button className={joinButtonStyle} onClick={() => handleCreateRoom()}>
           Créer
         </Button>
+        <Flex>
+          <Text>Nombre de pays</Text>
+          <Slider
+            flex="1"
+            focusThumbOnChange={false}
+            value={countryNumber}
+            onChange={(val) => setCountryNumber(val)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb fontSize="sm" boxSize="32px" children={countryNumber} />
+          </Slider>
+        </Flex>
       </div>
 
       <div className={sectionStyle}>
