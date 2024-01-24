@@ -27,3 +27,7 @@ export const monumentGuess = atom([], (get, set, update) => {
 export const gameIteration = atom(-1, (get, set, update) => {
   set(gameIteration, update), get(gameIteration);
 });
+
+export const loggedIn = atom(localStorage.getItem('token') ? true : false, (get, set, update) => {
+  set(loggedIn, update), get(loggedIn);
+});

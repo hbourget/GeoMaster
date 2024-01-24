@@ -1,8 +1,9 @@
 import { css } from '@styled-system/css';
 import { useGetQuery } from '../../Hooks/useQuery';
-import { currentGameID, currentUserID } from '../../jotai';
+import { currentGameID, currentUserID, loggedIn } from '../../jotai';
 import { useAtom } from 'jotai';
-import { Text } from '@chakra-ui/react';
+import { Center, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 const containerStyle = css({
   width: '100%',
@@ -58,12 +59,12 @@ type ApiResponse = {
 const Accueil = () => {
   const [gameID] = useAtom(currentGameID);
   const [userID] = useAtom(currentUserID);
+  const [isLogin] = useAtom(loggedIn);
 
   const gameScores = useGetQuery<User[]>({
     queryKey: ['users', 'score'],
     url: 'http://localhost:8080/users',
   });
-
   const endGameScore = useGetQuery<ApiResponse>({
     queryKey: ['user', 'game'],
     url: `http://localhost:8080/game/g/${gameID}`,
@@ -71,16 +72,30 @@ const Accueil = () => {
 
   const sortedUsers = gameScores.data ? gameScores.data.sort((a, b) => b.balance - a.balance) : [];
 
-  const userScore = endGameScore.data ? endGameScore.data.userIdsAndScores[userID] : null;
+  const userScore = endGameScore.data && endGameScore.data.userIdsAndScores[userID];
 
   const topUsers = sortedUsers.slice(0, 4);
 
-  if (gameScores.isLoading) {
-    return <div>Loading...</div>;
+  if (!isLogin) {
+    return (
+      <Center flexDir={'column'}>
+        <Text fontSize={'4xl'} color={'black'}>
+          You must be logged in to view scoreboard
+        </Text>{' '}
+        <Text fontSize={'4xl'} color={'black'}>
+          You can create an account{' '}
+          <Link style={{ color: 'blue' }} to={'/inscription'}>
+            here
+          </Link>
+        </Text>
+      </Center>
+    );
   }
 
-  if (gameScores.isError) {
-    return <div>Error loading data. Please try again later.</div>;
+  if (gameScores.isLoading) {
+    return <div>Loading game score ...</div>;
+  } else if (gameScores.isError) {
+    return <div>Error loading game score. Please try again later.</div>;
   }
 
   return (
