@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Configuration
 @EnableScheduling
@@ -21,16 +22,22 @@ public class SchedulerConfig {
     @Scheduled(cron = "0 * * * * *")
     public void removeOldGames() {
         System.out.println("Removing old games...");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         Iterable<Game> games = gService.getGames();
 
         for (Game game : games) {
-            LocalDateTime gameCreationDate = LocalDateTime.parse(game.getCreationDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+            LocalDateTime gameCreationDate;
+            try {
+                gameCreationDate = LocalDateTime.parse(game.getCreationDate(), formatter);
+            } catch (DateTimeParseException e) {
+                System.err.println("Error parsing date: " + game.getCreationDate());
+                continue; // Skip to the next iteration
+            }
             LocalDateTime now = LocalDateTime.now();
             if (gameCreationDate.isBefore(now.minusMinutes(10))) {
                 System.out.println("Game " + game.getId() + " is older than 10 minutes, deleting it...");
                 gService.deleteGame(game.getId());
             }
         }
-
     }
 }
