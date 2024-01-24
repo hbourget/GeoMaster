@@ -140,8 +140,7 @@ public class GameService {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
-                System.out.println("RESPONSE ENTITY "+responseEntity.getStatusCode().value());
-                if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                if (responseEntity.getStatusCode().value() == 200) {
                     Country country = responseEntity.getBody();
                     if (country != null) {
                         if (country.getName().equalsIgnoreCase(game.getCountriesMap().get(i))) {

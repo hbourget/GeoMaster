@@ -25,7 +25,7 @@ public class CountryCrt {
         if (country.isPresent()) {
             return new ResponseEntity<>(country.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 
