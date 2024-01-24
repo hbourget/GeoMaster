@@ -34,7 +34,7 @@ public class GameService {
 
         Iterable<Game> games = gameRepository.findAll();
         for (Game game : games) {
-            if (game.getUserIdsAndScores().containsKey(userId)) {
+            if (game.getUserIdsAndScores().containsKey(userId) && game.getStatus() != 4) {
                 return null;
             }
         }
