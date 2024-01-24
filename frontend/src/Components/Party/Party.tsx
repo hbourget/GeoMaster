@@ -1,10 +1,19 @@
 import { css } from '@styled-system/css';
 import { useNavigate } from 'react-router-dom';
 import { useGetQuery } from '../../Hooks/useQuery';
-import { Button } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Text,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+} from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { currentUserID, currentGameID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
+import { useState } from 'react';
 
 const containerStyle = css({
   width: '65%',
@@ -92,8 +101,8 @@ interface Party extends RoomData {
   countriesMonument: string[];
 }
 
-const createRoom = async (userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/${userId}`, {
+const createRoom = async (userId: number, countryNumber: number) => {
+  const response = await fetch(`http://159.65.52.6:8080/game/${userId}/${countryNumber}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -110,7 +119,7 @@ const createRoom = async (userId: number) => {
 };
 
 const launchGame = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/play`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/play`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -131,7 +140,7 @@ const launchGame = async (gameId: number, userId: number) => {
 };
 
 const joinRoom = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/addMember/${gameId}/${userId}`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/addMember/${gameId}/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -153,15 +162,18 @@ const Party = () => {
   const [, setCountriesFlag] = useAtom(flagGuess);
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
+  const [play, setPlay] = useState(false);
+  const [tojoinRoomID, setTojoinRoomID] = useState(-1);
   const navigate = useNavigate();
+  const [countryNumber, setCountryNumber] = useState(5);
 
   const gamesList = useGetQuery<Party[]>({
     queryKey: ['game', 'all'],
-    url: 'http://localhost:8080/game/all',
+    url: 'http://159.65.52.6:8080/game/all',
   });
 
   const createGameMutation = useMutation({
-    mutationFn: () => createRoom(userID),
+    mutationFn: () => createRoom(userID, countryNumber),
     onSuccess() {
       gamesList.refetch();
     },
@@ -213,6 +225,20 @@ const Party = () => {
         <button type="button" className="btn btn-primary" style={Createbutton}>
           Créer
         </button>
+        <Flex>
+          <Text>Nombre de pays</Text>
+          <Slider
+            flex="1"
+            focusThumbOnChange={false}
+            value={countryNumber}
+            onChange={(val) => setCountryNumber(val)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb fontSize="sm" boxSize="32px" children={countryNumber} />
+          </Slider>
+        </Flex>
       </div>
 
       <div className={sectionStyle}>
@@ -221,16 +247,30 @@ const Party = () => {
           {gamesList.isLoading && <div>Loading rooms...</div>}
           {gamesList.isError && <div>Error loading rooms</div>}
           {gamesList.isSuccess &&
-            gamesList.data.map((game, index) => (
-              <li key={game.id} className={listItemStyle(index, game.status)}>
-                <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
-                <span>{getStatusText(game.status)}</span>
-                <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
-                  Rejoindre
-                </Button>
-              </li>
-            ))}
+            gamesList.data.map(
+              (game, index) =>
+                game.status !== 2 && (
+                  <li key={game.id} className={listItemStyle(index, game.status)}>
+                    <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
+                    <span>{getStatusText(game.status)}</span>
+                    <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
+                      Rejoindre
+                    </Button>
+                  </li>
+                ),
+            )}
         </ul>
+        {play && (
+          <Button
+            backgroundColor={'#007BFF'}
+            onClick={() => {
+              launchGameMutation.mutate(tojoinRoomID);
+              navigate('/home');
+            }}
+          >
+            Play
+          </Button>
+        )}
       </div>
     </div>
   );

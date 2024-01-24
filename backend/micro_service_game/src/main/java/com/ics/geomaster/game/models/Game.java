@@ -16,10 +16,8 @@ public class Game {
     private Integer id;
     @ElementCollection
     private List<String> countriesMap;
-
     @ElementCollection
     private List<String> countriesFlag;
-
     @ElementCollection
     private List<String> countriesMonument;
     @ElementCollection
@@ -39,10 +37,10 @@ public class Game {
     }
 
     public Game(Integer status) {
+        this.status = status;
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
         this.countriesMap = new ArrayList<>();
-        this.status = status;
         this.userIdsAndScores = new HashMap<>();
         this.userIdsAndStatus = new HashMap<>();
     }

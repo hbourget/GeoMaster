@@ -94,6 +94,13 @@ services:
     networks:
       - archistack
 
+  translator:
+    image: easynmt/api:2.0-cpu
+    ports:
+      - '24080:80'
+    networks:
+      - archistack
+
 volumes:
   postgres-data:
 

@@ -9,7 +9,7 @@ import { useAtom } from 'jotai';
 import logo from '../../assets/img/logo.png';
 
 const login = async (data) => {
-  const response = await fetch('http://localhost:8080/auth/login', {
+  const response = await fetch('http://159.65.52.6:8080/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -26,7 +26,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState('Home');
-  const [, setUserID] = useAtom(currentUserID);
+  const [userID, setUserID] = useAtom(currentUserID);
 
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -142,9 +142,11 @@ const Navbar = () => {
         <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
           Home
         </Link>
-        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
-          Jouer
-        </Link>
+        {userID !== -1 && (
+          <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
+            Jouer
+          </Link>
+        )}
         <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
           Inscription
         </Link>

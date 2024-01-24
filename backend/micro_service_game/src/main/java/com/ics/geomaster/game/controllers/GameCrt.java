@@ -19,9 +19,9 @@ public class GameCrt {
     public GameCrt(GameService gameService) {
         this.gameService = gameService;
     }
-    @PostMapping("/game/{userId}")
-    public ResponseEntity<Game> createGame(@PathVariable Integer userId) {
-        Game createdGame = gameService.createGame(userId);
+    @PostMapping("/game/{userId}/{numberOfCountriesPerRound}")
+    public ResponseEntity<Game> createGame(@PathVariable Integer userId, @PathVariable Integer numberOfCountriesPerRound) {
+        Game createdGame = gameService.createGame(userId, numberOfCountriesPerRound);
         if (createdGame == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

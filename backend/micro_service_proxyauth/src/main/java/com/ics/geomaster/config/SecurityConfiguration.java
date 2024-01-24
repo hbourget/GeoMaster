@@ -31,7 +31,8 @@ public class SecurityConfiguration {
             "http://localhost:80",
             "http://localhost:8080",
             "http://localhost:4173",
-            "http://localhost:5173"
+            "http://localhost:5173",
+            "http://159.65.52.6/"
     ));
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
     configuration.setAllowedHeaders(Arrays.asList(
