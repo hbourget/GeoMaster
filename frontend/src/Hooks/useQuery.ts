@@ -21,6 +21,24 @@ const useGetQuery = <T>({ queryKey, url }: { queryKey: string[]; url: string }) 
   });
 };
 
+const useGetQueryProut = <T>({ queryKey, url }: { queryKey: string[]; url: string }) => {
+  return useQuery({
+    queryKey,
+    queryFn: async () => {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json() as T;
+    },
+  });
+};
+
 type FormData = {
   username?: string;
   password?: string;
@@ -101,4 +119,4 @@ const useDeleteQuery = (queryKey: string[], url: string) => {
   });
 };
 
-export { useGetQuery, usePostQuery, usePutQuery, useDeleteQuery };
+export { useGetQuery, usePostQuery, usePutQuery, useDeleteQuery, useGetQueryProut };

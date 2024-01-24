@@ -1,6 +1,7 @@
 import { css } from '@styled-system/css';
-import { useGetQuery } from '../../Hooks/useQuery';
+import { useGetQuery, useGetQueryProut } from '../../Hooks/useQuery';
 import planet from '../../assets/img/planet.png';
+import { useQuery } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 const containerStyle = css({
@@ -51,8 +52,8 @@ type User = {
 };
 
 const Accueil = () => {
-  const gameScores = useGetQuery<User[]>({
-    queryKey: ['users', 'score'],
+  const gameScores = useGetQueryProut<User[]>({
+    queryKey: ['users', 'scoreboard'],
     url: 'http://localhost:8080/users',
   });
 
