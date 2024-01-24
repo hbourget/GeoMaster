@@ -1,4 +1,5 @@
 import { css } from '@styled-system/css';
+import { useGetQuery } from '../../Hooks/useQuery';
 
 const containerStyle = css({
   width: '100%',
@@ -41,7 +42,30 @@ const ligneStyles = {
   fontWeight: 'bold',
 };
 
+type User = {
+  id: number;
+  username: string;
+  balance: number;
+};
+
 const Accueil = () => {
+  const gameScores = useGetQuery<User[]>({
+    queryKey: ['users', 'score'],
+    url: 'http://localhost:8080/users',
+  });
+
+  const sortedUsers = gameScores.data ? gameScores.data.sort((a, b) => b.balance - a.balance) : [];
+
+  const topUsers = sortedUsers.slice(0, 4);
+
+  if (gameScores.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (gameScores.isError) {
+    return <div>Error loading data. Please try again later.</div>;
+  }
+
   return (
     <div className={containerStyle}>
       <h1
@@ -67,21 +91,13 @@ const Accueil = () => {
             <div className="col">Score</div>
           </div>
 
-          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
-            <div className="col">1</div>
-            <div className="col">Hug</div>
-            <div className="col">4500</div>
-          </div>
-          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
-            <div className="col">2</div>
-            <div className="col">Max</div>
-            <div className="col">2500</div>
-          </div>
-          <div className="AccueilHover row row-cols-3" style={ligneStyles}>
-            <div className="col">3</div>
-            <div className="col">Clem</div>
-            <div className="col">300</div>
-          </div>
+          {topUsers.map((user, index) => (
+            <div key={user.id} className="AccueilHover row row-cols-3" style={ligneStyles}>
+              <div className="col">{index + 1}</div>
+              <div className="col">{user.username}</div>
+              <div className="col">{user.balance}</div>
+            </div>
+          ))}
         </div>
       </div>
       <br />
