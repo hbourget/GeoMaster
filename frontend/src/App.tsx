@@ -36,12 +36,12 @@ const App = () => {
           <div className={contentStyle}>
             <Routes>
               <Route path="/" element={<Accueil />} />
-              <Route path="/map" element={<RadioMap />} />
               <Route path="/home" element={<Accueil />} />
+              <Route path="/game" element={<RadioMap />} />
               <Route path="/party" element={<Party />} />
               <Route path="/inscription" element={<Inscription />} />
-              <Route path="/flagguesser" element={<FlagGuesser />} />
-              <Route path="/Monument" element={<Monument />} />
+              {/* <Route path="/flagguesser" element={<FlagGuesser />} />
+              <Route path="/Monument" element={<Monument />} /> */}
             </Routes>
           </div>
         </div>

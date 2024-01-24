@@ -102,7 +102,7 @@ interface Party extends RoomData {
 }
 
 const createRoom = async (userId: number, countryNumber: number) => {
-  const response = await fetch(`http://159.65.52.6:8080/game/${userId}/${countryNumber}`, {
+  const response = await fetch(`http://localhost:8080/game/${userId}/${countryNumber}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const createRoom = async (userId: number, countryNumber: number) => {
 };
 
 const launchGame = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://159.65.52.6:8080/game/play`, {
+  const response = await fetch(`http://localhost:8080/game/play`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ const launchGame = async (gameId: number, userId: number) => {
 };
 
 const joinRoom = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://159.65.52.6:8080/game/addMember/${gameId}/${userId}`, {
+  const response = await fetch(`http://localhost:8080/game/addMember/${gameId}/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const joinRoom = async (gameId: number, userId: number) => {
 
 const Party = () => {
   const [userID] = useAtom(currentUserID);
-  const [, setGameID] = useAtom(currentGameID);
+  const [gameID, setGameID] = useAtom(currentGameID);
   const [, setCountriesFlag] = useAtom(flagGuess);
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
@@ -169,12 +169,16 @@ const Party = () => {
 
   const gamesList = useGetQuery<Party[]>({
     queryKey: ['game', 'all'],
-    url: 'http://159.65.52.6:8080/game/all',
+    url: 'http://localhost:8080/game/all',
   });
 
   const createGameMutation = useMutation({
     mutationFn: () => createRoom(userID, countryNumber),
-    onSuccess() {
+    onSuccess(data) {
+      setGameID(data.id);
+      setCountriesFlag(data.countriesFlag);
+      setCountriesMap(data.countriesMap);
+      setCountriesMonument(data.countriesMonument);
       gamesList.refetch();
     },
   });
@@ -202,13 +206,15 @@ const Party = () => {
 
   const handleCreateRoom = async () => {
     createGameMutation.mutate();
+    setPlay(true);
   };
 
   const handleJoinRoom = (roomId: number) => {
     console.log(`Joining room ${roomId} for user ${userID}`);
-    joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
+    // joinGameMutation.mutate(roomId); // Pass the roomId to the mutate function
     launchGameMutation.mutate(roomId);
-    navigate('/home');
+    setTojoinRoomID(roomId);
+    navigate('/game');
   };
 
   const Createbutton = {
@@ -222,7 +228,12 @@ const Party = () => {
           Créer une nouvelle room
         </h3>
 
-        <button type="button" className="btn btn-primary" style={Createbutton}>
+        <button
+          type="button"
+          className="btn btn-primary"
+          style={Createbutton}
+          onClick={handleCreateRoom}
+        >
           Créer
         </button>
         <Flex>
@@ -265,7 +276,7 @@ const Party = () => {
             backgroundColor={'#007BFF'}
             onClick={() => {
               launchGameMutation.mutate(tojoinRoomID);
-              navigate('/home');
+              navigate('/game');
             }}
           >
             Play

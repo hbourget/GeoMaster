@@ -9,7 +9,7 @@ import { useAtom } from 'jotai';
 import logo from '../../assets/img/logo.png';
 
 const login = async (data) => {
-  const response = await fetch('http://159.65.52.6:8080/auth/login', {
+  const response = await fetch('http://localhost:8080/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -183,12 +183,18 @@ const Navbar = () => {
               color={'black'}
               boxShadow={'0 0 10px black'}
             />
-            <button type="button" className="btn btn-primary" style={connexion}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              style={connexion}
+              onClick={handleLogin}
+            >
               Connexion
             </button>
           </form>
         ) : (
           <Button className={buttonStyle} onClick={handleLogout}>
+            {/* TODO reset all state ? */}
             Déconnexion
           </Button>
         )}

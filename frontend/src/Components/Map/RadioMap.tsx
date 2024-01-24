@@ -19,7 +19,7 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
   console.log('gameData:', gameData);
   console.log('filteredArray:', filteredArray);
 
-  const response = await fetch('http://159.65.52.6:8080/game/play', {
+  const response = await fetch('http://localhost:8080/game/play', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
