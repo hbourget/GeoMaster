@@ -92,7 +92,7 @@ interface Party extends RoomData {
 }
 
 const createRoom = async (userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/${userId}`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/${userId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const createRoom = async (userId: number) => {
 };
 
 const launchGame = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/play`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/play`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const launchGame = async (gameId: number, userId: number) => {
 };
 
 const joinRoom = async (gameId: number, userId: number) => {
-  const response = await fetch(`http://localhost:8080/game/addMember/${gameId}/${userId}`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/addMember/${gameId}/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const Party = () => {
 
   const gamesList = useGetQuery<Party[]>({
     queryKey: ['game', 'all'],
-    url: 'http://localhost:8080/game/all',
+    url: 'http://159.65.52.6:8080/game/all',
   });
 
   const createGameMutation = useMutation({

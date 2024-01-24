@@ -8,7 +8,7 @@ import { currentUserID } from '../../jotai';
 import { useAtom } from 'jotai';
 
 const login = async (data) => {
-  const response = await fetch('http://localhost:8080/auth/login', {
+  const response = await fetch('http://159.65.52.6:8080/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
