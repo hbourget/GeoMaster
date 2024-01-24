@@ -61,7 +61,7 @@ public class SecurityConfiguration {
             .cors().configurationSource(corsConfigurationSource()).and()
 
             .authorizeExchange()
-            .pathMatchers("/auth/**").permitAll()
+            .pathMatchers("/auth/**", "/users/**").permitAll()
             .anyExchange().authenticated()
             .and()
             .csrf(csrf -> csrf.disable())

@@ -39,6 +39,10 @@ spring:
               - "Access-Control-Allow-Credentials"
             allowCredentials: true
       routes:
+        - id: user-service
+          uri: http://user:8081
+          predicates:
+            - Path=/users/**
         - id: country-service
           uri: http://country:8082
           predicates:
