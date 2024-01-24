@@ -61,6 +61,7 @@ const Navbar = () => {
     padding: '10px',
     backgroundColor: '#4ABBFF',
     color: '#fff',
+    textShadow: '1px 1px 1px #000',
   });
 
   const sideSectionStyle = css({
@@ -94,7 +95,7 @@ const Navbar = () => {
     },
   });
 
-  const start = {
+  const connexion = {
     width: '70%',
     backgroundColor: '#004590',
     border: 'none',
@@ -142,7 +143,7 @@ const Navbar = () => {
           Home
         </Link>
         <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
-          Party
+          Jouer
         </Link>
         <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
           Inscription
@@ -166,6 +167,7 @@ const Navbar = () => {
               marginRight={2}
               backgroundColor={'white'}
               color={'black'}
+              boxShadow={'0 0 10px black'}
             />
             <Input
               className={`${responsiveInputStyles}`}
@@ -177,8 +179,9 @@ const Navbar = () => {
               marginRight={2}
               backgroundColor={'white'}
               color={'black'}
+              boxShadow={'0 0 10px black'}
             />
-            <button type="button" className="btn btn-primary" style={start}>
+            <button type="button" className="btn btn-primary" style={connexion}>
               Connexion
             </button>
           </form>

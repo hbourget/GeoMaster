@@ -15,6 +15,7 @@ const formStyle = css({
   color: 'white',
   textAlign: 'center',
   fontWeight: 'bold',
+  textShadow: '0 0 10px black',
 });
 
 const labelStyle = css({
@@ -23,6 +24,7 @@ const labelStyle = css({
   marginTop: '-15px',
   fontWeight: 'bold',
   color: 'black',
+  boxShadow: '0 0 10px black',
 });
 
 const inputStyle = css({

@@ -206,7 +206,9 @@ const Party = () => {
   return (
     <div className={containerStyle} style={{ marginTop: '5%' }}>
       <div className={sectionStyle}>
-        <h3 style={{ fontWeight: 'bold' }}>Créer une nouvelle room</h3>
+        <h3 style={{ fontWeight: 'bold', textShadow: '1px 1px 1px black' }}>
+          Créer une nouvelle room
+        </h3>
 
         <button type="button" className="btn btn-primary" style={Createbutton}>
           Créer
