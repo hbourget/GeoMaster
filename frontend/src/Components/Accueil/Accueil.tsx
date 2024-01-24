@@ -51,6 +51,10 @@ type User = {
   balance: number;
 };
 
+type ApiResponse = {
+  userIdsAndScores: Record<string, number>;
+};
+
 const Accueil = () => {
   const [gameID] = useAtom(currentGameID);
   const [userID] = useAtom(currentUserID);
@@ -60,7 +64,7 @@ const Accueil = () => {
     url: 'http://localhost:8080/users',
   });
 
-  const endGameScore = useGetQuery({
+  const endGameScore = useGetQuery<ApiResponse>({
     queryKey: ['user', 'game'],
     url: `http://localhost:8080/game/g/${gameID}`,
   });
