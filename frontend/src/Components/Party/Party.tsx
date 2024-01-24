@@ -241,13 +241,20 @@ const Party = () => {
           <Slider
             flex="1"
             focusThumbOnChange={false}
+            max={20}
+            defaultValue={5}
             value={countryNumber}
             onChange={(val) => setCountryNumber(val)}
           >
             <SliderTrack>
               <SliderFilledTrack />
             </SliderTrack>
-            <SliderThumb fontSize="sm" boxSize="32px" children={countryNumber} />
+            <SliderThumb
+              style={{ color: 'black' }}
+              fontSize="sm"
+              boxSize="24px"
+              children={countryNumber}
+            />
           </Slider>
         </Flex>
       </div>
@@ -267,6 +274,7 @@ const Party = () => {
                     <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
                       Rejoindre
                     </Button>
+                    {/* TODO add a remove member button if the id of the game he created is the same as the id of the list */}
                   </li>
                 ),
             )}

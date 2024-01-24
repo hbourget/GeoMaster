@@ -6,10 +6,9 @@ import { css } from '@styled-system/css';
 import { useAtom } from 'jotai';
 import { currentGameID, currentUserID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
 import { useMutation } from '@tanstack/react-query';
-import { Text } from '@chakra-ui/react';
+import { Input, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { ElementRef } from 'react';
-import { Combobox, Portal } from '@ark-ui/react';
 
 // import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
 // import { world_map } from './world_map';
@@ -196,8 +195,6 @@ const RadioMap = () => {
   }, []);
   // MAX
 
-  const items = ['France', 'Germany', 'Italy', 'Spain', 'United Kingdom'];
-
   return (
     <div
       className={css({
@@ -217,31 +214,7 @@ const RadioMap = () => {
                 <img
                   src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
                 ></img>
-                <Combobox.Root items={items} lazyMount unmountOnExit>
-                  <Combobox.Label>Countries</Combobox.Label>
-                  <Combobox.Control>
-                    <Combobox.Input />
-                    <Combobox.Trigger>Open</Combobox.Trigger>
-                    <Combobox.ClearTrigger>Clear</Combobox.ClearTrigger>
-                  </Combobox.Control>
-                  <Portal>
-                    <Combobox.Positioner>
-                      <Combobox.Content>
-                        <Combobox.ItemGroup id="countries">
-                          <Combobox.ItemGroupLabel htmlFor="countries">
-                            Countries
-                          </Combobox.ItemGroupLabel>
-                          {items.map((item) => (
-                            <Combobox.Item key={item} item={item}>
-                              <Combobox.ItemText>{item}</Combobox.ItemText>
-                              <Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
-                            </Combobox.Item>
-                          ))}
-                        </Combobox.ItemGroup>
-                      </Combobox.Content>
-                    </Combobox.Positioner>
-                  </Portal>
-                </Combobox.Root>
+                <Input placeholder="Country" />
               </>
             ) : gameType === 2 ? (
               <>
@@ -291,31 +264,7 @@ const RadioMap = () => {
                 <Text fontSize="2xl" color="white">
                   {countriesMonument[guessIteration]}
                 </Text>
-                <Combobox.Root items={items} lazyMount unmountOnExit>
-                  <Combobox.Label>Countries</Combobox.Label>
-                  <Combobox.Control>
-                    <Combobox.Input />
-                    <Combobox.Trigger>Open</Combobox.Trigger>
-                    <Combobox.ClearTrigger>Clear</Combobox.ClearTrigger>
-                  </Combobox.Control>
-                  <Portal>
-                    <Combobox.Positioner>
-                      <Combobox.Content>
-                        <Combobox.ItemGroup id="countries">
-                          <Combobox.ItemGroupLabel htmlFor="countries">
-                            Countries
-                          </Combobox.ItemGroupLabel>
-                          {items.map((item) => (
-                            <Combobox.Item key={item} item={item}>
-                              <Combobox.ItemText>{item}</Combobox.ItemText>
-                              <Combobox.ItemIndicator>✓</Combobox.ItemIndicator>
-                            </Combobox.Item>
-                          ))}
-                        </Combobox.ItemGroup>
-                      </Combobox.Content>
-                    </Combobox.Positioner>
-                  </Portal>
-                </Combobox.Root>
+                <Input placeholder="Monument" />
               </>
             ) : null}
           </Text>
