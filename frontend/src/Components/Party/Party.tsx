@@ -49,7 +49,7 @@ const sectionStyle = css({
 
 const listItemStyle = (index: number, status: number) =>
   css({
-    backgroundColor: index % 2 === 0 ? '#f0f0f0' : '#fff',
+    backgroundColor: index % 2 === 0 ? '#007BFF' : '#007BFF',
     padding: '10px',
     borderRadius: '4px',
     display: 'flex',
@@ -294,7 +294,8 @@ const Party = () => {
         </ul>
         {play && (
           <Button
-            backgroundColor={'#007BFF'}
+            backgroundColor={'#004590'}
+            color={'white'}
             onClick={() => {
               launchGameMutation.mutate();
               navigate('/game');
