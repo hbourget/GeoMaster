@@ -20,7 +20,7 @@ public class SchedulerConfig {
     @Transactional
     @Scheduled(cron = "0 * * * * *")
     public void removeOldGames() {
-
+        System.out.println("Removing old games...");
         Iterable<Game> games = gService.getGames();
 
         for (Game game : games) {
