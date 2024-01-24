@@ -246,9 +246,6 @@ const RadioMap = () => {
             Guess {gameType === 3 ? 'the country' : gameType === 2 ? '' : 'the flag'} of{' '}
             {gameType === 3 ? (
               <>
-                <img
-                  src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
-                ></img>
                 <FlagGuesser
                   timer={timer}
                   url={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
