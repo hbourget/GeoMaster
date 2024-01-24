@@ -239,7 +239,7 @@ const RadioMap = () => {
     >
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
-          <Text fontSize="2xl" color="white">
+          <Text color="white">
             {gameType === 3 ? (
               <>
                 <FlagGuesser
@@ -251,14 +251,14 @@ const RadioMap = () => {
               </>
             ) : gameType === 2 ? (
               <>
-                <Center>
+                <Center style={{ position: 'absolute', top: '10%', left: '5%', zIndex: 1 }}>
                   <Center flexDir="column">
                     <Text fontSize="2xl" color="white">
                       Country : {countriesMap[guessIteration]}
                     </Text>
 
                     <Text fontSize="2xl" color="white">
-                      Il vous reste {timer}
+                      Il vous reste {timer}s
                     </Text>
                   </Center>
                 </Center>
