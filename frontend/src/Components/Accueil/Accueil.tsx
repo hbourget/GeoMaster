@@ -1,5 +1,8 @@
 import { css } from '@styled-system/css';
 import { useGetQuery } from '../../Hooks/useQuery';
+import { currentGameID, currentUserID } from '../../jotai';
+import { useAtom } from 'jotai';
+import { Text } from '@chakra-ui/react';
 
 const containerStyle = css({
   width: '100%',
@@ -49,12 +52,22 @@ type User = {
 };
 
 const Accueil = () => {
+  const [gameID] = useAtom(currentGameID);
+  const [userID] = useAtom(currentUserID);
+
   const gameScores = useGetQuery<User[]>({
     queryKey: ['users', 'score'],
     url: 'http://localhost:8080/users',
   });
 
+  const endGameScore = useGetQuery({
+    queryKey: ['user', 'game'],
+    url: `http://localhost:8080/game/g/${gameID}`,
+  });
+
   const sortedUsers = gameScores.data ? gameScores.data.sort((a, b) => b.balance - a.balance) : [];
+
+  const userScore = endGameScore.data ? endGameScore.data.userIdsAndScores[userID] : null;
 
   const topUsers = sortedUsers.slice(0, 4);
 
@@ -79,6 +92,11 @@ const Accueil = () => {
         GeoMaster
       </h1>
       <br />
+      {userID !== -1 && gameID !== -1 && (
+        <div>
+          <Text fontSize={'3xl'}>Votre score de la derniere partie {userScore}</Text>
+        </div>
+      )}
       <div className={leaderboard}>
         <h4>Meilleurs joueurs</h4>
         <br></br>
