@@ -27,9 +27,19 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
     else if (value === null) return 'Unknown';
     else return value;
   });
+  console.log('Radiomap game play debug:');
   console.log('Array:', filteredArray);
   console.log('userid:', userId);
   console.log('gameid:', gameId);
+
+  console.log('debug');
+  console.log(
+    JSON.stringify({
+      userId: userId,
+      gameId: gameId,
+      countryGuesses: filteredArray,
+    }),
+  );
 
   const response = await fetch('http://localhost:8080/game/play', {
     method: 'PUT',
