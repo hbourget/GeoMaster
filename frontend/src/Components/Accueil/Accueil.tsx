@@ -1,5 +1,6 @@
 import { css } from '@styled-system/css';
 import { useGetQuery } from '../../Hooks/useQuery';
+import planet from '../../assets/img/planet.png';
 
 const containerStyle = css({
   width: '100%',
@@ -58,6 +59,13 @@ const Accueil = () => {
 
   const topUsers = sortedUsers.slice(0, 4);
 
+  const planetStyle = css({
+    position: 'absolute',
+    top: '25%',
+    left: '10%',
+    width: '20%',
+  });
+
   if (gameScores.isLoading) {
     return <div>Loading game score ...</div>;
   } else if (gameScores.isError) {
@@ -66,6 +74,9 @@ const Accueil = () => {
 
   return (
     <div className={containerStyle}>
+      <div className={planetStyle}>
+        <img src={planet} alt="planet" />
+      </div>
       <h1
         style={{
           fontSize: '40px',
