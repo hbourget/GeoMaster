@@ -98,6 +98,8 @@ const Monument = (props) => {
           color={'black'}
           boxShadow={'0 0 10px black'}
           width={'50%'}
+          onChange={props.onChange}
+          value={props.value}
         />
       </div>
     </div>

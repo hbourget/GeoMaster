@@ -249,17 +249,20 @@ const RadioMap = () => {
                 <img
                   src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
                 ></img>
-                {/* TODO reset input on each iteration */}
-                <Input placeholder="Country" onChange={handleInput} value={inputValue} />
                 <FlagGuesser
                   timer={timer}
                   url={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
+                  onChange={handleInput}
+                  value={inputValue}
                 />
               </>
             ) : gameType === 2 ? (
               <>
                 <Text fontSize="2xl" color="white">
                   {countriesMap[guessIteration]}
+                </Text>
+                <Text fontSize="2xl" color="white">
+                  Il vous reste {timer}
                 </Text>
                 <div
                   className={containerStyle}
@@ -304,8 +307,12 @@ const RadioMap = () => {
                 <Text fontSize="2xl" color="white">
                   {countriesMonument[guessIteration]}
                 </Text>
-                <Input placeholder="Monument" onChange={handleInput} value={inputValue} />
-                <Monument guess={countriesMonument[guessIteration]} timer={timer} />
+                <Monument
+                  guess={countriesMonument[guessIteration]}
+                  timer={timer}
+                  onChange={handleInput}
+                  value={inputValue}
+                />
               </>
             ) : null}
           </Text>
