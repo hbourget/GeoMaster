@@ -138,7 +138,8 @@ public class GameService {
         if (game.getStatus() == 1) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
-                ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + countryName, Country.class);
+                String formattedCountryName = countryName.replace(" ", "-");
+                ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
                 System.out.println("RESPONSE ENTITY "+responseEntity.getStatusCode().value());
                 if (responseEntity.getStatusCode().is2xxSuccessful()) {
                     Country country = responseEntity.getBody();
