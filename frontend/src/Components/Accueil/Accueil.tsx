@@ -79,7 +79,6 @@ const Accueil = () => {
         GeoMaster
       </h1>
       <br />
-
       <div className={leaderboard}>
         <h4>Meilleurs joueurs</h4>
         <br></br>

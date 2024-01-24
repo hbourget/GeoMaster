@@ -71,7 +71,6 @@ const Navbar = () => {
 
   const middleSectionStyle = css({
     display: 'flex',
-    marginLeft: '15%',
   });
 
   const linkStyle = css({
@@ -79,18 +78,9 @@ const Navbar = () => {
     color: '#fff',
     padding: '8px ',
     fontWeight: 'bold',
+    marginRight: '10px',
     _hover: {
       color: '#007BFF !important',
-      transition: '0.5s',
-    },
-  });
-
-  const buttonStyle = css({
-    width: '70%',
-    backgroundColor: '#004590',
-    _hover: {
-      color: '#fff',
-      backgroundColor: '#007BFF !important',
       transition: '0.5s',
     },
   });
@@ -98,6 +88,17 @@ const Navbar = () => {
   const connexion = {
     width: '70%',
     backgroundColor: '#004590',
+    border: 'none',
+    _hover: {
+      color: '#black',
+      backgroundColor: '#fff !important',
+      transition: '0.5s',
+    },
+  };
+
+  const deconnexion = {
+    width: '100%',
+    backgroundColor: 'red',
     border: 'none',
     _hover: {
       color: '#black',
@@ -139,18 +140,27 @@ const Navbar = () => {
       {/* logo */}
       <img src={logo} alt="logo" width="100px" height="100px" />
       <div className={`${middleSectionStyle} ${middleSectionFlex}`}>
-        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
-          Home
-        </Link>
-        {userID !== -1 && (
-          <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
-            Jouer
-          </Link>
-        )}
-        <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
-          Inscription
-        </Link>
+        {!loggedIn ? (
+          <>
+            <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
+              Home
+            </Link>
+            <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/inscription">
+              Inscription
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
+              Home
+            </Link>
+            <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/party">
+              Jouer
+            </Link>
+          </>
+        )}{' '}
       </div>
+
       <div className={`${sideSectionStyle} ${sideSectionFlex}`}>
         {!loggedIn ? (
           <form
@@ -193,10 +203,15 @@ const Navbar = () => {
             </button>
           </form>
         ) : (
-          <Button className={buttonStyle} onClick={handleLogout}>
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={deconnexion}
+            onClick={handleLogout}
+          >
             {/* TODO reset all state ? */}
             Déconnexion
-          </Button>
+          </button>
         )}
       </div>
     </div>

@@ -40,8 +40,8 @@ const App = () => {
               <Route path="/game" element={<RadioMap />} />
               <Route path="/party" element={<Party />} />
               <Route path="/inscription" element={<Inscription />} />
-              {/* <Route path="/flagguesser" element={<FlagGuesser />} />
-              <Route path="/Monument" element={<Monument />} /> */}
+              <Route path="/flag" element={<FlagGuesser />} />
+              <Route path="/monument" element={<Monument />} />
             </Routes>
           </div>
         </div>
