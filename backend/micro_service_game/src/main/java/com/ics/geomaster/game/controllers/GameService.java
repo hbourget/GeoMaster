@@ -85,14 +85,19 @@ public class GameService {
     }
 
     public Game updateGameScores(Integer gameId, Integer userId, List<String> countryGuesses) {
+        System.out.println("START" + gameId + " " + userId + " " + countryGuesses.toString());
         Game game = gameRepository.findById(gameId).orElse(null);
         if (game == null) {
             return null;
         }
 
+        System.out.println("passed game != null");
+
         if (!game.getUserIdsAndScores().containsKey(userId)) {
             return null;
         }
+
+        System.out.println("passed game.getUserIdsAndScores().containsKey(userId)");
 
         try {
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
@@ -103,15 +108,21 @@ public class GameService {
             return null;
         }
 
+        System.out.println("passed responseEntity.getStatusCode().is2xxSuccessful()");
+
         if (game.getStatus() == 0) {
             game.setStatus(1);
             gameRepository.save(game);
             return game;
         }
 
+        System.out.println("passed game.getStatus() == 0 so now the game has started (status should be 1");
+
         if (game.getStatus() == 4) {
             return null;
         }
+
+        System.out.println("passed game.getStatus() == 4");
 
         if (hasPlayerAlreadyPlayed(gameId, userId)) {
             return null;
@@ -121,6 +132,8 @@ public class GameService {
             userIdsAndStatus.replace(userId, game.getStatus());
             game.setUserIdsAndStatus(userIdsAndStatus);
         }
+
+        System.out.println("passed hasPlayerAlreadyPlayed(gameId, userId)");
 
         if (game.getStatus() == 1) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
