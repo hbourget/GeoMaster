@@ -1,23 +1,23 @@
 @layer reset, base, tokens, recipes, utilities;
 
 .AccueilHover:hover {
-    background-color: #004590 !important;
-    transition: 0.5s;
-    border: none !important;
+  background-color: #004590 !important;
+  transition: 0.5s;
+  border: none !important;
 }
 
 @font-face {
-    font-family: grapenuts;
-    /* src: url(./assets/fonts/Janda/JandaManateeBubble.ttf); */
-    /* src: url(./assets/fonts/Happy/HappySchool.ttf); */
-     src: url(./assets/fonts/HeyComic/HeyComic.ttf);
-  }
+  font-family: grapenuts;
+  /* src: url(./assets/fonts/Janda/JandaManateeBubble.ttf); */
+  /* src: url(./assets/fonts/Happy/HappySchool.ttf); */
+  src: url(./assets/fonts/HeyComic/HeyComic.ttf);
+}
 
 @font-face {
-  font-family: grapenutssolid;  
+  font-family: grapenutssolid;
   src: url(./assets/fonts/JandaManateeSolid.ttf);
 }
-  
+
 * {
   font-family: grapenuts !important;
 }
