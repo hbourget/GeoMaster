@@ -56,6 +56,8 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
   if (!response.ok) {
     throw new Error('Something went wrong');
   }
+
+  return response.json();
 };
 
 const containerStyle = css({
@@ -85,6 +87,8 @@ const RadioMap = () => {
   const GAME_TYPE = 3;
 
   const navigate = useNavigate();
+
+  const [score, setScore] = useState(0);
 
   const [userID] = useAtom(currentUserID);
   const [gameID] = useAtom(currentGameID);
@@ -121,6 +125,7 @@ const RadioMap = () => {
     onSuccess: (data) => {
       console.log('Radio map success send game data');
       console.log(data);
+      setScore(data.userIdsAndScores[userID]);
     },
     retry: false,
   });
@@ -237,6 +242,7 @@ const RadioMap = () => {
         overflow: 'hidden',
       })}
     >
+      <h1>Votre score est : {score}</h1>
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text color="white">
