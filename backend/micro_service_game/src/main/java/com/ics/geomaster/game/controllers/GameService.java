@@ -221,6 +221,11 @@ public class GameService {
         userIdsAndStatus.remove(userId);
         game.setUserIdsAndStatus(userIdsAndStatus);
 
+        if (game.getUserIdsAndScores().isEmpty()) {
+            gameRepository.delete(game);
+            return null;
+        }
+
         gameRepository.save(game);
         return game;
     }
