@@ -16,20 +16,19 @@ import java.time.format.DateTimeFormatter;
 @EnableScheduling
 public class SchedulerConfig {
     @Autowired
-    private GameService cService;
-    private GameRepository gameRepository;
+    private GameService gService;
     @Transactional
     @Scheduled(cron = "0 * * * * *")
     public void removeOldGames() {
 
-        Iterable<Game> games = gameRepository.findAll();
+        Iterable<Game> games = gService.getGames();
 
         for (Game game : games) {
             LocalDateTime gameCreationDate = LocalDateTime.parse(game.getCreationDate(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             LocalDateTime now = LocalDateTime.now();
             if (gameCreationDate.isBefore(now.minusMinutes(10))) {
                 System.out.println("Game " + game.getId() + " is older than 10 minutes, deleting it...");
-                cService.deleteGame(game.getId());
+                gService.deleteGame(game.getId());
             }
         }
 
