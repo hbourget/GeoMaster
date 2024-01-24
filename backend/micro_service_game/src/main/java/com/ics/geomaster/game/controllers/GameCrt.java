@@ -32,7 +32,7 @@ public class GameCrt {
     public ResponseEntity<Game> addMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
         Game updatedGame = gameService.addMember(gameId, userId);
         if (updatedGame == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
@@ -41,7 +41,7 @@ public class GameCrt {
     public ResponseEntity<Game> removeMember(@PathVariable Integer gameId, @PathVariable Integer userId) {
         Game updatedGame = gameService.removeMember(gameId, userId);
         if (updatedGame == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
@@ -69,7 +69,7 @@ public class GameCrt {
     public ResponseEntity<Iterable<Game>> getGames() {
         Iterable<Game> games = gameService.getGames();
         if (games == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
