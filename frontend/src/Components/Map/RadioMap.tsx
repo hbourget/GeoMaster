@@ -4,11 +4,19 @@ import RadioSVGMap from './RadioSVGMap';
 import { getLocationName } from './utils';
 import { css } from '@styled-system/css';
 import { useAtom } from 'jotai';
-import { currentGameID, currentUserID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
+import {
+  currentGameID,
+  currentUserID,
+  flagGuess,
+  gameIteration,
+  mapGuess,
+  monumentGuess,
+} from '../../jotai';
 import { useMutation } from '@tanstack/react-query';
 import { Input, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { ElementRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
 // import { world_map } from './world_map';
@@ -59,13 +67,13 @@ const zoomControlStyle = css({
 
 const RadioMap = () => {
   const GAME_TIMER = 10;
-  const GAME_ITERATION = 5;
+  const [GAME_ITERATION] = useAtom(gameIteration);
   const GAME_TYPE = 3;
 
+  const navigate = useNavigate();
+
   const [userID] = useAtom(currentUserID);
-  console.log('userID:', userID);
   const [gameID] = useAtom(currentGameID);
-  console.log('gameID:', gameID);
 
   const [countriesFlag] = useAtom(flagGuess);
   const [countriesMap] = useAtom(mapGuess);
@@ -75,7 +83,7 @@ const RadioMap = () => {
   const [timer, setTimer] = useState(GAME_TIMER);
   const [arrayData, setArrayData] = useState([]);
   const [iteration, setIteration] = useState(GAME_ITERATION);
-  const guessIteration = 5 - iteration;
+  const guessIteration = GAME_ITERATION - iteration;
   const [gameType, setGameType] = useState(GAME_TYPE);
   const [gameEnd, setGameEnd] = useState(false);
 
@@ -88,18 +96,14 @@ const RadioMap = () => {
   const locationsRef = useRef<ElementRef<'div'>>(null);
   // MAX
 
-  // const handleLocationMouseOver = (event) => {
-  //   getLocationName(event);
-  // };
+  const [inputValue, setInputValue] = useState('');
+
+  const handleLocationMouseOver = (event) => {
+    getLocationName(event);
+  };
 
   const sendGameDataMutation = useMutation({
     mutationFn: () => sendGameData(userID, gameID, arrayData),
-    onSuccess: () => {
-      console.log('sendGameDataMutation success');
-    },
-    onError: () => {
-      console.log('sendGameDataMutation error');
-    },
   });
 
   useEffect(() => {
@@ -121,6 +125,7 @@ const RadioMap = () => {
 
       if (gameType === 1) {
         setGameEnd(true);
+        navigate('/home');
       }
     };
 
@@ -187,6 +192,10 @@ const RadioMap = () => {
     handleZoom(event.deltaY);
   };
 
+  const handleInput = (event) => {
+    setInputValue(event.target.value);
+  };
+
   useEffect(() => {
     if (locationsRef.current) {
       setZoomLevel(1);
@@ -207,14 +216,14 @@ const RadioMap = () => {
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text fontSize="2xl" color="white">
-            You have to guess{' '}
-            {gameType === 3 ? 'the country' : gameType === 2 ? 'the city' : 'the flag'} of{' '}
+            Guess {gameType === 3 ? 'the country' : gameType === 2 ? '' : 'the flag'} of{' '}
             {gameType === 3 ? (
               <>
                 <img
                   src={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
                 ></img>
-                <Input placeholder="Country" />
+                {/* TODO reset input on each iteration */}
+                <Input placeholder="Country" onChange={handleInput} value={inputValue} />
               </>
             ) : gameType === 2 ? (
               <>
@@ -264,11 +273,11 @@ const RadioMap = () => {
                 <Text fontSize="2xl" color="white">
                   {countriesMonument[guessIteration]}
                 </Text>
-                <Input placeholder="Monument" />
+                <Input placeholder="Monument" onChange={handleInput} value={inputValue} />
               </>
             ) : null}
           </Text>
-          <p style={{ color: 'white' }}>Temps restant : {timer}</p>
+          <span style={{ color: 'white' }}>Temps restant : {timer}</span>
         </>
       )}
 

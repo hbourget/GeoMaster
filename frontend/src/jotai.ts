@@ -23,3 +23,7 @@ export const mapGuess = atom([], (get, set, update) => {
 export const monumentGuess = atom([], (get, set, update) => {
   set(monumentGuess, update), get(monumentGuess);
 });
+
+export const gameIteration = atom(-1, (get, set, update) => {
+  set(gameIteration, update), get(gameIteration);
+});

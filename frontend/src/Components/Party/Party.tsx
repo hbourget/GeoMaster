@@ -12,7 +12,14 @@ import {
 } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
-import { currentUserID, currentGameID, flagGuess, mapGuess, monumentGuess } from '../../jotai';
+import {
+  currentUserID,
+  currentGameID,
+  flagGuess,
+  mapGuess,
+  monumentGuess,
+  gameIteration,
+} from '../../jotai';
 import { useState } from 'react';
 
 const containerStyle = css({
@@ -159,6 +166,7 @@ const joinRoom = async (gameId: number, userId: number) => {
 const Party = () => {
   const [userID] = useAtom(currentUserID);
   const [gameID, setGameID] = useAtom(currentGameID);
+  const [, setGameIteration] = useAtom(gameIteration);
   const [, setCountriesFlag] = useAtom(flagGuess);
   const [, setCountriesMap] = useAtom(mapGuess);
   const [, setCountriesMonument] = useAtom(monumentGuess);
@@ -175,7 +183,10 @@ const Party = () => {
   const createGameMutation = useMutation({
     mutationFn: () => createRoom(userID, countryNumber),
     onSuccess(data) {
+      console.log('les data');
+      console.log(data);
       setGameID(data.id);
+      setGameIteration(data.numberOfCountriesPerRound);
       setCountriesFlag(data.countriesFlag);
       setCountriesMap(data.countriesMap);
       setCountriesMonument(data.countriesMonument);
@@ -241,6 +252,7 @@ const Party = () => {
           <Slider
             flex="1"
             focusThumbOnChange={false}
+            min={1}
             max={20}
             defaultValue={5}
             value={countryNumber}
