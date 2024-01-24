@@ -134,7 +134,9 @@ const Navbar = () => {
 
   return (
     <div className={`${navbarStyle} ${navbarFlex} ${responsiveStyles}`}>
-      <img src={logo} alt="logo" width="100px" height="100px" />
+      <Link to="/home">
+        <img src={logo} alt="logo" width="100px" height="100px" />
+      </Link>{' '}
       <div className={`${middleSectionStyle} ${middleSectionFlex}`}>
         {!isLogin ? (
           <>
@@ -156,7 +158,6 @@ const Navbar = () => {
           </>
         )}
       </div>
-
       <div className={`${sideSectionStyle} ${sideSectionFlex}`}>
         {!isLogin ? (
           <form

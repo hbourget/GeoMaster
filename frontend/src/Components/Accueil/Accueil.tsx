@@ -1,6 +1,7 @@
 import { css } from '@styled-system/css';
 import { useGetQuery } from '../../Hooks/useQuery';
 import planet from '../../assets/img/planet.png';
+import { Link } from 'react-router-dom';
 
 const containerStyle = css({
   width: '100%',
@@ -60,10 +61,14 @@ const Accueil = () => {
   const topUsers = sortedUsers.slice(0, 4);
 
   const planetStyle = css({
-    position: 'absolute',
-    top: '25%',
-    left: '10%',
-    width: '20%',
+    'position': 'absolute',
+    'top': '35%',
+    'left': '9%',
+    'width': '37%',
+    'transition': 'transform 0.3s ease-out', // Ajoutez une transition pour une animation plus douce
+    '&:hover': {
+      transform: 'scale(1.1)', // Ajustez la valeur selon votre préférence
+    },
   });
 
   if (gameScores.isLoading) {
@@ -75,7 +80,11 @@ const Accueil = () => {
   return (
     <div className={containerStyle}>
       <div className={planetStyle}>
-        <img src={planet} alt="planet" />
+        <Link to="/party">
+          <div className={planetStyle}>
+            <img src={planet} alt="planet" />
+          </div>
+        </Link>{' '}
       </div>
       <h1
         style={{
@@ -100,7 +109,7 @@ const Accueil = () => {
           </div>
 
           {topUsers.map((user, index) => (
-            <div key={user.id} className="AccueilHover row row-cols-3" style={ligneStyles}>
+            <div key={user.id} className="AccueilHover row row-cols-3 monstyle" style={ligneStyles}>
               <div className="col">{index + 1}</div>
               <div className="col">{user.username}</div>
               <div className="col">{user.balance}</div>

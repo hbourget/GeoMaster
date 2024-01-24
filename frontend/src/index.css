@@ -21,3 +21,11 @@
 * {
   font-family: grapenuts !important;
 }
+
+.monstyle {
+  transition: transform 0.3s ease-out;
+}
+
+.monstyle:hover {
+  transform: scale(1.1);
+}
