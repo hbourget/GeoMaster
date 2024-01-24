@@ -123,6 +123,7 @@ const RadioMap = () => {
       console.log('Radio map success send game data');
       console.log(data);
     },
+    retry: false,
   });
 
   useEffect(() => {
