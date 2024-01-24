@@ -15,6 +15,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer numberOfCountriesPerRound;
+    private String creationDate;
     @ElementCollection
     private List<String> countriesMap;
     @ElementCollection
@@ -30,6 +31,7 @@ public class Game {
 
     public Game() {
         this.status = 0;
+        this.creationDate = "";
         this.numberOfCountriesPerRound = 5;
         this.countriesMonument = new ArrayList<>();
         this.countriesFlag = new ArrayList<>();
@@ -89,4 +91,8 @@ public class Game {
     public Integer getNumberOfCountriesPerRound() { return numberOfCountriesPerRound; }
 
     public void setNumberOfCountriesPerRound(Integer numberOfCountriesPerRound) { this.numberOfCountriesPerRound = numberOfCountriesPerRound; }
+
+    public String getCreationDate() { return creationDate; }
+
+    public void setCreationDate(String creationDate) { this.creationDate = creationDate; }
 }

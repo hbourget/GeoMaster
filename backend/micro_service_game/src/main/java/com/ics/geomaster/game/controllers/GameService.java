@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,6 +23,12 @@ public class GameService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String countryServiceUrl = "http://country:8082";
     private final String userService = "http://user:8081";
+
+    public String getCurrentTimeStamp() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
 
     public Game createGame(Integer userId, Integer numberOfCountriesPerRound) {
 
@@ -39,6 +47,7 @@ public class GameService {
                 game.getUserIdsAndScores().put(userId, 0);
                 game.getUserIdsAndStatus().put(userId, 0);
                 game.setNumberOfCountriesPerRound(numberOfCountriesPerRound);
+                game.setCreationDate(getCurrentTimeStamp());
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
