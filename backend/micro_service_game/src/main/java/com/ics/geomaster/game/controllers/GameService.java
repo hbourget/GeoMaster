@@ -114,7 +114,7 @@ public class GameService {
         }
 
         if (game.getStatus() == 1) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + countryName, Country.class);
                 if (responseEntity.getStatusCode().is2xxSuccessful()) {
@@ -134,7 +134,7 @@ public class GameService {
         }
 
         else if (game.getStatus() == 2) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
@@ -155,7 +155,7 @@ public class GameService {
         }
 
         else if (game.getStatus() == 3) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Boolean> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/monument/" + formattedCountryName + "/" + game.getCountriesMonument().get(i), Boolean.class);
