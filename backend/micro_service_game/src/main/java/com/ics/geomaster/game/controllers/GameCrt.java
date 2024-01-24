@@ -50,7 +50,7 @@ public class GameCrt {
     public ResponseEntity<Game> updateGame(@RequestBody GameUpdateDTO gameUpdateDTO) {
         Game updatedGame = gameService.updateGameScores(gameUpdateDTO.getGameId(), gameUpdateDTO.getUserId(), gameUpdateDTO.getCountryGuesses());
         if (updatedGame == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(updatedGame, HttpStatus.OK);
     }
