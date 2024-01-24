@@ -99,7 +99,6 @@ public class AuthService {
       System.out.println(e);
       return null;
     }
-    System.out.println(request.getUsername());
     var user = getUserByUsername(request.getUsername());
     UserDetails userDetails = usertoUserDetails(user);
     var jwtToken = jwtService.generateToken(userDetails);
