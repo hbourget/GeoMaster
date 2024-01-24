@@ -65,7 +65,7 @@ const Accueil = () => {
     'position': 'absolute',
     'top': '35%',
     'left': '9%',
-    'width': '37%',
+    'width': '32%',
     'transition': 'transform 0.3s ease-out', // Ajoutez une transition pour une animation plus douce
     '&:hover': {
       transform: 'scale(1.1)', // Ajustez la valeur selon votre préférence
