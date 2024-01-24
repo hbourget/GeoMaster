@@ -31,7 +31,7 @@ public class SchedulerConfig {
                 gameCreationDate = LocalDateTime.parse(game.getCreationDate(), formatter);
             } catch (DateTimeParseException e) {
                 System.err.println("Error parsing date: " + game.getCreationDate());
-                continue; // Skip to the next iteration
+                continue;
             }
             LocalDateTime now = LocalDateTime.now();
             if (gameCreationDate.isBefore(now.minusMinutes(10))) {
