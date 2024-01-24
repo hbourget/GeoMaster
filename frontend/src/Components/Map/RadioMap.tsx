@@ -17,6 +17,8 @@ import { Input, Text } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { ElementRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import FlagGuesser from '../FlagGuesser/FlagGuesser';
+import Monument from '../Monument/Monument';
 
 // import { MapsComponent, LayersDirective, LayerDirective } from '@syncfusion/ej2-react-maps';
 // import { world_map } from './world_map';
@@ -249,6 +251,10 @@ const RadioMap = () => {
                 ></img>
                 {/* TODO reset input on each iteration */}
                 <Input placeholder="Country" onChange={handleInput} value={inputValue} />
+                <FlagGuesser
+                  timer={timer}
+                  url={`https://restfulcountries.com//assets//images//flags//${countriesFlag[guessIteration]}.png`}
+                />
               </>
             ) : gameType === 2 ? (
               <>
@@ -299,10 +305,10 @@ const RadioMap = () => {
                   {countriesMonument[guessIteration]}
                 </Text>
                 <Input placeholder="Monument" onChange={handleInput} value={inputValue} />
+                <Monument guess={countriesMonument[guessIteration]} timer={timer} />
               </>
             ) : null}
           </Text>
-          <span style={{ color: 'white' }}>Temps restant : {timer}</span>
         </>
       )}
 

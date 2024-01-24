@@ -1,5 +1,5 @@
 import { css } from '@styled-system/css';
-import { Button, Input } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
 
 const containerStyle = css({
   width: '100%',
@@ -30,34 +30,25 @@ const imageStyle = css({
   marginBottom: '20px',
 });
 
-const FlagGuesser = () => {
+const FlagGuesser = (props) => {
   return (
     <div className={containerStyle}>
       <h1 style={{ fontSize: '40px', fontWeight: 'bold', textShadow: '0 0 10px black' }}>
         FlagGuesser
       </h1>
-      <br></br>
       <div className={flagContainer}>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Flag_of_Afghanistan.svg/1200px-Flag_of_Afghanistan.svg.png"
-          alt="Flag"
-          className={imageStyle}
-        />
+        <img src={props.url} alt="Flag" className={imageStyle} />
+        <span style={{ color: 'black' }}>Temps restant : {props.timer}</span>
+
         <p>Connaissez-vous le nom du drapeau ?</p>
-        <br></br>
         <Input
-          placeholder="Nom d'utilisateur"
+          placeholder="Country"
           marginRight={2}
           backgroundColor={'white'}
           color={'black'}
           boxShadow={'0 0 10px black'}
           width={'50%'}
         />
-        <button
-          style={{ background: '#004590', padding: '5px', color: '#fff', borderRadius: '5px' }}
-        >
-          Valider
-        </button>
       </div>
     </div>
   );
