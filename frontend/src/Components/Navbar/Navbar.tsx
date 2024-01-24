@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@styled-system/css';
-import { Button, Input } from '@chakra-ui/react';
+import { Input } from '@chakra-ui/react';
 // import { usePostQuery } from '../../Hooks/useQuery';
 import { useMutation } from '@tanstack/react-query';
-import { currentUserID } from '../../jotai';
+import { currentUserID, loggedIn } from '../../jotai';
 import { useAtom } from 'jotai';
 import logo from '../../assets/img/logo.png';
 
@@ -23,10 +23,9 @@ const login = async (data) => {
 };
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLogin, setIsLogin] = useAtom(loggedIn);
   const [currentPage, setCurrentPage] = useState('Home');
-  const [userID, setUserID] = useAtom(currentUserID);
+  const [, setUserID] = useAtom(currentUserID);
 
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
@@ -37,8 +36,7 @@ const Navbar = () => {
       console.log('dataLogin:', data);
       localStorage.setItem('token', data.access_token);
       setUserID(data.userId);
-      setLoggedIn(true);
-      setUser(userInput);
+      setIsLogin(true);
     },
   });
 
@@ -47,9 +45,8 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    setUser(null);
-    setLoggedIn(false);
     localStorage.removeItem('token');
+    setIsLogin(false);
     if (currentPage !== 'Home') {
       setCurrentPage('Home');
     }
@@ -137,10 +134,9 @@ const Navbar = () => {
 
   return (
     <div className={`${navbarStyle} ${navbarFlex} ${responsiveStyles}`}>
-      {/* logo */}
       <img src={logo} alt="logo" width="100px" height="100px" />
       <div className={`${middleSectionStyle} ${middleSectionFlex}`}>
-        {!loggedIn ? (
+        {!isLogin ? (
           <>
             <Link className={`${linkStyle} ${responsiveInputStyles}`} to="/home">
               Home
@@ -158,11 +154,11 @@ const Navbar = () => {
               Jouer
             </Link>
           </>
-        )}{' '}
+        )}
       </div>
 
       <div className={`${sideSectionStyle} ${sideSectionFlex}`}>
-        {!loggedIn ? (
+        {!isLogin ? (
           <form
             className={css({
               display: 'flex',
@@ -209,7 +205,6 @@ const Navbar = () => {
             style={deconnexion}
             onClick={handleLogout}
           >
-            {/* TODO reset all state ? */}
             Déconnexion
           </button>
         )}
