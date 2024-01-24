@@ -184,6 +184,7 @@ public class GameService {
         }
 
         gameRepository.save(game);
+        System.out.println(game.toString());
         return game;
     }
 
