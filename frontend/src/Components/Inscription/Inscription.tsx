@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
-// import { usePostQuery } from '../../Hooks/useQuery';
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 const formStyle = css({
   backgroundColor: '#007BFF',
@@ -70,11 +70,13 @@ const Inscription = () => {
 
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: (data) => {
       console.log('User inscription data:', data);
+      navigate('/home');
     },
   });
 
@@ -94,10 +96,7 @@ const Inscription = () => {
     e.preventDefault();
     mutation.mutate(formData);
     console.log('Submitted data:', formData);
-    // mutation.isSuccess && setUserID(1);
   };
-
-  // mutation.isSuccess && store.set('user', mutation.data);
 
   return (
     <form onSubmit={handleSubmit} className={formStyle} style={{ marginTop: '5%' }}>
@@ -115,7 +114,6 @@ const Inscription = () => {
           style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
-
       <p> Mot de passe:</p>
       <label className={labelStyle}>
         <Input
@@ -129,7 +127,6 @@ const Inscription = () => {
           style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
-
       <p> Confirmation du mot de passe:</p>
       <label className={labelStyle}>
         <Input
@@ -142,11 +139,9 @@ const Inscription = () => {
           style={{ fontWeight: 'normal', backgroundColor: 'white' }}
         />
       </label>
-
       {password !== passwordConfirm && (
         <p style={{ color: 'red' }}>Les mots de passe ne correspondent pas</p>
       )}
-
       <Button
         type="submit"
         style={{
@@ -155,14 +150,13 @@ const Inscription = () => {
           width: '50%',
         }}
         className={buttonStyle}
-        // disabled={password !== passwordConfirm}
         disabled
       >
         S'inscrire
       </Button>
-
+      <br></br> <br></br>
       {mutation.isError && <p style={{ color: 'red' }}>Une erreur est survenue</p>}
-      {mutation.isSuccess && <p style={{ color: 'green' }}>Inscription réussie</p>}
+      {mutation.isSuccess && <p style={{ color: '#76EA00' }}>Inscription réussie</p>}
     </form>
   );
 };

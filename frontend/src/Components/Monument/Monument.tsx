@@ -79,7 +79,14 @@ const imageStyle = css({
 const Monument = (props) => {
   return (
     <div className={containerStyle}>
-      <h1 style={{ fontSize: '40px', fontWeight: 'bold', textShadow: '0 0 10px black' }}>
+      <h1
+        style={{
+          fontSize: '40px',
+          fontWeight: 'bold',
+          textShadow: '0 0 10px black',
+          marginBottom: '2%',
+        }}
+      >
         Monument
       </h1>
       <div className={flagContainer}>
@@ -88,7 +95,7 @@ const Monument = (props) => {
           alt="monument"
           className={imageStyle}
         />
-        <span style={{ color: 'black' }}>Temps restant : {props.timer}</span>
+        <span style={{ color: 'black' }}>Temps restant : {props.timer}s</span>
 
         <p>De quel pays vient ce monument : {props.guess} ?</p>
         <Input
@@ -100,6 +107,7 @@ const Monument = (props) => {
           width={'50%'}
           onChange={props.onChange}
           value={props.value}
+          autoFocus
         />
       </div>
     </div>

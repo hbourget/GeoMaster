@@ -33,12 +33,19 @@ const imageStyle = css({
 const FlagGuesser = (props) => {
   return (
     <div className={containerStyle}>
-      <h1 style={{ fontSize: '40px', fontWeight: 'bold', textShadow: '0 0 10px black' }}>
-        FlagGuesser
+      <h1
+        style={{
+          fontSize: '40px',
+          fontWeight: 'bold',
+          textShadow: '0 0 10px black',
+          marginBottom: '2%',
+        }}
+      >
+        Guess the flag !
       </h1>
       <div className={flagContainer}>
         <img src={props.url} alt="Flag" className={imageStyle} />
-        <span style={{ color: 'black' }}>Temps restant : {props.timer}</span>
+        <span style={{ color: 'black' }}>Temps restant : {props.timer}s</span>
 
         <p>Connaissez-vous le nom du drapeau ?</p>
         <Input
@@ -50,6 +57,7 @@ const FlagGuesser = (props) => {
           width={'50%'}
           onChange={props.onChange}
           value={props.value}
+          autoFocus
         />
       </div>
     </div>

@@ -62,7 +62,6 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
 
 const containerStyle = css({
   width: '100%',
-  marginTop: '2%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -242,11 +241,6 @@ const RadioMap = () => {
         overflow: 'hidden',
       })}
     >
-      <Center>
-        <Text fontSize={'4xl'} color={'white'}>
-          Votre score est : <span className="scoreuser">{score}</span>
-        </Text>
-      </Center>
       {!gameEnd && userID !== -1 && gameID !== -1 && (
         <>
           <Text color="white">
@@ -261,10 +255,25 @@ const RadioMap = () => {
               </>
             ) : gameType === 2 ? (
               <>
-                <Center style={{ position: 'absolute', top: '10%', left: '5%', zIndex: 1 }}>
+                <Center
+                  style={{
+                    position: 'absolute',
+                    top: '65%',
+                    left: '2%',
+                    zIndex: 1,
+                    textShadow: '0 0 10px black',
+                    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                    padding: '1%',
+                    borderRadius: '8px',
+                  }}
+                >
                   <Center flexDir="column">
+                    <Text fontSize={'3xl'} color={'white'}>
+                      Votre score est : <span className="scoreuser">{score}</span>
+                    </Text>
                     <Text fontSize="2xl" color="white">
-                      Country : {countriesMap[guessIteration]}
+                      <span style={{ color: 'white' }}>Country: </span>
+                      <span style={{ color: '#FCFF00' }}>{countriesMap[guessIteration]}</span>
                     </Text>
 
                     <Text fontSize="2xl" color="white">
