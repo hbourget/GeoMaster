@@ -3,6 +3,7 @@ import { css } from '@styled-system/css';
 import { Button, Input } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
 
 const formStyle = css({
   backgroundColor: '#007BFF',
@@ -72,11 +73,32 @@ const Inscription = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const toast = useToast();
+
   const mutation = useMutation({
     mutationFn: register,
     onSuccess: (data) => {
       console.log('User inscription data:', data);
       navigate('/home');
+      // Affichage du toast
+      toast({
+        title: 'Inscription réussie',
+        description: `Bienvenue, ${formData.username} !`,
+        status: 'info',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onError(error) {
+      console.error('Error during login:', error);
+
+      toast({
+        title: 'Erreur de connexion',
+        description: 'Veuillez vérifier vos informations de connexion.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     },
   });
 
@@ -155,8 +177,6 @@ const Inscription = () => {
         S'inscrire
       </Button>
       <br></br> <br></br>
-      {mutation.isError && <p style={{ color: 'red' }}>Une erreur est survenue</p>}
-      {mutation.isSuccess && <p style={{ color: '#76EA00' }}>Inscription réussie</p>}
     </form>
   );
 };
