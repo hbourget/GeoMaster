@@ -85,7 +85,7 @@ const Inscription = () => {
         title: 'Inscription réussie',
         description: `Bienvenue, ${formData.username} !`,
         status: 'info',
-        duration: 5000,
+        duration: 2500,
         isClosable: true,
       });
     },
@@ -94,9 +94,9 @@ const Inscription = () => {
 
       toast({
         title: 'Erreur de connexion',
-        description: 'Veuillez vérifier vos informations de connexion.',
+        description: 'Ce pseudo est déjà utilisé.',
         status: 'error',
-        duration: 5000,
+        duration: 2500,
         isClosable: true,
       });
     },

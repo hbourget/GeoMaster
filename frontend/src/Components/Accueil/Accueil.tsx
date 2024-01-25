@@ -20,13 +20,13 @@ const leaderboard = css({
   width: '100%',
   maxWidth: '400px',
   height: '400px',
-  backgroundColor: 'transparent',
+  backgroundColor: '#007BFF',
   borderRadius: '8px',
   overflowY: 'auto',
   color: 'white',
   textAlign: 'center',
   textShadow: '0 0 10px black',
-  boxShadow: '0 0 10px white',
+  boxShadow: '0 0 10px black',
 });
 
 const MasterligneStyles = {
@@ -38,7 +38,7 @@ const MasterligneStyles = {
 };
 
 const ligneStyles = {
-  backgroundColor: '#007BFF',
+  backgroundColor: '#4ABBFF',
   borderRadius: '8px',
   padding: '3%',
   marginBottom: '2%',
@@ -70,6 +70,11 @@ const Accueil = () => {
     '&:hover': {
       transform: 'scale(1.1)', // Ajustez la valeur selon votre préférence
     },
+  });
+
+  const col = css({
+    fontWeight: 'normal',
+    textShadow: 'none',
   });
 
   if (gameScores.isLoading) {
@@ -110,10 +115,10 @@ const Accueil = () => {
           </div>
 
           {topUsers.map((user, index) => (
-            <div key={user.id} className="AccueilHover row row-cols-3 monstyle" style={ligneStyles}>
-              <div className="col">{index + 1}</div>
-              <div className="col">{user.username}</div>
-              <div className="col">{user.balance}</div>
+            <div key={user.id} className="row row-cols-3 monstyle" style={ligneStyles}>
+              <div className={col}>{index + 1}</div>
+              <div className={col}>{user.username}</div>
+              <div className={col}>{user.balance}</div>
             </div>
           ))}
         </div>

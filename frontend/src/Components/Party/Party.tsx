@@ -61,16 +61,15 @@ const getStatusColor = (status: string) => {
 };
 
 const listItemStyle = (index: number, status: string) =>
-    css({
-      backgroundColor: index % 2 === 0 ? '#007BFF' : '#007BFF',
-      padding: '10px',
-      borderRadius: '4px',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      color: getStatusColor(status),
-    });
-
+  css({
+    backgroundColor: index % 2 === 0 ? '#007BFF' : '#007BFF',
+    padding: '10px',
+    borderRadius: '4px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    color: getStatusColor(status),
+  });
 
 const getStatusText = (status: string) => {
   switch (status) {
@@ -83,7 +82,7 @@ const getStatusText = (status: string) => {
     case 'MONUMENTS':
       return 'Round des monuments';
     case 'FINISHED':
-        return 'Terminé';
+      return 'Terminé';
     default:
       return 'En attente';
   }

@@ -48,7 +48,7 @@ const Navbar = () => {
         title: 'Connexion réussie',
         description: `Bienvenue, ${userInput} !`,
         status: 'success',
-        duration: 5000,
+        duration: 2500,
         isClosable: true,
       });
     },
@@ -59,7 +59,7 @@ const Navbar = () => {
         title: 'Erreur de connexion',
         description: 'Veuillez vérifier vos informations de connexion.',
         status: 'error',
-        duration: 5000,
+        duration: 2500,
         isClosable: true,
       });
     },
