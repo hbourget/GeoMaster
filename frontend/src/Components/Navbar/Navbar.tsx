@@ -8,6 +8,7 @@ import { currentUserID, loggedIn } from '../../jotai';
 import { useAtom } from 'jotai';
 import logo from '../../assets/img/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
 
 const login = async (data) => {
   const response = await fetch('http://localhost:8080/auth/login', {
@@ -31,6 +32,8 @@ const Navbar = () => {
   const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  const toast = useToast();
+
   const mutation = useMutation({
     mutationFn: login,
     onSuccess(data) {
@@ -39,6 +42,26 @@ const Navbar = () => {
       setUserID(data.userId);
       setIsLogin(true);
       navigate('/home');
+
+      // Affichage du toast
+      toast({
+        title: 'Connexion réussie',
+        description: `Bienvenue, ${userInput} !`,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+    onError(error) {
+      console.error('Error during login:', error);
+
+      toast({
+        title: 'Erreur de connexion',
+        description: 'Veuillez vérifier vos informations de connexion.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     },
   });
 
