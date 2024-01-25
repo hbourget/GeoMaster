@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 
 const login = async (data) => {
-  const response = await fetch('http://localhost:8080/auth/login', {
+  const response = await fetch('http://159.65.52.6:8080/auth/login', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
