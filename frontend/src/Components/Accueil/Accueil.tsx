@@ -11,16 +11,6 @@ const userAtom = atom({
   username: null,
 });
 
-const containerStyle = css({
-  width: '100%',
-  marginTop: '2%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'white',
-});
-
 const leaderboard = css({
   position: 'relative',
   padding: '20px',
@@ -68,9 +58,11 @@ const Accueil = () => {
     setUser({ isLoggedIn, username });
   }, []);
 
+  const SERVER_IP = import.meta.env.SERVER_IP;
+
   const gameScores = useGetQueryProut<User[]>({
     queryKey: ['users', 'scoreboard'],
-    url: 'http://159.65.52.6:8080/users',
+    url: `http://${SERVER_IP}:8080/users`, // Utilisation de la variable SERVER_IP
   });
 
   const sortedUsers = gameScores.data ? gameScores.data.sort((a, b) => b.balance - a.balance) : [];

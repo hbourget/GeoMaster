@@ -11,7 +11,7 @@ const formStyle = css({
   margin: 'auto',
   padding: '20px',
   borderRadius: '8px',
-  boxShadow: '0 0 10px black', //#004590
+  boxShadow: '0 0 10px ', //#004590
   marginBottom: '2%',
   color: 'white',
   textAlign: 'center',
@@ -48,9 +48,10 @@ const buttonStyle = css({
     backgroundColor: '#0056b3',
   },
 });
+const SERVER_IP = import.meta.env.SERVER_IP;
 
 const register = async (data) => {
-  const response = await fetch('http://159.65.52.6:8080/auth/register', {
+  const response = await fetch(`http://${SERVER_IP}:8080/auth/register`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {

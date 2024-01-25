@@ -10,10 +10,11 @@ export default defineConfig({
   },
   resolve: {
     alias: [
-      // { find: '@', replacement: path.resolve(__dirname, 'src') },
       { find: '@styled-system', replacement: path.resolve(__dirname, 'styled-system') },
-      //       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
       { find: '~bootstrap', replacement: path.resolve(__dirname, 'node_modules/bootstrap') },
     ],
+  },
+  define: {
+    'import.meta.env.SERVER_IP': JSON.stringify(process.env.SERVER_IP || 'localhost'),
   },
 });
