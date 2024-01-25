@@ -11,7 +11,7 @@ const formStyle = css({
   margin: 'auto',
   padding: '20px',
   borderRadius: '8px',
-  boxShadow: '0 0 10px ', //#004590
+  boxShadow: '0 0 10px black', //#004590
   marginBottom: '2%',
   color: 'white',
   textAlign: 'center',
