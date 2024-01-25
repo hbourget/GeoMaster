@@ -54,7 +54,7 @@ type User = {
 const Accueil = () => {
   const gameScores = useGetQueryProut<User[]>({
     queryKey: ['users', 'scoreboard'],
-    url: 'http://159.65.52.6:8080/users',
+    url: 'http://localhost:8080/users',
   });
 
   const sortedUsers = gameScores.data ? gameScores.data.sort((a, b) => b.balance - a.balance) : [];

@@ -50,7 +50,7 @@ const buttonStyle = css({
 });
 
 const register = async (data) => {
-  const response = await fetch('http://159.65.52.6:8080/auth/register', {
+  const response = await fetch('http://localhost:8080/auth/register', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
