@@ -85,7 +85,7 @@ const Accueil = () => {
           <div className={planetStyle}>
             <img src={planet} alt="planet" />
           </div>
-        </Link>{' '}
+        </Link>
       </div>
       <h1
         style={{

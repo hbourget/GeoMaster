@@ -29,20 +29,18 @@ const containerStyle = css({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  overflow: 'hidden',
 });
 
 //todo update style for room list to not overflow until screen border
 const sectionStyle = css({
   marginBottom: '20px',
-  marginTop: '20px',
   padding: '20px',
   backgroundColor: '#007BFF',
   boxShadow: '0 0 10px #004590',
   color: 'white',
   borderRadius: '8px',
   width: '100%',
-  maxWidth: '400px',
+  maxWidth: '450',
   boxSizing: 'border-box',
   overflowY: 'auto',
 });
@@ -92,16 +90,12 @@ const getStatusText = (status: string) => {
 };
 
 const joinButtonStyle = css({
-  'padding': '12px',
-  'backgroundColor': '#007BFF',
-  'color': '#fff',
-  'border': 'none',
-  'borderRadius': '4px',
-  'cursor': 'pointer',
-  'transition': 'background-color 0.3s',
-  '&:hover': {
-    backgroundColor: '#0056b3',
-  },
+  padding: '12px',
+  backgroundColor: '#007BFF',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '4px',
+  cursor: 'pointer',
 });
 
 type RoomData = {
@@ -241,20 +235,21 @@ const Party = () => {
   };
 
   return (
-    <div className={containerStyle} style={{ marginTop: '5%' }}>
+    <div className={containerStyle} style={{ marginTop: '2%' }}>
       <div className={sectionStyle}>
         <h3 style={{ fontWeight: 'bold', textShadow: '1px 1px 1px black' }}>
           Créer une nouvelle room
         </h3>
 
-        <button
+        <Button
           type="button"
+          marginBottom={2}
           className="btn btn-primary"
           style={Createbutton}
           onClick={handleCreateRoom}
         >
           Créer
-        </button>
+        </Button>
         <Flex>
           <Text>Nombre de pays</Text>
           <Slider
@@ -281,7 +276,7 @@ const Party = () => {
 
       <div className={sectionStyle}>
         <h2>Liste des rooms</h2>
-        <ul style={{ listStyle: 'none', padding: 0, overflowY: 'auto', maxHeight: '300px' }}>
+        <ul style={{ listStyle: 'none', padding: 0, overflowY: 'auto', maxHeight: '230px' }}>
           {gamesList.isLoading && <div>Loading rooms...</div>}
           {gamesList.isError && <div>Error loading rooms</div>}
           {gamesList.isSuccess &&
@@ -289,7 +284,9 @@ const Party = () => {
               (game, index) =>
                 game.status !== 'FINISHED' && (
                   <li key={game.id} className={listItemStyle(index, game.status)}>
-                    <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
+                    <span style={{ fontWeight: 'normal' }}>
+                      Room #{game.id} - ({game.countriesFlag.length} pays)
+                    </span>
                     <span>{getStatusText(game.status)}</span>
                     <Button className={joinButtonStyle} onClick={() => handleJoinRoom(game.id)}>
                       Rejoindre
@@ -301,8 +298,7 @@ const Party = () => {
         </ul>
         {play && (
           <Button
-            backgroundColor={'#004590'}
-            color={'white'}
+            className="mysuccessbutton"
             onClick={() => {
               launchGameMutation.mutate();
               navigate('/game');

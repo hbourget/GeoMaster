@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { currentUserID, loggedIn } from '../../jotai';
 import { useAtom } from 'jotai';
 import logo from '../../assets/img/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const login = async (data) => {
   const response = await fetch('http://localhost:8080/auth/login', {
@@ -37,6 +38,7 @@ const Navbar = () => {
       localStorage.setItem('token', data.access_token);
       setUserID(data.userId);
       setIsLogin(true);
+      navigate('/home');
     },
   });
 
@@ -132,6 +134,8 @@ const Navbar = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   return (
     <div className={`${navbarStyle} ${navbarFlex} ${responsiveStyles}`}>
       <Link to="/home">
@@ -177,6 +181,7 @@ const Navbar = () => {
               backgroundColor={'white'}
               color={'black'}
               boxShadow={'0 0 10px black'}
+              required
             />
             <Input
               className={`${responsiveInputStyles}`}
@@ -189,12 +194,15 @@ const Navbar = () => {
               backgroundColor={'white'}
               color={'black'}
               boxShadow={'0 0 10px black'}
+              required
             />
             <button
               type="button"
               className="btn btn-primary"
               style={connexion}
-              onClick={handleLogin}
+              onClick={() => {
+                handleLogin();
+              }}
             >
               Connexion
             </button>
@@ -204,7 +212,10 @@ const Navbar = () => {
             type="button"
             className="btn btn-primary"
             style={deconnexion}
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              navigate('/home');
+            }}
           >
             Déconnexion
           </button>
