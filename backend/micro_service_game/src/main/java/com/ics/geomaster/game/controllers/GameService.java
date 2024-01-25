@@ -94,12 +94,7 @@ public class GameService {
             return null;
         }
 
-        try {
-            ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
-            if (responseEntity.getStatusCode().is4xxClientError()) {
-                return null;
-            }
-        } catch (Exception e) {
+        if (game.getStatus() == Game.Status.FINISHED) {
             return null;
         }
 
@@ -110,16 +105,12 @@ public class GameService {
         }
 
         if (hasPlayerAlreadyPlayed(gameId, userId)) {
-            return null;
+            return game;
         }
         else {
             Map<Integer, Game.Status> userIdsAndStatus = game.getUserIdsAndStatus();
             userIdsAndStatus.replace(userId, game.getStatus());
             game.setUserIdsAndStatus(userIdsAndStatus);
-        }
-
-        if (game.getStatus() == Game.Status.FINISHED) {
-            return null;
         }
 
         if (game.getStatus() == Game.Status.FLAGS) {
