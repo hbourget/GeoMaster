@@ -43,7 +43,7 @@ public class GameService {
 
         try {
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
-            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            if (responseEntity.getStatusCode().value() == 200) {
                 game.getUserIdsAndScores().put(userId, 0);
                 game.getUserIdsAndStatus().put(userId, Game.Status.WAITING);
                 game.setNumberOfCountriesPerRound(numberOfCountriesPerRound);
@@ -118,7 +118,7 @@ public class GameService {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
                 ResponseEntity<Country> responseEntity = restTemplate.getForEntity(countryServiceUrl + "/countries/name/" + formattedCountryName, Country.class);
-                if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                if (responseEntity.getStatusCode().value() == 200) {
                     Country country = responseEntity.getBody();
                     if (country != null) {
                         if (country.getName().equalsIgnoreCase(game.getCountriesFlag().get(i))) {
