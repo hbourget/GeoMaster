@@ -3,6 +3,13 @@ import { useGetQuery, useGetQueryProut } from '../../Hooks/useQuery';
 import planet from '../../assets/img/planet.png';
 import { useQuery } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { useAtom, atom } from 'jotai';
+import { useEffect } from 'react';
+
+const userAtom = atom({
+  isLoggedIn: false,
+  username: null,
+});
 
 const containerStyle = css({
   width: '100%',
@@ -27,6 +34,7 @@ const leaderboard = css({
   textAlign: 'center',
   textShadow: '0 0 10px black',
   boxShadow: '0 0 10px black',
+  margin: 'auto',
 });
 
 const MasterligneStyles = {
@@ -52,6 +60,14 @@ type User = {
 };
 
 const Accueil = () => {
+  const [user, setUser] = useAtom(userAtom);
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('token') ? true : false;
+    const username = isLoggedIn ? localStorage.getItem('username') : null;
+    setUser({ isLoggedIn, username });
+  }, []);
+
   const gameScores = useGetQueryProut<User[]>({
     queryKey: ['users', 'scoreboard'],
     url: 'http://159.65.52.6:8080/users',
@@ -84,46 +100,61 @@ const Accueil = () => {
   }
 
   return (
-    <div className={containerStyle}>
-      <div className={planetStyle}>
-        <Link to="/party">
-          <div className={planetStyle}>
-            <img src={planet} alt="planet" />
-          </div>
-        </Link>
-      </div>
-      <h1
-        style={{
-          fontSize: '40px',
-          fontWeight: 'bold',
-          marginBottom: '1%',
-          textShadow: '0 0 10px black',
-        }}
-      >
-        GeoMaster
-      </h1>
-      <br />
-      <div className={leaderboard}>
-        <h4>Meilleurs joueurs</h4>
-        <br></br>
-
-        <div className="container text-center conteneur">
-          <div className="AccueilHover row row-cols-3" style={MasterligneStyles}>
-            <div className="col">Rang</div>
-            <div className="col">Nom</div>
-            <div className="col">Score</div>
-          </div>
-
-          {topUsers.map((user, index) => (
-            <div key={user.id} className="row row-cols-3 monstyle" style={ligneStyles}>
-              <div className={col}>{index + 1}</div>
-              <div className={col}>{user.username}</div>
-              <div className={col}>{user.balance}</div>
-            </div>
-          ))}
+    <div className="row">
+      <div className="col-md-4 text-center">
+        <div className={planetStyle}>
+          {user.isLoggedIn ? (
+            <Link to="/party">
+              <div className={planetStyle}>
+                <img src={planet} alt="planet" />
+              </div>
+            </Link>
+          ) : (
+            <Link to="/home">
+              <div className={planetStyle}>
+                <img src={planet} alt="planet" />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
-      <br />
+
+      <div className="col-md-4 text-center">
+        <h1
+          style={{
+            fontSize: '40px',
+            fontWeight: 'bold',
+            marginBottom: '1%',
+            color: 'white',
+            textShadow: '0 0 10px black',
+          }}
+        >
+          GeoMaster
+        </h1>
+        <br />
+        <div className={leaderboard}>
+          <h4>Meilleurs joueurs</h4>
+          <br></br>
+          <div className="container text-center conteneur">
+            <div className="AccueilHover row row-cols-3" style={MasterligneStyles}>
+              <div className="col">Rang</div>
+              <div className="col">Nom</div>
+              <div className="col">Score</div>
+            </div>
+
+            {topUsers.map((user, index) => (
+              <div key={user.id} className="row row-cols-3 monstyle" style={ligneStyles}>
+                <div className={col}>{index + 1}</div>
+                <div className={col}>{user.username}</div>
+                <div className={col}>{user.balance}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <br></br> <br></br>
+      </div>
+
+      <div className="col-md-4 text-center">{/* Contenu de la troisième div */}</div>
     </div>
   );
 };
