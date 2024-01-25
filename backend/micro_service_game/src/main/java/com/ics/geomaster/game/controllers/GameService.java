@@ -204,7 +204,7 @@ public class GameService {
             return null;
         }
 
-        if (game.getStatus() == 4) {
+        if (game.getStatus() != 0) {
             return null;
         }
 
