@@ -23,7 +23,7 @@ public class GameCrt {
     public ResponseEntity<Game> createGame(@PathVariable Integer userId, @PathVariable Integer numberOfCountriesPerRound) {
         Game createdGame = gameService.createGame(userId, numberOfCountriesPerRound);
         if (createdGame == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(createdGame, HttpStatus.OK);
     }
@@ -60,7 +60,7 @@ public class GameCrt {
     public ResponseEntity<Game> getGame(@PathVariable Integer gameId) {
         Game game = gameService.getGame(gameId);
         if (game == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
@@ -78,7 +78,7 @@ public class GameCrt {
     public ResponseEntity<Game> getGameByUserId(@PathVariable Integer userId) {
         Game game = gameService.getGameByUserId(userId);
         if (game == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(game, HttpStatus.OK);
     }
@@ -89,7 +89,7 @@ public class GameCrt {
         if (gameDeleted != null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 }

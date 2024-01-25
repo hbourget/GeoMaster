@@ -237,9 +237,10 @@ public class GameService {
 
     public Game deleteGame(Integer gameId) {
         Game game = gameRepository.findById(gameId).orElse(null);
-        if (game != null) {
-            gameRepository.delete(game);
+        if (game == null) {
+            return null;
         }
+        gameRepository.delete(game);
         return game;
     }
 
