@@ -27,8 +27,8 @@ public class GameServiceTest {
 
     @BeforeEach
     public void setUp() {
-        Game game1 = new Game(0);
-        Game game2 = new Game(1);
+        Game game1 = new Game(Game.Status.WAITING);
+        Game game2 = new Game(Game.Status.WAITING);
 
         when(gameRepository.findAll()).thenReturn(Arrays.asList(game1, game2));
         when(gameRepository.findById(1)).thenReturn(Optional.of(game1));

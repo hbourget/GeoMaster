@@ -47,40 +47,47 @@ const sectionStyle = css({
   overflowY: 'auto',
 });
 
-const listItemStyle = (index: number, status: number) =>
-  css({
-    backgroundColor: index % 2 === 0 ? '#007BFF' : '#007BFF',
-    padding: '10px',
-    borderRadius: '4px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    color: getStatusColor(status),
-  });
-
-const getStatusText = (status: number) => {
+const getStatusColor = (status: string) => {
   switch (status) {
-    case 0:
-      return 'En attente de joueur';
-    case 1:
-      return 'En cours';
-    case 2:
-      return 'Terminé';
+    case 'WAITING':
+      return 'colorForWaiting';
+    case 'FLAGS':
+      return 'colorForFlags';
+    case 'MAP':
+      return 'colorForMap';
+    case 'MONUMENTS':
+      return 'colorForMonuments';
     default:
-      return '';
+      return 'defaultColor';
   }
 };
 
-const getStatusColor = (status: number) => {
+const listItemStyle = (index: number, status: string) =>
+    css({
+      backgroundColor: index % 2 === 0 ? '#007BFF' : '#007BFF',
+      padding: '10px',
+      borderRadius: '4px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      color: getStatusColor(status),
+    });
+
+
+const getStatusText = (status: string) => {
   switch (status) {
-    case 0:
-      return 'gray';
-    case 1:
-      return 'orange';
-    case 2:
-      return 'green';
+    case 'WAITING':
+      return 'En attente';
+    case 'FLAGS':
+      return 'Round des drapeaux';
+    case 'MAP':
+      return 'Round de la carte';
+    case 'MONUMENTS':
+      return 'Round des monuments';
+    case 'FINISHED':
+        return 'Terminé';
     default:
-      return 'black';
+      return 'En attente';
   }
 };
 
@@ -99,7 +106,7 @@ const joinButtonStyle = css({
 
 type RoomData = {
   id: number;
-  status: number;
+  status: string;
 };
 
 interface Party extends RoomData {
@@ -280,7 +287,7 @@ const Party = () => {
           {gamesList.isSuccess &&
             gamesList.data.map(
               (game, index) =>
-                game.status !== 2 && (
+                game.status !== 'FINISHED' && (
                   <li key={game.id} className={listItemStyle(index, game.status)}>
                     <span style={{ fontWeight: 'bold' }}>Room #{game.id}</span>
                     <span>{getStatusText(game.status)}</span>

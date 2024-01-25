@@ -8,9 +8,11 @@ export const currentGameID = atom(-1, (get, set, update) => {
   set(currentGameID, update), get(currentGameID);
 });
 
-export const currentGameStatus = atom(-1, (get, set, update) => {
-  set(currentGameStatus, update), get(currentGameStatus);
+export const currentGameStatus = atom('WAITING', (get, set, update) => {
+  set(currentGameStatus, update);
+  return get(currentGameStatus);
 });
+
 
 export const flagGuess = atom([], (get, set, update) => {
   set(flagGuess, update), get(flagGuess);

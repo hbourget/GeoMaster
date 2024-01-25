@@ -11,6 +11,10 @@ import java.util.Map;
 @Table(name = "GAME")
 public class Game {
 
+    public enum Status {
+        WAITING, FLAGS, MAP, MONUMENTS, FINISHED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,12 +29,12 @@ public class Game {
     @ElementCollection
     private Map<Integer, Integer> userIdsAndScores;
     @ElementCollection
-    private Map<Integer, Integer> userIdsAndStatus;
-
-    private Integer status;
+    private Map<Integer, Status> userIdsAndStatus;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Game() {
-        this.status = 0;
+        this.status = Status.WAITING;
         this.creationDate = "";
         this.numberOfCountriesPerRound = 5;
         this.countriesMonument = new ArrayList<>();
@@ -40,7 +44,7 @@ public class Game {
         this.userIdsAndStatus = new HashMap<>();
     }
 
-    public Game(Integer status) {
+    public Game(Status status) {
         this.status = status;
         this.numberOfCountriesPerRound = 5;
         this.countriesMonument = new ArrayList<>();
@@ -50,7 +54,7 @@ public class Game {
         this.userIdsAndStatus = new HashMap<>();
     }
 
-    public Game( Integer status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds, Map<Integer, Integer> userIdsAndStatus, Integer numberOfCountriesPerRound) {
+    public Game( Status status, List<String> countriesMap, List<String> countriesFlag, List<String> countriesMonument, Map<Integer, Integer> userIds, Map<Integer, Status> userIdsAndStatus, Integer numberOfCountriesPerRound) {
         this.status = status;
         this.numberOfCountriesPerRound = numberOfCountriesPerRound;
         this.countriesMap = countriesMap;
@@ -64,9 +68,9 @@ public class Game {
 
     public void setId(Integer id) { this.id = id; }
 
-    public Integer getStatus() { return status; }
+    public Status getStatus() { return status; }
 
-    public void setStatus(Integer status) { this.status = status; }
+    public void setStatus(Status status) { this.status = status; }
 
     public List<String> getCountriesMap() { return countriesMap; }
 
@@ -84,9 +88,9 @@ public class Game {
 
     public void setUserIdsAndScores(Map<Integer, Integer> userIds) { this.userIdsAndScores = userIds; }
 
-    public Map<Integer, Integer> getUserIdsAndStatus() { return userIdsAndStatus; }
+    public Map<Integer, Status> getUserIdsAndStatus() { return userIdsAndStatus; }
 
-    public void setUserIdsAndStatus(Map<Integer, Integer> userIdsAndStatus) { this.userIdsAndStatus = userIdsAndStatus; }
+    public void setUserIdsAndStatus(Map<Integer, Status> userIdsAndStatus) { this.userIdsAndStatus = userIdsAndStatus; }
 
     public Integer getNumberOfCountriesPerRound() { return numberOfCountriesPerRound; }
 

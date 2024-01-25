@@ -34,7 +34,7 @@ public class GameService {
 
         Iterable<Game> games = gameRepository.findAll();
         for (Game game : games) {
-            if (game.getUserIdsAndScores().containsKey(userId) && game.getStatus() != 4) {
+            if (game.getUserIdsAndScores().containsKey(userId) && game.getStatus() != Game.Status.FINISHED) {
                 return null;
             }
         }
@@ -45,7 +45,7 @@ public class GameService {
             ResponseEntity<UserDTO> responseEntity = restTemplate.getForEntity(userService + "/users/" + userId, UserDTO.class);
             if (responseEntity.getStatusCode().is2xxSuccessful()) {
                 game.getUserIdsAndScores().put(userId, 0);
-                game.getUserIdsAndStatus().put(userId, 0);
+                game.getUserIdsAndStatus().put(userId, Game.Status.WAITING);
                 game.setNumberOfCountriesPerRound(numberOfCountriesPerRound);
                 game.setCreationDate(getCurrentTimeStamp());
             }
@@ -103,8 +103,8 @@ public class GameService {
             return null;
         }
 
-        if (game.getStatus() == 0) {
-            game.setStatus(1);
+        if (game.getStatus() == Game.Status.WAITING) {
+            game.setStatus(Game.Status.FLAGS);
             gameRepository.save(game);
             return game;
         }
@@ -113,16 +113,16 @@ public class GameService {
             return null;
         }
         else {
-            Map<Integer, Integer> userIdsAndStatus = game.getUserIdsAndStatus();
+            Map<Integer, Game.Status> userIdsAndStatus = game.getUserIdsAndStatus();
             userIdsAndStatus.replace(userId, game.getStatus());
             game.setUserIdsAndStatus(userIdsAndStatus);
         }
 
-        if (game.getStatus() == 4) {
+        if (game.getStatus() == Game.Status.FINISHED) {
             return null;
         }
 
-        if (game.getStatus() == 1) {
+        if (game.getStatus() == Game.Status.FLAGS) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
@@ -139,10 +139,10 @@ public class GameService {
                 }
             }
             if (hasEveryPlayerPlayed(gameId)) {
-                game.setStatus(2);
+                game.setStatus(Game.Status.MAP);
             }
 
-        } else if (game.getStatus() == 2) {
+        } else if (game.getStatus() == Game.Status.MAP) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
@@ -159,11 +159,11 @@ public class GameService {
                 }
             }
             if (hasEveryPlayerPlayed(gameId)) {
-                game.setStatus(3);
+                game.setStatus(Game.Status.MONUMENTS);
             }
         }
 
-        else if (game.getStatus() == 3) {
+        else if (game.getStatus() == Game.Status.MONUMENTS) {
             for (int i = 0; i < game.getNumberOfCountriesPerRound(); i++) {
                 String countryName = countryGuesses.get(i);
                 String formattedCountryName = countryName.replace(" ", "-");
@@ -178,12 +178,11 @@ public class GameService {
                 for (Map.Entry<Integer, Integer> entry : game.getUserIdsAndScores().entrySet()) {
                     restTemplate.put(userService + "/users/addbal/" + entry.getKey() + "/" + entry.getValue(), null);
                 }
-                game.setStatus(4);
+                game.setStatus(Game.Status.FINISHED);
             }
         }
 
         gameRepository.save(game);
-        System.out.println(game.toString());
         return game;
     }
 
@@ -204,7 +203,7 @@ public class GameService {
             return null;
         }
 
-        if (game.getStatus() != 0) {
+        if (game.getStatus() != Game.Status.WAITING) {
             return null;
         }
 
@@ -212,8 +211,8 @@ public class GameService {
         userIdsAndScores.put(userId, 0);
         game.setUserIdsAndScores(userIdsAndScores);
 
-        Map<Integer, Integer> userIdsAndStatus = game.getUserIdsAndStatus();
-        userIdsAndStatus.put(userId, 0);
+        Map<Integer, Game.Status> userIdsAndStatus = game.getUserIdsAndStatus();
+        userIdsAndStatus.put(userId, Game.Status.WAITING);
         game.setUserIdsAndStatus(userIdsAndStatus);
 
         gameRepository.save(game);
@@ -232,7 +231,7 @@ public class GameService {
         userIdsAndScores.remove(userId);
         game.setUserIdsAndScores(userIdsAndScores);
 
-        Map<Integer, Integer> userIdsAndStatus = game.getUserIdsAndStatus();
+        Map<Integer, Game.Status> userIdsAndStatus = game.getUserIdsAndStatus();
         userIdsAndStatus.remove(userId);
         game.setUserIdsAndStatus(userIdsAndStatus);
 
@@ -277,7 +276,7 @@ public class GameService {
             return null;
         }
 
-        Integer status = game.getStatus();
+        Game.Status status = game.getStatus();
 
         if (game.getUserIdsAndStatus().get(userId).equals(status)) {
             return true;
@@ -290,8 +289,8 @@ public class GameService {
         if (game == null) {
             return null;
         }
-        Integer status = game.getStatus();
-        for (Map.Entry<Integer, Integer> entry : game.getUserIdsAndStatus().entrySet()) {
+        Game.Status status = game.getStatus();
+        for (Map.Entry<Integer, Game.Status> entry : game.getUserIdsAndStatus().entrySet()) {
             if (!entry.getValue().equals(status)) {
                 return false;
             }
