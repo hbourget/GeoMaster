@@ -24,7 +24,7 @@ public class UserCrt {
             user = uService.getUserByUsername(idOrUsername);
         }
         if (user == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(user);
         }
@@ -44,7 +44,7 @@ public class UserCrt {
     public ResponseEntity<UserDTO> updateUser(@PathVariable Integer id, @RequestBody User user) {
         UserDTO updatedUser = uService.updateUser(id, user);
         if (updatedUser == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(updatedUser);
         }
@@ -54,7 +54,7 @@ public class UserCrt {
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         boolean userDeleted = uService.deleteUser(id);
         if (userDeleted) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -93,7 +93,7 @@ public class UserCrt {
     public ResponseEntity<UserDTO> addBalance(@PathVariable Integer userId, @PathVariable Integer amount) {
         UserDTO updatedUser = uService.addBalance(userId, amount);
         if (updatedUser == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(updatedUser);
         }
@@ -103,7 +103,7 @@ public class UserCrt {
     public ResponseEntity<UserDTO> removeBalance(@PathVariable Integer userId, @PathVariable Integer amount) {
         UserDTO updatedUser = uService.removeBalance(userId, amount);
         if (updatedUser == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(updatedUser);
         }
