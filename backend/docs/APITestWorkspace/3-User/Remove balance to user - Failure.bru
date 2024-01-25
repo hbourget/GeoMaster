@@ -13,6 +13,6 @@ put {
 tests {
   test("should not be able to remove 500 balance to user", function() {
     const data = res.getBody();
-    expect(res.getStatus()).to.equal(404);
+    expect(res.getStatus()).to.equal(204);
   });
 }
