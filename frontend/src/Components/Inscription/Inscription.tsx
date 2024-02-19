@@ -48,10 +48,9 @@ const buttonStyle = css({
     backgroundColor: '#0056b3',
   },
 });
-const SERVER_IP = import.meta.env.SERVER_IP;
 
 const register = async (data) => {
-  const response = await fetch(`http://${SERVER_IP}:8080/auth/register`, {
+  const response = await fetch(`http://159.65.52.6:8080/auth/register`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {

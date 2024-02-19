@@ -108,9 +108,7 @@ interface Party extends RoomData {
   countriesMonument: string[];
 }
 
-const SERVER_IP = import.meta.env.SERVER_IP;
-
-const url = `http://${SERVER_IP}:8080`;
+const url = `http://159.65.52.6:8080`;
 
 const createRoom = async (userId: number, countryNumber: number) => {
   const response = await fetch(url + `/game/${userId}/${countryNumber}`, {

@@ -40,9 +40,7 @@ const sendGameData = async (userId: number, gameId: number, gameData: string[]) 
     }),
   );
 
-  const SERVER_IP = import.meta.env.SERVER_IP;
-
-  const response = await fetch(`http://${SERVER_IP}:8080/game/play`, {
+  const response = await fetch(`http://159.65.52.6:8080/game/play`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

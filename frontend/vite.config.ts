@@ -14,7 +14,4 @@ export default defineConfig({
       { find: '~bootstrap', replacement: path.resolve(__dirname, 'node_modules/bootstrap') },
     ],
   },
-  define: {
-    'import.meta.env.SERVER_IP': JSON.stringify(process.env.SERVER_IP || 'localhost'),
-  },
 });
